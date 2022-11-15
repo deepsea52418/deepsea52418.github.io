@@ -1,0 +1,484 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to Simulate TSN | Deepsea52418</title><meta name="keywords" content="simulate,TSN,omnet"><meta name="author" content="Deepsea52418"><meta name="copyright" content="Deepsea52418"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="一、简介TSN（Time-Sensitive Networking）时间敏感网络，即在非确定性的以太网中实现确定性的最小时间延时的协议族，是IEEE 802.1工作组中的TSN工作组开发的一套协议标准，定义了以太网数据传输的时间敏感机制，为标准以太网增加了确定性和可靠性，以确保数据实时、确定和可靠地传输。 OMNeT++(Objective Modular Network TestBed in C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Simulate TSN">
+<meta property="og:url" content="https://deepsea52418.github.io/How-to-Simulate-TSN/">
+<meta property="og:site_name" content="Deepsea52418">
+<meta property="og:description" content="一、简介TSN（Time-Sensitive Networking）时间敏感网络，即在非确定性的以太网中实现确定性的最小时间延时的协议族，是IEEE 802.1工作组中的TSN工作组开发的一套协议标准，定义了以太网数据传输的时间敏感机制，为标准以太网增加了确定性和可靠性，以确保数据实时、确定和可靠地传输。 OMNeT++(Objective Modular Network TestBed in C">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-04-02T03:58:51.000Z">
+<meta property="article:modified_time" content="2022-04-02T05:19:05.540Z">
+<meta property="article:author" content="Deepsea52418">
+<meta property="article:tag" content="simulate">
+<meta property="article:tag" content="TSN">
+<meta property="article:tag" content="omnet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://deepsea52418.github.io/How-to-Simulate-TSN/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'How to Simulate TSN',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-02 13:19:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How%20to%20simulate%20TSN/49990-106.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Deepsea52418</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">How to Simulate TSN</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-02T03:58:51.000Z" title="发表于 2022-04-02 11:58:51">2022-04-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-02T05:19:05.540Z" title="更新于 2022-04-02 13:19:05">2022-04-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="How to Simulate TSN"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><p>TSN（Time-Sensitive Networking）时间敏感网络，即在非确定性的以太网中实现确定性的最小时间延时的协议族，是IEEE 802.1工作组中的TSN工作组开发的一套协议标准，定义了以太网数据传输的时间敏感机制，为标准以太网增加了确定性和可靠性，以确保数据实时、确定和可靠地传输。</p>
+<p>OMNeT++(Objective Modular Network TestBed in C++) 是基于 <em>Eclipse</em>开发的开源的基于组件的模块化的开放网络仿真平台，是近年来在科学和工业领域里逐渐流行的一种优秀的网络仿真平台。其作为离散事件仿真器，具备强大完善的图形界面接口和可嵌入式仿真内核，同NS2等仿真平台相比，OMNeT++可运行于多个操作系统平台，可以简便定义网络拓扑结构，具备编程，调试和跟踪支持等功能。 </p>
+<p>通过在OMNeT上加载特定的TSN仿真库（如Nesting, <a target="_blank" rel="noopener" href="https://github.com/CoRE-RG/CoRE4INET">CoRE4INET</a>)，即可对TSN网络进行仿真验证。</p>
+<p>在本文中，我们主要讲述以下内容：</p>
+<ul>
+<li>第一章：简单概括OMNeT组成与功能</li>
+<li>第二章：在虚拟机中配置仿真环境，实现TSN仿真</li>
+<li>第三章：根据Nesting官方论文，介绍TSN交换机架构</li>
+<li>第四章：利用Nesting官方提供的例程，分析TSN网络</li>
+<li>第五章：通过运行仿真示例，验证第四章中的分析</li>
+<li>第六章：总结遇到的问题和下一步规划</li>
+</ul>
+<h2 id="1-1-OMNeT组成"><a href="#1-1-OMNeT组成" class="headerlink" title="1.1 OMNeT组成"></a>1.1 OMNeT组成</h2><p>OMNeT主要由六个部分组成：    </p>
+<ul>
+<li><p>仿真内核库 （simulation kernel library, Sim）                                    ：最重要的部分，用户编写的仿真程序要与Sim链接    </p>
+</li>
+<li><p>网络描述语言的编译器 （network description compiler, Nedc）       ：网络拓扑文件编译器</p>
+</li>
+<li><p>图形化的网络编辑器（graphical network description editor, Gned）：可用于编写简单的网络拓扑，复杂拓扑需要直接编写ned文件</p>
+</li>
+<li><p>仿真程序的图形化用户接口 （Tkenv）                                               ：通过图形化界面仿真</p>
+</li>
+<li><p>仿真程序的命令行用户接口 （Cmdenv）                                           ：通过命令行界面仿真，支持批处理</p>
+</li>
+<li><p>图形化的输出工具 Plove 和 Scalar                                                      ：输出仿真结果，用于分析</p>
+</li>
+</ul>
+<h2 id="1-2-OMNeT-仿真过程"><a href="#1-2-OMNeT-仿真过程" class="headerlink" title="1.2 OMNeT++仿真过程"></a>1.2 OMNeT++仿真过程</h2><img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image/How to simulate TSN/OMNeT++仿真流程.jpg" alt="OMNeT++仿真流程" style="zoom:15%;" />
+
+<center>图1 OMNeT++仿真流程</center>   
+
+<h2 id="1-3-OMNeT-文件简介"><a href="#1-3-OMNeT-文件简介" class="headerlink" title="1.3 OMNeT++文件简介"></a>1.3 OMNeT++文件简介</h2><p>OMNeT++中涉及多个文件，其中我们重点关注<code>.ned</code> <code>.cc</code> <code>.ini</code> <code>.vec</code> <code>.sca</code>文件。  </p>
+<ul>
+<li><code>.ned文件：</code>（network description file）负责描述网络拓扑结构  </li>
+<li><code>.cc文件 ：</code> 负责描述网络中的  </li>
+<li><code>.ini文件：</code>  负责描述网络组件配置属性，如mac地址，数据报文大小等  </li>
+<li><code>.vec文件：</code>  统计网络流量，生成折线图</li>
+<li><code>.sca文件：</code>  统计网络流量，生成柱状图</li>
+</ul>
+<h1 id="二、配置仿真环境"><a href="#二、配置仿真环境" class="headerlink" title="二、配置仿真环境"></a>二、配置仿真环境</h1><p>本文采用的仿真环境为：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">版本</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://ubuntu.com/">Ubuntu</a></td>
+<td align="center">18.04</td>
+<td align="center">仿真平台操作系统</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://omnetpp.org/">OMNeT</a></td>
+<td align="center">5.5.1</td>
+<td align="center">仿真平台</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://inet.omnetpp.org/">INET Framework</a></td>
+<td align="center">4.1.2</td>
+<td align="center">提供多种网络协议仿真</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://gitlab.com/ipvs/nesting">Nesting</a></td>
+<td align="center">&#x2F;</td>
+<td align="center">提供多种TSN模型</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注：以上版本配置已由Nesting官方验证兼容性</p>
+</blockquote>
+<h2 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h2><p>网上有大量OMNeT的安装教程，在此不做赘述。具体可参照以下链接。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_37702021/article/details/121306656">https://blog.csdn.net/weixin_37702021/article/details/121306656</a><br><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/omnetpp/InstallGuide.pdf">https://doc.omnetpp.org/omnetpp/InstallGuide.pdf</a></p>
+</blockquote>
+<p><strong><font color=yellow>为了简化安装流程，本人已将配置好的虚拟机打包存储至云端，可直接下载解压运行 </font></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="http://efind.org.cn/f/18607a35017e46748753/?dl=1">下载密码：Ubuntu18.04    虚拟机用户名:tsn3    虚拟机密码:tsn3    root账号密码:root    VMware WorkStation 16.2.2</a></strong></p>
+<h2 id="2-2-常见问题"><a href="#2-2-常见问题" class="headerlink" title="2.2 常见问题"></a>2.2 常见问题</h2><ul>
+<li><strong><font color=red>安装过程中不要使用root用户，会导致文件无法编译</font></strong></li>
+<li>大多数教程中的环境变量设置与自己本机的环境变量不同，建议进入OMNeT文件夹后采用<code>pwd</code>指令查看本地具体路径</li>
+<li>配置过程中需要下载大量国外资源，建议配置apt代理和git代理，具体可参考<a href="https://deepsea52418.github.io/How-to-use-VPN/">此文章</a></li>
+</ul>
+<h1 id="三、TSN交换机模型"><a href="#三、TSN交换机模型" class="headerlink" title="三、TSN交换机模型"></a>三、TSN交换机模型</h1><h2 id="3-1-交换机缓冲架构"><a href="#3-1-交换机缓冲架构" class="headerlink" title="3.1 交换机缓冲架构"></a>3.1 交换机缓冲架构</h2><p>一台交换机具有多个输入输出端口，交换机内部通过交换矩阵将端口连接起来。交换机内有一块资源存储缓冲区，用于存储待转发的数据包。</p>
+<p>根据缓冲区位置的不同，可以分为以下四种架构[1]：</p>
+<p>（a）  输出端口缓冲架构：将缓冲区置于出端口位置。其相比于输入端口缓冲具有更好的吞吐性。但每个输出端口需要 N 倍于线路带宽的处理能力来处理来自 N 个输入端口的帧，对处理芯片性能要求高。</p>
+<p>（b） 输入端口缓冲+虚拟输出队列（VOQs）架构：可以满足处理速度，但吞吐量低，是目前最常用的架构。</p>
+<p>（c）  交叉点缓冲架构：吞吐量大，但是对于具有N个端口的交换机需要O(N*N)的缓存空间。所需空间大，空间利用率低。</p>
+<p>（d） 交换-内存-交换 (SMS) 架构：每个输入和输出端口共享中间的所有缓冲区，空间利用率高。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How%20to%20simulate%20TSN/image-20220402131433523.png" alt="image-20220402131433523"  />
+
+<center>图2 交换机缓冲架构</center>   
+
+<h2 id="3-2-Nesting交换机模型"><a href="#3-2-Nesting交换机模型" class="headerlink" title="3.2 Nesting交换机模型"></a>3.2 Nesting交换机模型</h2><p>Nesting作为OMNeT++的扩展包，主要提供了多种仿真模型用以实现TSN的仿真。在本章节主要根据Nesting官方的<a target="_blank" rel="noopener" href="https://www.researchgate.net/publication/330753982_NeSTiNg_Simulating_IEEE_Time-sensitive_Networking_TSN_in_OMNeT">论文</a>对其中的交换机模块的具体实现进行解释。</p>
+<blockquote>
+<p>注：目前最新的Nesting包中关于交换机的结构与其论文中的不完全一样</p>
+</blockquote>
+<p>图中为一个两端口交换机。其内部由以下功能模块组成：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>interface Table</td>
+<td>负责将新接入交换机设备的mac地址和对应端口绑定</td>
+</tr>
+<tr>
+<td>Filtering Database</td>
+<td>过滤数据库负责存储数据包的过滤和转发规则，用于中继模块</td>
+</tr>
+<tr>
+<td>clock</td>
+<td>交换机时钟，负责时间同步</td>
+</tr>
+<tr>
+<td>scheduleSwap</td>
+<td>调度交换模块</td>
+</tr>
+<tr>
+<td>ProcessingDelay</td>
+<td>延迟模块，负责仿真流量在交换机内部寻找路由等所消耗时间</td>
+</tr>
+<tr>
+<td>relayUnit</td>
+<td>中继模块，负责仿真流量在交换机内部寻找目的端口</td>
+</tr>
+<tr>
+<td>queuing</td>
+<td>输出端口队列，存储转发至该端口待传输的数据包</td>
+</tr>
+<tr>
+<td>lowerLayer</td>
+<td>下层接口，负责将流量传入物理层传输</td>
+</tr>
+</tbody></table>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image/How to simulate TSN/image-20220323200425129.png" alt="image-20220323200425129" style="zoom:33%;" />
+
+<center>图3 交换机内部结构</center>   
+
+<p>在输出端口队列（即图2中queuing）内部，由以下模块组成：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>gateController</td>
+<td>负责控制GCL，控制门（tGates）的开关</td>
+</tr>
+<tr>
+<td>queuingFrames</td>
+<td>负责根据数据帧Vlan Tag中的PCP值将其映射到不同队列中</td>
+</tr>
+<tr>
+<td>queues</td>
+<td>负责存储待转发的数据帧</td>
+</tr>
+<tr>
+<td>tsAlgorithms</td>
+<td>时间整形算法，根据一定的规则在队列中选择下一个待传输的数据帧。常见的算法有CBS等。</td>
+</tr>
+<tr>
+<td>tGates</td>
+<td>门控，当门打开时该队列流量可以传输</td>
+</tr>
+<tr>
+<td>transmissionSelection</td>
+<td>传输选择，当同一时间端口中有多个队列的流量都可传输时，选择优先传输的流量</td>
+</tr>
+</tbody></table>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image/How to simulate TSN/image-20220323204931002.png" alt="image-20220323204931002" style="zoom: 35%;" />
+
+<center>图4 输出队列内部结构</center>  
+
+<p>在此，我们利用一个流量从交换机入端口（ingress）到出端口（egress）的流程来演示流量在交换机内部的操作。（条件设定：流量vlan pcp&#x3D;7；当前时间&#x3D;0s；processingDelay&#x3D;5us；tsAlgorithms&#x3D;FIFO；交换机内部端口队列中无存储流量，无正在传输流量；GCL&#x3D;01111111 100us 10000000 100us；流量从0号端口入，1号端口出）</p>
+<p>在端设备连接到交换机上时，interface Table在交换机内部将端口号与mac地址绑定。filtering Database存储数据包过滤与转发的规则。流量从0号端口进入交换机时，filtering Database决定是否接收该数据包，数据包从物理层经由lowerLayer[0]进入交换机，relayUnit根据流量目的地址，将其转发至1号端口。整个过程耗时5us。流量进入1号端口queuingFrames，其根据流量PCP值，将其映射至queues[7]等待传输。tsAlgorithms配置为FIFO模式，因此该流量在queues[7]中不在重新排队。此时时间为5us，tGates[7]&#x3D;0，关门，7号队列流量无法传输。当时间到达100us时，tGates[7]&#x3D;1，开门。流量进入transmissionSelection中，由于只有7号队列的流量，所以直接进入lowerLayer[1]，传输至物理层。</p>
+<h1 id="四、仿真实验"><a href="#四、仿真实验" class="headerlink" title="四、仿真实验"></a>四、仿真实验</h1><p>本章节，我们利用Nesting官方提供的3个例程模拟TSN网络。例程位于Nesting-&gt;simulation-&gt;examples目录下，分别为：</p>
+<ul>
+<li><p>01_example_strict_priority：严格优先级</p>
+</li>
+<li><p>02_example_gating：门控</p>
+</li>
+<li><p>03_example_frame_preemption：帧抢占</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401172119706.png" alt="image-20220401172119706" style="zoom:150%;" />
+
+<center>图5 网络拓扑</center></li>
+</ul>
+<p>3个例程采用同一个ned文件（TestScenario.ned）描述的网络拓扑。网络拓扑如下图所示，其中workstation1与workstation2向backupServer发送数据包，robotCotroller向roboticArm发生数据包。</p>
+<table>
+<thead>
+<tr>
+<th align="center">源</th>
+<th align="center">目的</th>
+<th align="center">优先级</th>
+<th align="center">发送间隔</th>
+<th align="center">帧大小</th>
+<th align="center">帧传输时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">RobotController</td>
+<td align="center">RoboticArm</td>
+<td align="center">7</td>
+<td align="center">400us</td>
+<td align="center">354B</td>
+<td align="center">2.832us</td>
+</tr>
+<tr>
+<td align="center">workStation1</td>
+<td align="center">BackupServer</td>
+<td align="center">6</td>
+<td align="center">12us</td>
+<td align="center">1500B</td>
+<td align="center">12us</td>
+</tr>
+<tr>
+<td align="center">workStation2</td>
+<td align="center">BackupServer</td>
+<td align="center">5</td>
+<td align="center">12us</td>
+<td align="center">1500B</td>
+<td align="center">12us</td>
+</tr>
+</tbody></table>
+<h2 id="4-1-TestScenario-ned文件详解"><a href="#4-1-TestScenario-ned文件详解" class="headerlink" title="4.1 TestScenario.ned文件详解"></a>4.1 TestScenario.ned文件详解</h2><p>在ned文件中，指出链路传播延迟&#x3D;0.1us，链路带宽1Gbps。交换机采用VlanEtherSwitchPreemptable模型，robotController采用VlanEtherHostSched模型，其余终端采用VlanEtherHostQ模型。</p>
+<h3 id="4-1-1-VlanEtherSwitchPreemptable模型"><a href="#4-1-1-VlanEtherSwitchPreemptable模型" class="headerlink" title="4.1.1 VlanEtherSwitchPreemptable模型"></a>4.1.1 VlanEtherSwitchPreemptable模型</h3><p>该模块实现了一个支持帧抢占的交换机。其内部结构如下图所示，其中eth模块时钟模块与第二章中所述有所不同。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401172420972.png" alt="image-20220401172420972" style="zoom: 150%;" />
+
+<center>图6 VlanEtherSwitchPreemptable模型</center>
+
+<p>在VlanEtherSwitchPreemptable.ned模型中，交换机默认处理延迟&#x3D;4us。eth模型采用Ethernetinterface.ned模型，其内部具体模块如下图所示。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401172518711.png" alt="image-20220401172518711"  />
+
+<center>图7 Ethernetinterface模型</center>
+
+<p>在Ethernetinterface模型中，queue模块采用Queueing.ned模型，其内部具体模块如下图所示。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401172605884.png" alt="image-20220401172605884"  />
+
+<center>图 8 Queuing模型</center>
+
+<p>在Queueing模型内部，指定默认队列数&#x3D;8，默认整形算法为StrictPriority。每个队列为LengthAwareQueue，其空间大小为100*1500*8b。</p>
+<h3 id="4-1-2-VlanEtherHostSched模型"><a href="#4-1-2-VlanEtherHostSched模型" class="headerlink" title="4.1.2 VlanEtherHostSched模型"></a>4.1.2 VlanEtherHostSched模型</h3><p>该模块实现了具有根据给定时间表发送帧的能力的简单主机，其具体结构如下图所示。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401172901718.png" alt="image-20220401172901718" style="zoom:150%;" />
+
+<center>图 9 VlanEtherHostSched模型</center>
+
+<h3 id="4-1-3-VlanEtherHostQ模型"><a href="#4-1-3-VlanEtherHostQ模型" class="headerlink" title="4.1.3 VlanEtherHostQ模型"></a>4.1.3 VlanEtherHostQ模型</h3><p>该模块实现了能够创建和接收带有 VLAN 标记的以太网流量的简单主机， 主要用于测试目的。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401173004381.png" alt="image-20220401173004381" style="zoom:150%;" />
+
+<center>图 10 VlanEtherHostQ模型</center>
+
+<p><font color=red>注：VlanEtherHostQ、VlanEtherHostSched中以太网网卡模型与VlanEtherSwitchPreemptable中以太网网卡结构不同，此处暂不做分析。</font></p>
+<h2 id="4-2-严格优先级"><a href="#4-2-严格优先级" class="headerlink" title="4.2 严格优先级"></a>4.2 严格优先级</h2><h3 id="4-2-1-example-strict-priority-ini文件"><a href="#4-2-1-example-strict-priority-ini文件" class="headerlink" title="4.2.1 example_strict_priority.ini文件"></a>4.2.1 example_strict_priority.ini文件</h3><p>在本小节我们对01_example_strict_priority.ini文件内容进行全面的解析，对于另外两个ini文件我们仅描述其不同点。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[General]</span>  </span><br><span class="line"><span class="comment"># 指定使用的网络拓扑文件名</span></span><br><span class="line"><span class="attr">network</span> = TestScenario  </span><br><span class="line"><span class="attr">record-eventlog</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="attr">debug-on-errors</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="comment"># 仿真结果输出文件夹名</span></span><br><span class="line"><span class="attr">result-dir</span> = results_strict_priority  </span><br><span class="line"><span class="attr">sim-time-limit</span> = <span class="number">1</span>s   </span><br><span class="line">**.<span class="attr">displayAddresses</span> = <span class="literal">true</span>  </span><br><span class="line">**.<span class="attr">verbose</span> = <span class="literal">true</span> </span><br><span class="line"><span class="comment"># 配置终端设备MAC地址 </span></span><br><span class="line">**.<span class="attr">robotController.eth.address</span> = <span class="string">&quot;00-00-00-00-00-01&quot;</span>  </span><br><span class="line">**.<span class="attr">workstation1.eth.address</span> = <span class="string">&quot;00-00-00-00-00-02&quot;</span>  </span><br><span class="line">**.<span class="attr">workstation2.eth.address</span> = <span class="string">&quot;00-00-00-00-00-03&quot;</span>  </span><br><span class="line">**.<span class="attr">roboticArm.eth.address</span> = <span class="string">&quot;00-00-00-00-00-04&quot;</span>  </span><br><span class="line">**.<span class="attr">backupServer.eth.address</span> = <span class="string">&quot;00-00-00-00-00-05&quot;</span>  </span><br><span class="line"><span class="comment"># 交换机默认延迟是4us,在此处延迟设定为5us </span></span><br><span class="line">**.switch*.<span class="attr">processingDelay.delay</span> = <span class="number">5</span>us </span><br><span class="line"><span class="comment"># 配置交换机路由表</span></span><br><span class="line">**.<span class="attr">filteringDatabase.database</span> = xmldoc(<span class="string">&quot;xml/TestScenarioRouting.xml&quot;</span>, <span class="string">&quot;/filteringDatabases/&quot;</span>)  </span><br><span class="line"><span class="comment"># 配置交换机GCL和流量整形算法</span></span><br><span class="line"><span class="comment"># 注：本人认为只需要在交换机A的3号端口进行配置即可，没必要在交换机B的0号端口进行配置，因为数据包拥塞发生在A的3号端口到B的2号端口上</span></span><br><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_AllOpen.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchA&#x27;]/port[@id=&#x27;3&#x27;]/schedule&quot;</span>)  </span><br><span class="line">**.switchB.eth<span class="section">[0]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_AllOpen.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchB&#x27;]/port[@id=&#x27;0&#x27;]/schedule&quot;</span>)  </span><br><span class="line"><span class="comment"># 注：此处enableHoldAndRelease作用暂不了解，怀疑可能和配置网卡发送方式有关</span></span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.<span class="attr">queue.gateController.enableHoldAndRelease</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.<span class="attr">queue.numberOfQueues</span> = <span class="number">8</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[0]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[2]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[3]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[4]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[5]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[6]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[7]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line"><span class="comment"># 注：此处expressQueue作用暂不了解</span></span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[0]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[1]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[2]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[3]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[4]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[5]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[6]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[7]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="comment"># 设定交换机队列缓冲区大小,约29个MTU</span></span><br><span class="line">**.queues<span class="section">[*]</span>.<span class="attr">bufferCapacity</span> = <span class="number">363360</span>b  </span><br><span class="line"><span class="comment"># 设定交换机是否运行帧抢占  </span></span><br><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">mac.enablePreemptingFrames</span> = <span class="literal">false</span>    </span><br><span class="line"><span class="comment"># 配置RobotController的GCL  </span></span><br><span class="line">**.<span class="attr">robotController.trafGenSchedApp.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_AllOpen.xml&quot;</span>)   </span><br><span class="line"><span class="comment"># 配置workstation的流量大小、优先级、发送间隔、VLAN Tag</span></span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.destAddress</span> = <span class="string">&quot;00-00-00-00-00-05&quot;</span> </span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.packetLength</span> = <span class="number">1500</span>Byte-<span class="number">4</span>Byte </span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.sendInterval</span> = <span class="number">12</span>us  </span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.vlanTagEnabled</span> = <span class="literal">true</span>  </span><br><span class="line">**.<span class="attr">workstation1.trafGenApp.pcp</span> = <span class="number">6</span>  </span><br><span class="line">**.<span class="attr">workstation2.trafGenApp.pcp</span> = <span class="number">5</span>  </span><br><span class="line"><span class="comment"># 配置RoboticArm为仅接收。numPacketsPerBurst = 0 表示不发送数据包，以下三个参数必须配置，否则无法运行 </span></span><br><span class="line">**.<span class="attr">roboticArm.trafGenApp.numPacketsPerBurst</span> = <span class="number">0</span>  </span><br><span class="line">**.<span class="attr">roboticArm.trafGenApp.sendInterval</span> = <span class="number">1</span>ms  </span><br><span class="line">**.<span class="attr">roboticArm.trafGenApp.packetLength</span> = <span class="number">100</span>B   </span><br><span class="line"><span class="comment"># 配置BackupServer为仅接收  </span></span><br><span class="line">**.<span class="attr">backupServer.trafGenApp.numPacketsPerBurst</span> = <span class="number">0</span>  </span><br><span class="line">**.<span class="attr">backupServer.trafGenApp.sendInterval</span> = <span class="number">1</span>ms  </span><br><span class="line">**.<span class="attr">backupServer.trafGenApp.packetLength</span> = <span class="number">100</span>B  </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-2-TestScenarioSchedule-AllOpen-xml文件"><a href="#4-2-2-TestScenarioSchedule-AllOpen-xml文件" class="headerlink" title="4.2.2 TestScenarioSchedule_AllOpen.xml文件"></a>4.2.2 TestScenarioSchedule_AllOpen.xml文件</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>    </span><br><span class="line"><span class="tag">&lt;<span class="name">schedules</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">defaultcycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">defaultcycle</span>&gt;</span>   </span><br><span class="line"># 设定robotController发送周期为400us，流量大小354B，优先级7 </span><br><span class="line">    <span class="tag">&lt;<span class="name">host</span> <span class="attr">name</span>=<span class="string">&quot;robotController&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">cycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">cycle</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line"># 不知道这个start的设置是不是保护带？  </span><br><span class="line">            <span class="tag">&lt;<span class="name">start</span>&gt;</span>10us<span class="tag">&lt;/<span class="name">start</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">queue</span>&gt;</span>7<span class="tag">&lt;/<span class="name">queue</span>&gt;</span>    </span><br><span class="line">         		  <span class="tag">&lt;<span class="name">dest</span>&gt;</span>00:00:00:00:00:04<span class="tag">&lt;/<span class="name">dest</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">size</span>&gt;</span>354B<span class="tag">&lt;/<span class="name">size</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">flowId</span>&gt;</span>1<span class="tag">&lt;/<span class="name">flowId</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">host</span>&gt;</span>    </span><br><span class="line"># 设定交换机所有门一直打开</span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchA&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;3&quot;</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>11111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchB&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;0&quot;</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>11111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>    </span><br><span class="line">              	 <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;/<span class="name">schedules</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-3-StrictPriority算法"><a href="#4-2-3-StrictPriority算法" class="headerlink" title="4.2.3 StrictPriority算法"></a>4.2.3 StrictPriority算法</h3><p>暂未了解算法具体代码。大体意思是流量严格按照高优先级到低优先级的顺序发送，只要有高优先级流量存在，低优先级就需要等待高优先级发送完成后才可发送。</p>
+<h3 id="4-2-4-小结"><a href="#4-2-4-小结" class="headerlink" title="4.2.4 小结"></a>4.2.4 小结</h3><p>在严格优先级中，初始时刻，网络中仅workStation1和workStation2的流量，由于workStation1流量优先级较高，优先发送。当到达10us时，RobotController发出一个优先级为7的流量，但此时交换机中正在由流量被发送，因此需要等待到12us时才可从交换机中发出，产生约2us的排队时延。RobotController发送完成后，workStation1继续传输，由于流量间隔为12us，且workStation2流量优先级较低，所以workStation2的流量在SwitchA处一直排队，无法传输。</p>
+<p>RobotController传输的最好情况是其流量到达交换机时刚好上一个流量传输完；最坏情况是刚好上一个流量开始传输。最好情况与最坏情况相差12us。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/Strict%20Priority.jpg" alt="Strict Priority" style="zoom:33%;" />
+
+<center>图11 StrictPriority时序图</center>
+
+<h2 id="4-3-门控"><a href="#4-3-门控" class="headerlink" title="4.3 门控"></a>4.3 门控</h2><h3 id="4-3-1-example-gating-ini文件"><a href="#4-3-1-example-gating-ini文件" class="headerlink" title="4.3.1 example_gating.ini文件"></a>4.3.1 example_gating.ini文件</h3><p>02_example_gating.ini文件与01_example_strict_priority.ini文件相比主要不同点集中在以下三条配置。其指定RobotController和交换机都采用TestScenarioSchedule_GatingOn.xml文件描述的门控。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_GatingOn.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchA&#x27;]/port[@id=&#x27;3&#x27;]/schedule&quot;</span>)  </span><br><span class="line">**.switchB.eth<span class="section">[0]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_GatingOn.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchB&#x27;]/port[@id=&#x27;0&#x27;]/schedule&quot;</span>)  </span><br><span class="line">**.<span class="attr">robotController.trafGenSchedApp.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_GatingOn.xml&quot;</span>) </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-2-TestScenarioSchedule-GatingOn-xml文件"><a href="#4-3-2-TestScenarioSchedule-GatingOn-xml文件" class="headerlink" title="4.3.2 TestScenarioSchedule_GatingOn.xml文件"></a>4.3.2 TestScenarioSchedule_GatingOn.xml文件</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">schedules</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">defaultcycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">defaultcycle</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">host</span> <span class="attr">name</span>=<span class="string">&quot;robotController&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">cycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">cycle</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">start</span>&gt;</span>10us<span class="tag">&lt;/<span class="name">start</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">queue</span>&gt;</span>7<span class="tag">&lt;/<span class="name">queue</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">dest</span>&gt;</span>00:00:00:00:00:04<span class="tag">&lt;/<span class="name">dest</span>&gt;</span>  </span><br><span class="line">           	<span class="tag">&lt;<span class="name">size</span>&gt;</span>354B<span class="tag">&lt;/<span class="name">size</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">flowId</span>&gt;</span>1<span class="tag">&lt;/<span class="name">flowId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">host</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchA&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;3&quot;</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line"># 指定一个周期=400us，其中前200us打开7号队列门，后200us打开0-6号队列门</span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>10000000<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">             		<span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                   	<span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>01111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchB&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;0&quot;</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>10000000<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>01111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">schedules</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-3-小结"><a href="#4-3-3-小结" class="headerlink" title="4.3.3 小结"></a>4.3.3 小结</h3><p>在有门控列表存在的情况下，0时刻WorkStation向交换机A发送数据包，其中WorkStation1的流量进入交换机A的3号端口6号队列，WorkStation2的流量进入5号队列。但此时5号队列和6号队列的门关闭，无法传输，流量缓存在队列中。当10us时，RobotController发送数据包，进入7号队列，此时7号队列的门打开，流量完成传输。当200us时，0-6号队列门打开，6号队列优先级高于5号队列，有先传输。由于开门周期内6号队列总是有流量，所以5号队列的流量无法完成传输。</p>
+<p>在GCL存在的情况下，交换机专门将每个周期的前200us预留给RobotController发送流量，其流量不会产生排队延迟。但是由于GCL的存在，对于WorkStation1来说，网络带宽变成了StrictPriority带宽的一半。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/Gating.jpg" alt="Gating" style="zoom:33%;" />
+
+<center>图12 Gating示例时序图</center>
+
+<h2 id="4-4-帧抢占"><a href="#4-4-帧抢占" class="headerlink" title="4.4 帧抢占"></a>4.4 帧抢占</h2><h3 id="4-4-1-example-frame-preemption-ini文件"><a href="#4-4-1-example-frame-preemption-ini文件" class="headerlink" title="4.4.1 example_frame_preemption.ini文件"></a>4.4.1 example_frame_preemption.ini文件</h3><p>此文件主要的区别在以下几条设定，主要是关于交换机队列是否是快速队列和交换机是否设置为可抢占。其余设定与example_strict_priority.ini文件相同。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 暂时不知道这边设置的具体含义，可能和设置7号队列可抢占，0-6号队列不可抢占有关</span></span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[0]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[1]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[2]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[3]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[4]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[5]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[6]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[7]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="comment"># 设定交换机A的3号端口为可抢占</span></span><br><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">mac.enablePreemptingFrames</span> = <span class="literal">true</span>  </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-2-小结"><a href="#4-4-2-小结" class="headerlink" title="4.4.2 小结"></a>4.4.2 小结</h3><p>在帧抢占模式中，起始情况与严格优先级情况相同。当到达10us时，RobotController发送的流量达到交换机A的3号端口，此时交换机正在传输WorkStation1的流量，但高优先级帧抢占，终断正在传输的流量。当高优先级流量传输完成后，低优先级流量继续传输。</p>
+<p>对于帧抢占模式，高优先级流量可以抢占正在传输的低优先级流量，从而减少排队时延，与严格优先级相比，其确定性更佳。但由于交换机处理帧抢占也需要一定的时间，所以其确定性略差与门控模式。但其可以保证网络的充分利用。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/frame preemption.jpg" alt="frame preemption" style="zoom:33%;" />
+
+<center>图12 Frame Preemption示例时序图</center>
+
+<h1 id="五、实验结果"><a href="#五、实验结果" class="headerlink" title="五、实验结果"></a>五、实验结果</h1><h2 id="5-1-严格优先级实验"><a href="#5-1-严格优先级实验" class="headerlink" title="5.1 严格优先级实验"></a>5.1 严格优先级实验</h2><p>通过观察RoboticArm端应用程序统计的端到端延迟（endToEndDelay:vector TestScenario.roboticArm.tranfGenApp），可以看到延迟范围是19.5us-31.8us，且呈现一定的周期性。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401204800560.png" alt="image-20220401204800560" style="zoom:50%;" />
+
+<center>图13 严格优先级 端到端延迟 单位：s</center>
+
+<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits&#x2F;sec sent &#x3D;986962179）</p>
+<p>SwitchA.eth[3]流量带宽为：0.987Gbps(TestScenario.switchA.eth[3].mac bits&#x2F;sec sent &#x3D; 986655162)</p>
+<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits&#x2F;sec sent &#x3D;7523725)</p>
+<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)&#x3D;100）</p>
+<h2 id="5-2-门控实验"><a href="#5-2-门控实验" class="headerlink" title="5.2 门控实验"></a>5.2 门控实验</h2><p>观察RoboticArm端应用程序统计的端到端延迟，可以看到延迟确定性极佳，稳定在19.5us</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401204934774.png" alt="image-20220401204934774" style="zoom:50%;" />
+
+<center>图14 门控 端到端延迟 单位：s</center>
+
+<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits&#x2F;sec sent &#x3D;986945179）</p>
+<p>SwitchA.eth[3]流量带宽为：0.493Gbps(TestScenario.switchA.eth[3].mac bits&#x2F;sec sent &#x3D;492965016)</p>
+<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits&#x2F;sec sent &#x3D;7523725)</p>
+<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)&#x3D;100）</p>
+<h2 id="5-3-帧抢占实验"><a href="#5-3-帧抢占实验" class="headerlink" title="5.3 帧抢占实验"></a>5.3 帧抢占实验</h2><p>观察RoboticArm端应用程序统计的端到端延迟，可以看到延迟在19.5us附近有小幅度抖动。</p>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401205142569.png" alt="image-20220401205142569" style="zoom:50%;" />
+
+<center>图15 帧抢占 端到端延迟 单位：s</center>
+
+<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits&#x2F;sec sent &#x3D;986945179）</p>
+<p>SwitchA.eth[3]流量带宽为：1.01Gbps(TestScenario.switchA.eth[3].mac bits&#x2F;sec sent &#x3D; 1014668064) （注：流量带宽超过1Gbps原因未知）</p>
+<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits&#x2F;sec sent &#x3D;7523725)</p>
+<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)&#x3D;100）</p>
+<h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h1><p>本文通过运行Nesting官方提供的三个例程，对3中不同TSN模式进行了对比分析。但依然存在以下问题需要解决：</p>
+<ol>
+<li>时间问题：按照Nesting论文中，d<em>tot</em>&#x3D;3 *d<em>prop</em>+2*d<em>proc</em>+3*d<em>trans</em>&#x3D;19.516us。但是交换机运行延迟d<em>proc</em>&#x3D;5us，链路传输延迟d<em>trans</em>&#x3D;0.1us，传播延迟(传输一帧用时) d<em>prop</em>不确定。即不知道在物理链路上传输的数据帧大小具体是多少。（上文中的354B是应用层设置数据大小，查看mac层组件发现帧大小为376B，而倒推得到的帧大小应该是384B，刚好符合802.3协议规定的帧的大小）</li>
+</ol>
+<img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How to simulate TSN/image-20220401222703667.png" alt="image-20220401222703667" style="zoom:50%;" />
+
+<center>图16 802.3MAC帧格式</center>
+
+<ol start="2">
+<li>时间同步是如何实现的？</li>
+<li>**.switch*.eth[*].queue.queues[0].expressQueue &#x3D; true是什么？</li>
+<li>帧抢占里面产生的小范围抖动，其抖动大小是在哪规定的？即在哪里规定了抢占一个数据帧所需时间？</li>
+</ol>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1]. <a target="_blank" rel="noopener" href="https://www.sdnlab.com/author/15680/">https://www.sdnlab.com/author/15680/</a></p>
+<p>[2]. <a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/index.html">https://doc.omnetpp.org/inet/api-current/neddoc/index.html</a></p>
+<p>[3]. <a target="_blank" rel="noopener" href="https://1.ieee802.org/protocol-simulations/#Tutorials">https://1.ieee802.org/protocol-simulations/#Tutorials</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Deepsea52418</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://deepsea52418.github.io/How-to-Simulate-TSN/">https://deepsea52418.github.io/How-to-Simulate-TSN/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://deepsea52418.github.io" target="_blank">Deepsea52418</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/simulate/">simulate</a><a class="post-meta__tags" href="/tags/TSN/">TSN</a><a class="post-meta__tags" href="/tags/omnet/">omnet</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/How-to-Clone-Linux/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">How to Clone Linux</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/deepsea52418/Blog-image//How%20to%20simulate%20TSN/49990-106.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Deepsea52418</div><div class="author-info__description">时间敏感网络</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/deepsea52418/deepsea52418.github.io"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">Email :deepsea52418@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-text">一、简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-OMNeT%E7%BB%84%E6%88%90"><span class="toc-text">1.1 OMNeT组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-OMNeT-%E4%BB%BF%E7%9C%9F%E8%BF%87%E7%A8%8B"><span class="toc-text">1.2 OMNeT++仿真过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-OMNeT-%E6%96%87%E4%BB%B6%E7%AE%80%E4%BB%8B"><span class="toc-text">1.3 OMNeT++文件简介</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AE%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83"><span class="toc-text">二、配置仿真环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%AE%89%E8%A3%85"><span class="toc-text">2.1 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-text">2.2 常见问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81TSN%E4%BA%A4%E6%8D%A2%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="toc-text">三、TSN交换机模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%BC%93%E5%86%B2%E6%9E%B6%E6%9E%84"><span class="toc-text">3.1 交换机缓冲架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Nesting%E4%BA%A4%E6%8D%A2%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="toc-text">3.2 Nesting交换机模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BB%BF%E7%9C%9F%E5%AE%9E%E9%AA%8C"><span class="toc-text">四、仿真实验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-TestScenario-ned%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3"><span class="toc-text">4.1 TestScenario.ned文件详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-1-VlanEtherSwitchPreemptable%E6%A8%A1%E5%9E%8B"><span class="toc-text">4.1.1 VlanEtherSwitchPreemptable模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-2-VlanEtherHostSched%E6%A8%A1%E5%9E%8B"><span class="toc-text">4.1.2 VlanEtherHostSched模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-3-VlanEtherHostQ%E6%A8%A1%E5%9E%8B"><span class="toc-text">4.1.3 VlanEtherHostQ模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E4%B8%A5%E6%A0%BC%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-text">4.2 严格优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-example-strict-priority-ini%E6%96%87%E4%BB%B6"><span class="toc-text">4.2.1 example_strict_priority.ini文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-2-TestScenarioSchedule-AllOpen-xml%E6%96%87%E4%BB%B6"><span class="toc-text">4.2.2 TestScenarioSchedule_AllOpen.xml文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-3-StrictPriority%E7%AE%97%E6%B3%95"><span class="toc-text">4.2.3 StrictPriority算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-4-%E5%B0%8F%E7%BB%93"><span class="toc-text">4.2.4 小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E9%97%A8%E6%8E%A7"><span class="toc-text">4.3 门控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-1-example-gating-ini%E6%96%87%E4%BB%B6"><span class="toc-text">4.3.1 example_gating.ini文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-2-TestScenarioSchedule-GatingOn-xml%E6%96%87%E4%BB%B6"><span class="toc-text">4.3.2 TestScenarioSchedule_GatingOn.xml文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-3-%E5%B0%8F%E7%BB%93"><span class="toc-text">4.3.3 小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-%E5%B8%A7%E6%8A%A2%E5%8D%A0"><span class="toc-text">4.4 帧抢占</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-1-example-frame-preemption-ini%E6%96%87%E4%BB%B6"><span class="toc-text">4.4.1 example_frame_preemption.ini文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-2-%E5%B0%8F%E7%BB%93"><span class="toc-text">4.4.2 小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-text">五、实验结果</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E4%B8%A5%E6%A0%BC%E4%BC%98%E5%85%88%E7%BA%A7%E5%AE%9E%E9%AA%8C"><span class="toc-text">5.1 严格优先级实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E9%97%A8%E6%8E%A7%E5%AE%9E%E9%AA%8C"><span class="toc-text">5.2 门控实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E5%B8%A7%E6%8A%A2%E5%8D%A0%E5%AE%9E%E9%AA%8C"><span class="toc-text">5.3 帧抢占实验</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">六、总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">参考文献</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/How-to-Use-VPN/" title="How to Use VPN"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Use VPN"/></a><div class="content"><a class="title" href="/How-to-Use-VPN/" title="How to Use VPN">How to Use VPN</a><time datetime="2022-11-15T03:49:56.000Z" title="发表于 2022-11-15 11:49:56">2022-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Inet-4-4-TSN-Introduction/" title="Inet 4.4 TSN Introduction"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Inet 4.4 TSN Introduction"/></a><div class="content"><a class="title" href="/Inet-4-4-TSN-Introduction/" title="Inet 4.4 TSN Introduction">Inet 4.4 TSN Introduction</a><time datetime="2022-11-13T07:47:36.000Z" title="发表于 2022-11-13 15:47:36">2022-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Clone-Linux/" title="How to Clone Linux"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Clone Linux"/></a><div class="content"><a class="title" href="/How-to-Clone-Linux/" title="How to Clone Linux">How to Clone Linux</a><time datetime="2022-05-01T10:01:47.000Z" title="发表于 2022-05-01 18:01:47">2022-05-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Simulate-TSN/" title="How to Simulate TSN"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Simulate TSN"/></a><div class="content"><a class="title" href="/How-to-Simulate-TSN/" title="How to Simulate TSN">How to Simulate TSN</a><time datetime="2022-04-02T03:58:51.000Z" title="发表于 2022-04-02 11:58:51">2022-04-02</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By Deepsea52418</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
