@@ -1,6 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>How to Clone Linux</title>
+    <url>/How-to-Clone-Linux/</url>
+    <content><![CDATA[<p><strong>配置过Linux系统的同学应该经常会碰见以下问题：</strong></p>
+<ol>
+<li>操作失误，导致配置好的系统出错，修复困难</li>
+<li>为多台电脑进行一样的配置</li>
+<li>将配置好的虚拟机移动为物理机（V2P）</li>
+<li>树莓派怎么备份</li>
+</ol>
+<p><strong>对于上述问题，可以通过两种方式解决：</strong></p>
+<ol>
+<li><p>部分备份（使用软件备份某几个文件夹）</p>
+</li>
+<li><p>制作系统镜像文件</p>
+</li>
+</ol>
+<p>其区别如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">rm -rf&#x2F;* 后能否恢复</th>
+<th align="center">备份速度</th>
+<th align="center">能否移植</th>
+<th align="center">适用范围</th>
+<th align="center">典型软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">部分备份</td>
+<td align="center">不能</td>
+<td align="center">快</td>
+<td align="center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">&amp;#x274c;</span></td>
+<td align="center">用户级</td>
+<td align="center"><code>systemback</code> <code>Timeshift</code></td>
+</tr>
+<tr>
+<td align="center">制作系统镜像文件</td>
+<td align="center">能</td>
+<td align="center">慢</td>
+<td align="center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">&amp;#x2714;</span></td>
+<td align="center">系统级</td>
+<td align="center"><code>systemback</code> <code>Clonezilla</code></td>
+</tr>
+</tbody></table>
+<h1 id="一、部分备份"><a href="#一、部分备份" class="headerlink" title="一、部分备份"></a>一、部分备份</h1><p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
+<p>这里<strong>首推</strong><code>Timeshift</code>，具体备份教程参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/94105263">如何使用 TimeShift 备份和还原 Ubuntu Linux</a></p>
+<p>原因如下：</p>
+<ol>
+<li>timeshift界面简洁，操作简单</li>
+<li>timeshift可设置定期自动备份</li>
+<li>timeshift可直接通过选定用户名完成该用户所有文件的备份</li>
+</ol>
+<blockquote>
+<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift </p>
+</blockquote>
+<p>其次，推荐<code>systemback</code>，具体备份教程参考这篇文章：<a href="https://www.unixmen.com/systemback-restore-linux-system-previous-state/">Systemback: Restore Your Linux System To Previous State</a></p>
+<blockquote>
+<p>注：systemback默认备份系统文件和root用户的文件，不会备份普通用户文件，需要去 <em>Function menu</em> -&gt; <em>include</em> 下将需要备份的文件夹添加进去。</p>
+</blockquote>
+<h1 id="二、制作镜像文件"><a href="#二、制作镜像文件" class="headerlink" title="二、制作镜像文件"></a>二、制作镜像文件</h1><p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
+<p>这里<strong>首推</strong><code>systemback</code>，具体教程参考这篇文章：<a href="https://www.guyuehome.com/34452">一文搞定基于 systemback 的 Ubuntu 系统镜像制作与安装</a></p>
+<p>原因如下：</p>
+<ol>
+<li>与后文中提到的Clonezilla相比，不需要烧录启动U盘</li>
+<li>与Clonezilla相比，操作更简单</li>
+<li>可以便捷的实现大硬盘到小硬盘的迁移</li>
+<li>可以重命名拷贝系统的用户名</li>
+<li>可以制作成可启动的iso镜像</li>
+</ol>
+<blockquote>
+<p>注：</p>
+<ol>
+<li>建议拷贝系统的用户名与原用户名一致，防止环境变量出错</li>
+<li>systemback可直接通过图形化界面制作小于4G的iso文件，对于大于4G的文件，只能制作成sblive文件。唯一区别在于iso文件可以直接从U盘拷贝到windows电脑上存储起来，但是sblive文件windows拷贝不出来。</li>
+</ol>
+</blockquote>
+<p>其次，推荐<code>Clonezilla</code>，具体备份教程参考这篇文章：<a href="https://clonezilla.org/clonezilla-usage/general-live-use.php">Clonezilla</a></p>
+<p>其主要优势在于：</p>
+<ol>
+<li>不限操作系统，windows，mac，linux都可以使用</li>
+<li>制作的镜像文件在windows下可以读取，可以直接以文件夹的形式存储到windows电脑中</li>
+</ol>
+<p>但是缺点在于：</p>
+<ol>
+<li>需要先准备一个U盘，用<code>UltraISO</code>烧录进去Clonezilla的镜像文件，然后进入bios里面制作，然后再插一个U盘来存储镜像文件</li>
+<li>对于大硬盘向小硬盘的迁移，我用Clonezilla迁移失败了，没有systemback好用</li>
+</ol>
+<blockquote>
+<p>注：<strong>Clonezilla制作的镜像文件千万不要重命名</strong>，要命名就制作的时候一次命名好，否则会导致还原的时候无法读取文件名</p>
+</blockquote>
+<h1 id="附录一-大硬盘向小硬盘移动"><a href="#附录一-大硬盘向小硬盘移动" class="headerlink" title="附录一 大硬盘向小硬盘移动"></a>附录一 大硬盘向小硬盘移动</h1><p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
+<p>打个比方，我现在需要将A电脑上的Ubuntu移动到B电脑上。A电脑硬盘大小500G，但是只使用了5G，B电脑硬盘大小128G。</p>
+<p>我的建议是：</p>
+<ol>
+<li>找一个空闲U盘，烧录<code>Gparted</code>镜像，进入BIOS修改分区大小，将A电脑上500G的分区分成使用的10G和未分配的490G</li>
+<li>打开A电脑，启动<code>systemback</code>，将其系统的10G制作成镜像文件烧录到U盘里</li>
+<li>通过U盘启动B电脑，安装系统</li>
+<li>在B电脑中安装<code>Gparted</code>软件，扩展分区</li>
+</ol>
+<h1 id="附录二-虚拟机U盘启动"><a href="#附录二-虚拟机U盘启动" class="headerlink" title="附录二 虚拟机U盘启动"></a>附录二 虚拟机U盘启动</h1><p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
+<blockquote>
+<p>注：<strong>以管理员身份运行</strong>来打开VMware，否则无法将U盘配置为虚拟机硬盘</p>
+</blockquote>
+<h1 id="附录三-树莓派备份"><a href="#附录三-树莓派备份" class="headerlink" title="附录三 树莓派备份"></a>附录三 树莓派备份</h1><p>树莓派备份主要有4种方式：</p>
+<ol>
+<li><strong>推荐使用</strong><code>PiShrink</code>具体教程参考此文：<a href="https://shumeipai.nxez.com/2020/09/11/pishrink-make-raspberry-pi-images-smaller.html">PiShrink：制作更小的树莓派镜像文件</a></li>
+<li>Clonezilla好像有arm架构版，可以用于备份树莓派</li>
+<li>树莓派官方操作系统下，<em>附件</em> -&gt; <code>SD Card Copier</code> 软件可以实现</li>
+<li>可以将SD卡插入windows电脑，用<code>Win32Diskimager</code>制作iso文件。缺点在于16G的SD卡哪怕只用了2G，拷出来也是16G。具体参考此文章：<a href="https://blog.csdn.net/u010235853/article/details/77891327">使用Win32DiskImager来备份树莓派镜像文件</a></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>How to Use VPN</title>
     <url>/How-to-Use-VPN/</url>
     <content><![CDATA[<p>在国内，经常会碰到由于资源在境外导致无法访问的情况，为了解决这种问题，一种选择是镜像源，另一种选择是翻墙。本文将对后一种方式进行阐述。  </p>
@@ -307,123 +424,6 @@
 ]]></content>
       <tags>
         <tag>TSN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to Clone Linux</title>
-    <url>/How-to-Clone-Linux/</url>
-    <content><![CDATA[<p><strong>配置过Linux系统的同学应该经常会碰见以下问题：</strong></p>
-<ol>
-<li>操作失误，导致配置好的系统出错，修复困难</li>
-<li>为多台电脑进行一样的配置</li>
-<li>将配置好的虚拟机移动为物理机（V2P）</li>
-<li>树莓派怎么备份</li>
-</ol>
-<p><strong>对于上述问题，可以通过两种方式解决：</strong></p>
-<ol>
-<li><p>部分备份（使用软件备份某几个文件夹）</p>
-</li>
-<li><p>制作系统镜像文件</p>
-</li>
-</ol>
-<p>其区别如下：</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">rm -rf&#x2F;* 后能否恢复</th>
-<th align="center">备份速度</th>
-<th align="center">能否移植</th>
-<th align="center">适用范围</th>
-<th align="center">典型软件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">部分备份</td>
-<td align="center">不能</td>
-<td align="center">快</td>
-<td align="center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">&amp;#x274c;</span></td>
-<td align="center">用户级</td>
-<td align="center"><code>systemback</code> <code>Timeshift</code></td>
-</tr>
-<tr>
-<td align="center">制作系统镜像文件</td>
-<td align="center">能</td>
-<td align="center">慢</td>
-<td align="center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">&amp;#x2714;</span></td>
-<td align="center">系统级</td>
-<td align="center"><code>systemback</code> <code>Clonezilla</code></td>
-</tr>
-</tbody></table>
-<h1 id="一、部分备份"><a href="#一、部分备份" class="headerlink" title="一、部分备份"></a>一、部分备份</h1><p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
-<p>这里<strong>首推</strong><code>Timeshift</code>，具体备份教程参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/94105263">如何使用 TimeShift 备份和还原 Ubuntu Linux</a></p>
-<p>原因如下：</p>
-<ol>
-<li>timeshift界面简洁，操作简单</li>
-<li>timeshift可设置定期自动备份</li>
-<li>timeshift可直接通过选定用户名完成该用户所有文件的备份</li>
-</ol>
-<blockquote>
-<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift </p>
-</blockquote>
-<p>其次，推荐<code>systemback</code>，具体备份教程参考这篇文章：<a href="https://www.unixmen.com/systemback-restore-linux-system-previous-state/">Systemback: Restore Your Linux System To Previous State</a></p>
-<blockquote>
-<p>注：systemback默认备份系统文件和root用户的文件，不会备份普通用户文件，需要去 <em>Function menu</em> -&gt; <em>include</em> 下将需要备份的文件夹添加进去。</p>
-</blockquote>
-<h1 id="二、制作镜像文件"><a href="#二、制作镜像文件" class="headerlink" title="二、制作镜像文件"></a>二、制作镜像文件</h1><p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
-<p>这里<strong>首推</strong><code>systemback</code>，具体教程参考这篇文章：<a href="https://www.guyuehome.com/34452">一文搞定基于 systemback 的 Ubuntu 系统镜像制作与安装</a></p>
-<p>原因如下：</p>
-<ol>
-<li>与后文中提到的Clonezilla相比，不需要烧录启动U盘</li>
-<li>与Clonezilla相比，操作更简单</li>
-<li>可以便捷的实现大硬盘到小硬盘的迁移</li>
-<li>可以重命名拷贝系统的用户名</li>
-<li>可以制作成可启动的iso镜像</li>
-</ol>
-<blockquote>
-<p>注：</p>
-<ol>
-<li>建议拷贝系统的用户名与原用户名一致，防止环境变量出错</li>
-<li>systemback可直接通过图形化界面制作小于4G的iso文件，对于大于4G的文件，只能制作成sblive文件。唯一区别在于iso文件可以直接从U盘拷贝到windows电脑上存储起来，但是sblive文件windows拷贝不出来。</li>
-</ol>
-</blockquote>
-<p>其次，推荐<code>Clonezilla</code>，具体备份教程参考这篇文章：<a href="https://clonezilla.org/clonezilla-usage/general-live-use.php">Clonezilla</a></p>
-<p>其主要优势在于：</p>
-<ol>
-<li>不限操作系统，windows，mac，linux都可以使用</li>
-<li>制作的镜像文件在windows下可以读取，可以直接以文件夹的形式存储到windows电脑中</li>
-</ol>
-<p>但是缺点在于：</p>
-<ol>
-<li>需要先准备一个U盘，用<code>UltraISO</code>烧录进去Clonezilla的镜像文件，然后进入bios里面制作，然后再插一个U盘来存储镜像文件</li>
-<li>对于大硬盘向小硬盘的迁移，我用Clonezilla迁移失败了，没有systemback好用</li>
-</ol>
-<blockquote>
-<p>注：<strong>Clonezilla制作的镜像文件千万不要重命名</strong>，要命名就制作的时候一次命名好，否则会导致还原的时候无法读取文件名</p>
-</blockquote>
-<h1 id="附录一-大硬盘向小硬盘移动"><a href="#附录一-大硬盘向小硬盘移动" class="headerlink" title="附录一 大硬盘向小硬盘移动"></a>附录一 大硬盘向小硬盘移动</h1><p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
-<p>打个比方，我现在需要将A电脑上的Ubuntu移动到B电脑上。A电脑硬盘大小500G，但是只使用了5G，B电脑硬盘大小128G。</p>
-<p>我的建议是：</p>
-<ol>
-<li>找一个空闲U盘，烧录<code>Gparted</code>镜像，进入BIOS修改分区大小，将A电脑上500G的分区分成使用的10G和未分配的490G</li>
-<li>打开A电脑，启动<code>systemback</code>，将其系统的10G制作成镜像文件烧录到U盘里</li>
-<li>通过U盘启动B电脑，安装系统</li>
-<li>在B电脑中安装<code>Gparted</code>软件，扩展分区</li>
-</ol>
-<h1 id="附录二-虚拟机U盘启动"><a href="#附录二-虚拟机U盘启动" class="headerlink" title="附录二 虚拟机U盘启动"></a>附录二 虚拟机U盘启动</h1><p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
-<blockquote>
-<p>注：<strong>以管理员身份运行</strong>来打开VMware，否则无法将U盘配置为虚拟机硬盘</p>
-</blockquote>
-<h1 id="附录三-树莓派备份"><a href="#附录三-树莓派备份" class="headerlink" title="附录三 树莓派备份"></a>附录三 树莓派备份</h1><p>树莓派备份主要有4种方式：</p>
-<ol>
-<li><strong>推荐使用</strong><code>PiShrink</code>具体教程参考此文：<a href="https://shumeipai.nxez.com/2020/09/11/pishrink-make-raspberry-pi-images-smaller.html">PiShrink：制作更小的树莓派镜像文件</a></li>
-<li>Clonezilla好像有arm架构版，可以用于备份树莓派</li>
-<li>树莓派官方操作系统下，<em>附件</em> -&gt; <code>SD Card Copier</code> 软件可以实现</li>
-<li>可以将SD卡插入windows电脑，用<code>Win32Diskimager</code>制作iso文件。缺点在于16G的SD卡哪怕只用了2G，拷出来也是16G。具体参考此文章：<a href="https://blog.csdn.net/u010235853/article/details/77891327">使用Win32DiskImager来备份树莓派镜像文件</a></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>

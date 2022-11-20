@@ -2417,7 +2417,7 @@ blockquote footer cite:before {
   margin: 0 0.2rem 0 0;
 }
 #recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap .article-meta-label {
-  padding-right: 0.2rem;
+  display: none;
 }
 #recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap .article-meta__separator {
   margin: 0 0.3rem;
@@ -3507,7 +3507,7 @@ blockquote footer cite:before {
   margin-right: 0.2rem;
 }
 #post-info #post-meta .post-meta-label {
-  margin-right: 0.2rem;
+  display: none;
 }
 #post-info #post-meta a {
   color: var(--light-grey);
