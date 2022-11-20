@@ -1,123 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>How to Clone Linux</title>
-    <url>/How-to-Clone-Linux/</url>
-    <content><![CDATA[<p><strong>配置过Linux系统的同学应该经常会碰见以下问题：</strong></p>
-<ol>
-<li>操作失误，导致配置好的系统出错，修复困难</li>
-<li>为多台电脑进行一样的配置</li>
-<li>将配置好的虚拟机移动为物理机（V2P）</li>
-<li>树莓派怎么备份</li>
-</ol>
-<p><strong>对于上述问题，可以通过两种方式解决：</strong></p>
-<ol>
-<li><p>部分备份（使用软件备份某几个文件夹）</p>
-</li>
-<li><p>制作系统镜像文件</p>
-</li>
-</ol>
-<p>其区别如下：</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">rm -rf&#x2F;* 后能否恢复</th>
-<th align="center">备份速度</th>
-<th align="center">能否移植</th>
-<th align="center">适用范围</th>
-<th align="center">典型软件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">部分备份</td>
-<td align="center">不能</td>
-<td align="center">快</td>
-<td align="center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">&amp;#x274c;</span></td>
-<td align="center">用户级</td>
-<td align="center"><code>systemback</code> <code>Timeshift</code></td>
-</tr>
-<tr>
-<td align="center">制作系统镜像文件</td>
-<td align="center">能</td>
-<td align="center">慢</td>
-<td align="center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">&amp;#x2714;</span></td>
-<td align="center">系统级</td>
-<td align="center"><code>systemback</code> <code>Clonezilla</code></td>
-</tr>
-</tbody></table>
-<h1 id="一、部分备份"><a href="#一、部分备份" class="headerlink" title="一、部分备份"></a>一、部分备份</h1><p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
-<p>这里<strong>首推</strong><code>Timeshift</code>，具体备份教程参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/94105263">如何使用 TimeShift 备份和还原 Ubuntu Linux</a></p>
-<p>原因如下：</p>
-<ol>
-<li>timeshift界面简洁，操作简单</li>
-<li>timeshift可设置定期自动备份</li>
-<li>timeshift可直接通过选定用户名完成该用户所有文件的备份</li>
-</ol>
-<blockquote>
-<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift </p>
-</blockquote>
-<p>其次，推荐<code>systemback</code>，具体备份教程参考这篇文章：<a href="https://www.unixmen.com/systemback-restore-linux-system-previous-state/">Systemback: Restore Your Linux System To Previous State</a></p>
-<blockquote>
-<p>注：systemback默认备份系统文件和root用户的文件，不会备份普通用户文件，需要去 <em>Function menu</em> -&gt; <em>include</em> 下将需要备份的文件夹添加进去。</p>
-</blockquote>
-<h1 id="二、制作镜像文件"><a href="#二、制作镜像文件" class="headerlink" title="二、制作镜像文件"></a>二、制作镜像文件</h1><p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
-<p>这里<strong>首推</strong><code>systemback</code>，具体教程参考这篇文章：<a href="https://www.guyuehome.com/34452">一文搞定基于 systemback 的 Ubuntu 系统镜像制作与安装</a></p>
-<p>原因如下：</p>
-<ol>
-<li>与后文中提到的Clonezilla相比，不需要烧录启动U盘</li>
-<li>与Clonezilla相比，操作更简单</li>
-<li>可以便捷的实现大硬盘到小硬盘的迁移</li>
-<li>可以重命名拷贝系统的用户名</li>
-<li>可以制作成可启动的iso镜像</li>
-</ol>
-<blockquote>
-<p>注：</p>
-<ol>
-<li>建议拷贝系统的用户名与原用户名一致，防止环境变量出错</li>
-<li>systemback可直接通过图形化界面制作小于4G的iso文件，对于大于4G的文件，只能制作成sblive文件。唯一区别在于iso文件可以直接从U盘拷贝到windows电脑上存储起来，但是sblive文件windows拷贝不出来。</li>
-</ol>
-</blockquote>
-<p>其次，推荐<code>Clonezilla</code>，具体备份教程参考这篇文章：<a href="https://clonezilla.org/clonezilla-usage/general-live-use.php">Clonezilla</a></p>
-<p>其主要优势在于：</p>
-<ol>
-<li>不限操作系统，windows，mac，linux都可以使用</li>
-<li>制作的镜像文件在windows下可以读取，可以直接以文件夹的形式存储到windows电脑中</li>
-</ol>
-<p>但是缺点在于：</p>
-<ol>
-<li>需要先准备一个U盘，用<code>UltraISO</code>烧录进去Clonezilla的镜像文件，然后进入bios里面制作，然后再插一个U盘来存储镜像文件</li>
-<li>对于大硬盘向小硬盘的迁移，我用Clonezilla迁移失败了，没有systemback好用</li>
-</ol>
-<blockquote>
-<p>注：<strong>Clonezilla制作的镜像文件千万不要重命名</strong>，要命名就制作的时候一次命名好，否则会导致还原的时候无法读取文件名</p>
-</blockquote>
-<h1 id="附录一-大硬盘向小硬盘移动"><a href="#附录一-大硬盘向小硬盘移动" class="headerlink" title="附录一 大硬盘向小硬盘移动"></a>附录一 大硬盘向小硬盘移动</h1><p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
-<p>打个比方，我现在需要将A电脑上的Ubuntu移动到B电脑上。A电脑硬盘大小500G，但是只使用了5G，B电脑硬盘大小128G。</p>
-<p>我的建议是：</p>
-<ol>
-<li>找一个空闲U盘，烧录<code>Gparted</code>镜像，进入BIOS修改分区大小，将A电脑上500G的分区分成使用的10G和未分配的490G</li>
-<li>打开A电脑，启动<code>systemback</code>，将其系统的10G制作成镜像文件烧录到U盘里</li>
-<li>通过U盘启动B电脑，安装系统</li>
-<li>在B电脑中安装<code>Gparted</code>软件，扩展分区</li>
-</ol>
-<h1 id="附录二-虚拟机U盘启动"><a href="#附录二-虚拟机U盘启动" class="headerlink" title="附录二 虚拟机U盘启动"></a>附录二 虚拟机U盘启动</h1><p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
-<blockquote>
-<p>注：<strong>以管理员身份运行</strong>来打开VMware，否则无法将U盘配置为虚拟机硬盘</p>
-</blockquote>
-<h1 id="附录三-树莓派备份"><a href="#附录三-树莓派备份" class="headerlink" title="附录三 树莓派备份"></a>附录三 树莓派备份</h1><p>树莓派备份主要有4种方式：</p>
-<ol>
-<li><strong>推荐使用</strong><code>PiShrink</code>具体教程参考此文：<a href="https://shumeipai.nxez.com/2020/09/11/pishrink-make-raspberry-pi-images-smaller.html">PiShrink：制作更小的树莓派镜像文件</a></li>
-<li>Clonezilla好像有arm架构版，可以用于备份树莓派</li>
-<li>树莓派官方操作系统下，<em>附件</em> -&gt; <code>SD Card Copier</code> 软件可以实现</li>
-<li>可以将SD卡插入windows电脑，用<code>Win32Diskimager</code>制作iso文件。缺点在于16G的SD卡哪怕只用了2G，拷出来也是16G。具体参考此文章：<a href="https://blog.csdn.net/u010235853/article/details/77891327">使用Win32DiskImager来备份树莓派镜像文件</a></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>How to Use VPN</title>
     <url>/How-to-Use-VPN/</url>
     <content><![CDATA[<p>在国内，经常会碰到由于资源在境外导致无法访问的情况，为了解决这种问题，一种选择是镜像源，另一种选择是翻墙。本文将对后一种方式进行阐述。  </p>
@@ -241,6 +124,306 @@
 ]]></content>
       <tags>
         <tag>VPN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Inet 4.4 TSN Introduction</title>
+    <url>/Inet-4-4-TSN-Introduction/</url>
+    <content><![CDATA[<h1 id="Inet-4-4-TSN-Introduction"><a href="#Inet-4-4-TSN-Introduction" class="headerlink" title="Inet 4.4 TSN Introduction"></a>Inet 4.4 TSN Introduction</h1><h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>本系列主要对Inet 4.4中TSN showcase进行分析，具体请参考：<a href="https://inet.omnetpp.org/docs/users-guide/ch-tsn.html">参考网站</a></p>
+<h3 id="1-1-TSN设备"><a href="#1-1-TSN设备" class="headerlink" title="1.1 TSN设备"></a>1.1 TSN设备</h3><ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnClock.html">TsnClock</a> 模拟TSN时钟，负责gPTP时间同步</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnDevice.html">TsnDevice</a> TSN端设备</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnSwitch.html">TsnSwitch</a> TSN交换机</li>
+</ul>
+<h3 id="1-2-时间同步"><a href="#1-2-时间同步" class="headerlink" title="1.2 时间同步"></a>1.2 时间同步</h3><p>IEEE 802.1AS-2020</p>
+<p>在TsnDevice和TsnSwitch中，通过<code>hasTimeSynchronization</code>和<code>hasGptp</code>参数启用时间同步。</p>
+<p>inet为时间同步提供了两个方面，一方面是时钟模块，一方面是时间同步协议模块</p>
+<p>时钟模块</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 震荡时钟</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 可设置时间的时钟</li>
+</ul>
+<p>时间同步协议模块</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpBridge.html">GptpBridge</a> gPTP网桥节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpEndstation.html">GptpEndstation</a> gPTP终端节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpMaster.html">GptpMaster</a> gPTP主节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpSlave.html">GptpSlave</a> gPTP从节点</li>
+</ul>
+<p>为了仿真时间同步失败情况（主时钟丢失或链路断开），需要多个时间同步域，不同时钟域独立运行，用户模块决定所使用的时钟。</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.MultiClock.html">MultiClock</a> 包含不同时钟域的多个子时钟</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.MultiDomainGptp.html">MultiDomainGptp</a> 包含不同时钟域的多个gPTP子模块</li>
+</ul>
+<h3 id="1-3-TSN流过滤"><a href="#1-3-TSN流过滤" class="headerlink" title="1.3 TSN流过滤"></a>1.3 TSN流过滤</h3><p>IEEE 802.1Q IEEE 802.1Qci-2017</p>
+<p>在TsnDevice和TsnSwitch中，通过<code>hasIngressTrafficFiltering</code>参数启用流过滤。</p>
+<p>有两种模型，分别为 SimpleIeee8021qFilter 和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qFilter.html">Ieee8021qFilter</a> ，前者更接近802.1Qci，后者更接近802.1Q。前者在结构和功能上更加完善，同时使用更加简单。</p>
+<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.SimpleIeee8021qFilter.html">SimpleIeee8021qFilter</a> 包括多个子模块，对接收到的数据包进行处理，实现流量过滤 </p>
+<p><img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221101221710422.png" alt="image-20221101221710422"></p>
+<ul>
+<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamClassifier.html">StreamClassifier</a> 根据流的名称映射到不同的入队列</p>
+</li>
+<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketMeter.html">IPacketMeter</a> 数据包计数模块，可根据不同的规则对流量进行标记，默认采用 DualRateThreeColorMeter，其可选择以下模块</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateTwoColorMeter.html">SingleRateTwoColorMeter</a> 根据 CIR 和 CBS 参数将数据包标记为绿色或红色</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateThreeColorMeter.html">SingleRateThreeColorMeter</a> 根据 CIR、CBS 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.DualRateThreeColorMeter.html">DualRateThreeColorMeter</a> 根据 CIR、CBS、EIR 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
+</ul>
+<p>以上模块是是基于通用令牌桶实现的：</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.TokenBucketMeter.html">TokenBucketMeter</a> 单个令牌桶，标记数据包通过会丢弃</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.MultiTokenBucketMeter.html">MultiTokenBucketMeter</a> 包含 N 个令牌桶的溢出链，并使用 N+1 个标签之一标记数据包</li>
+</ul>
+</li>
+<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketFilter.html">IPacketFilter</a> 包过滤模块，默认采用 LabelFilter ，其可实现丢弃红色数据包，通过绿色和黄色数据包</p>
+</li>
+<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketGate.html">IPacketGate</a> 数据包门模块，控制数据包是否通过</p>
+</li>
+<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.common.PacketMultiplexer.html">PacketMultiplexer</a> 多路复用器，类似于多路复用接口</p>
+</li>
+</ul>
+<p>可通过不同子模块的组合，实现不同的流过滤规则。</p>
+<h3 id="1-4-TSN调度和整形"><a href="#1-4-TSN调度和整形" class="headerlink" title="1.4 TSN调度和整形"></a>1.4 TSN调度和整形</h3><p>IEEE 802.1Q IEEE 802.1Qbv-2015</p>
+<p>在TsnDevice和TsnSwitch中，通过<code>hasEgressTrafficShaping</code>参数启用流整形。</p>
+<p>支持3种整形器，TAS,CBS,ATS</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.CreditBasedShaper.html">CreditBasedShaper</a> CBS整形器，根据当前信用值决定数据包是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qCreditBasedGate.html">Ieee8021qCreditBasedGate</a>门组成</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.TimeAwareShaper.html">TimeAwareShaper</a> TAS整形器，根据GCL决定当前队列数据是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.gate.PeriodicGate.html">PeriodicGate</a> 门组成</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.AsynchronousShaper.html">AsynchronousShaper</a> ATS整形器，根据数据包的传输合格时间（<a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet-EligibilityTimeTag.html">EligibilityTimeTag</a>）对数据进行重新排队候传输。</li>
+</ul>
+<h3 id="1-5-TSN帧复制与消除"><a href="#1-5-TSN帧复制与消除" class="headerlink" title="1.5 TSN帧复制与消除"></a>1.5 TSN帧复制与消除</h3><p>IEEE 802.1CB-2017</p>
+<p>在TsnDevice和TsnSwitch中，通过<code>hasStreamRedundancy</code>参数启用流复制与消除。</p>
+<p>由4个部分组成，分别负责不同的工作。</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamIdentifierLayer.html">StreamIdentifierLayer</a> 负责根据其内容和数据等来为传出的数据包分配流名称，只可以用于自身产生应用流量的网络节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamRelayLayer.html">StreamRelayLayer</a> 负责传入流的重复帧删除和传出流的复制拆分</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.StreamFilterLayer.html">StreamFilterLayer</a> 负责传入传出流的过滤（非必要）</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamCoderLayer.html">StreamCoderLayer</a> 负责传入流的解码和传出流的编码。通过检查传入流的各种标签域映射进行匹配，解析数据流</li>
+</ul>
+<h3 id="1-6-TSN帧抢占"><a href="#1-6-TSN帧抢占" class="headerlink" title="1.6 TSN帧抢占"></a>1.6 TSN帧抢占</h3><p>IEEE 802.1Q IEEE 802.1Qbu</p>
+<p>在TsnDevice和TsnSwitch中，通过<code>hasFramePreemption</code>参数启用帧抢占。</p>
+<p>由特殊的MAC层和PHC层一起实现。</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetPreemptingMacLayer.html">EthernetPreemptingMacLayer</a> 包含多个MAC子层的以太网MAC层</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.physicallayer.wired.ethernet.EthernetPreemptingPhyLayer.html">EthernetPreemptingPhyLayer</a> 允许数据帧抢占的PHC层</li>
+</ul>
+<h3 id="1-7-Cut-through-Switching"><a href="#1-7-Cut-through-Switching" class="headerlink" title="1.7 Cut-through Switching"></a>1.7 Cut-through Switching</h3><p>传统交换机采用<code>存储-转发</code>的架构，需要接收到全部数据帧之后判断其转发端口，再进行转发。Cut-through Switching可实现在接收到数据包MAC头后判断转发端口，直接转发，减少数据包在交换机处浪费的时间。（只有当出端口速度&gt;&#x3D;入端口速度时，才可以使用)</p>
+<p>在TsnDevice和TsnSwitch中，通过<code>hasCutthroughSwitching</code>参数启用Cut-through Switching。</p>
+<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughInterface.html">EthernetCutthroughInterface</a> Cut-through网卡，允许数据帧直接从输入接口传输至输出接口。内部主要通过 EthernetCutthroughLayer 实现</p>
+<img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221102221431411.png" alt="image-20221102221431411" style="zoom: 50%;" />
+
+<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughLayer.html">EthernetCutthroughLayer</a> 内部由 EthernetCutthroughSource 和 EthernetCutthroughSink 组成</p>
+<img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221102221749931.png" alt="image-20221102221749931" style="zoom:50%;" />
+
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSource.html">EthernetCutthroughSource</a> 转发入的Cut-through Switch</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSink.html">EthernetCutthroughSink</a> 转发出的Cut-through Switch</li>
+</ul>
+<h3 id="1-8-TSN网络自动配置"><a href="#1-8-TSN网络自动配置" class="headerlink" title="1.8 TSN网络自动配置"></a>1.8 TSN网络自动配置</h3><p>inet提供了3种网络自动配置机制，可能会用到不同层的的配置器，如 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator.html">Ipv4NetworkConfigurator</a> 和  <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.MacForwardingTableConfigurator.html">MacForwardingTableConfigurator</a> </p>
+<ul>
+<li>门调度配置，通过配置GCL</li>
+<li>流冗余配置，通过流复制和消除，实现网络中流量的冗余传输</li>
+<li>故障保护配置</li>
+</ul>
+<p>对于门控调度配置，inet提供了3中不同的的调度器</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.EagerGateScheduleConfigurator.html">EagerGateScheduleConfigurator</a> 按照流量优先级分配时隙</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.z3.Z3GateScheduleConfigurator.html">Z3GateScheduleConfigurator</a> 使用SAT求解器计算GCL</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.TSNschedGateScheduleConfigurator.html">TSNschedGateScheduleConfigurator</a> 使用<a href="https://github.com/ACassimiro/TSNsched">TSNsched</a>计算调度</li>
+</ul>
+<p>对于流冗余配置，inet提供了1个调度器</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.StreamRedundancyConfigurator.html">StreamRedundancyConfigurator</a> 为网络中所有节点的流量配置流赋值与消除</li>
+</ul>
+<p>对于失败保护配置，inet提供了1个调度器</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.FailureProtectionConfigurator.html">FailureProtectionConfigurator</a> 配置门调度和流冗余配置器以提供针对指定链路和节点故障的保护</li>
+</ul>
+<h2 id="二、showcase"><a href="#二、showcase" class="headerlink" title="二、showcase"></a>二、showcase</h2><h3 id="2-1-时间同步"><a href="#2-1-时间同步" class="headerlink" title="2.1 时间同步"></a>2.1 时间同步</h3><p><a href="https://inet.omnetpp.org/docs/showcases/tsn/timesynchronization/index.html">参考网站</a></p>
+<p>局域网中存在大量网络设备，每台网络设备都具有自身的时钟。即使在开始时设置相同的时间，也会因为时钟漂移造成误差，需要不断发送报文同步时间。</p>
+<h4 id="2-1-1-时钟漂移"><a href="#2-1-1-时钟漂移" class="headerlink" title="2.1.1 时钟漂移"></a>2.1.1 时钟漂移</h4><h4 id="2-1-1-1-概述"><a href="#2-1-1-1-概述" class="headerlink" title="2.1.1.1 概述"></a>2.1.1.1 概述</h4><p><a href="https://inet.omnetpp.org/docs/showcases/tsn/timesynchronization/clockdrift/doc/index.html">参考网站</a></p>
+<p>在默认情况下，inet的节点中没有本地时钟，而是依靠仿真时间充当全局时间。为了模拟具有本地时间的网络节点，需要在网络节点中加入本地时钟模块。inet中本地时钟由振荡器组成，可以仿真恒定和随机时钟漂移率。</p>
+<p>inet中提供以下时钟模型：</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 基于振荡器的时钟，通过振荡器子模块可以实现恒定、理想、随机时钟漂移率</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 基于振荡器的时钟，但可以通过C++或者脚本设置时间</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.IdealClock.html">IdealClock</a> 理想时钟，时钟时间和仿真时间一致，可用于测试</li>
+</ul>
+<p>inet中提供以下振荡器模型：</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.IdealOscillator.html">IdealOscillator</a> 理想振荡器</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.ConstantDriftOscillator.html">ConstantDriftOscillator</a> 恒定漂移振荡器</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.RandomDriftOscillator.html">RandomDriftOscillator</a> 随机漂移振荡器</li>
+</ul>
+<p>inet中时间同步器在应用层实现，inet中只有 <strong><font color=red>SettableClock</font></strong> 时钟模型支持同步器。</p>
+<p>inet中提供以下同步器：</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.applications.clock.SimpleClockSynchronizer.html">SimpleClockSynchronizer</a> 使用带外机制进行时间同步，对时间同步细节不重要的仿真很有用</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
+</ul>
+<p>SimpleClockSynchronizer 同步器定期将从时钟时间与主时钟时间同步。可通过参数设置同步时间间隔，可以设置同步精度</p>
+<p>Gptp 同步器，通过gPTP协议，同步网络中所有设备</p>
+<h4 id="2-1-1-2-示例"><a href="#2-1-1-2-示例" class="headerlink" title="2.1.1.2 示例"></a>2.1.1.2 示例</h4><p>inet官方提供了4种仿真示例</p>
+<ul>
+<li>NoClockDrift 无时钟偏移</li>
+<li>ConstantClockDriftRate 固定速率时钟偏移，并且不进行同步</li>
+<li>OutOfBandSynchronization 固定速率时钟偏移，利用 SimpleClockSynchronizer 同步器同步</li>
+<li>GptpSynchronization 随机速率时钟偏移，利用Gptp 同步器同步</li>
+</ul>
+<p><img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221103212622326.png" alt="image-20221103212622326"></p>
+<p>NoClockDrift 网络中没有时钟偏移，所有节点采用仿真时间</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[General]</span></span><br><span class="line"><span class="attr">network</span> = ClockDriftShowcase</span><br><span class="line"><span class="comment">#abstract-config = true (requires omnet 6)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># disable legacy Ethernet</span></span><br><span class="line">*.*.<span class="attr">ethernet.typename</span> = <span class="string">&quot;EthernetLayer&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># avoid ARP</span></span><br><span class="line">**.<span class="attr">hasGlobalArp</span> = <span class="literal">true</span></span><br><span class="line"><span class="comment">#*.*.ipv4.arp.typename = &quot;GlobalArp&quot;</span></span><br><span class="line"><span class="comment">#*.switch1.macTable.forwardingTable = [&#123;address: &quot;switch2&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink1&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink2&quot;, interface: &quot;eth0&quot;&#125;]</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#*.switch2.macTable.forwardingTable = [&#123;address: &quot;switch1&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink1&quot;, interface: &quot;eth1&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink2&quot;, interface: &quot;eth2&quot;&#125;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># source applications</span></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">1</span></span><br><span class="line">*.source*.app<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;UdpSourceApp&quot;</span></span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.packetLength</span> = <span class="number">800</span>B</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.productionInterval</span> = <span class="number">20</span>us</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">io.destPort</span> = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">io.destAddress</span> = <span class="string">&quot;sink1&quot;</span></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">source.packetNameFormat</span> = <span class="string">&quot;source1-%c&quot;</span></span><br><span class="line"></span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">io.destAddress</span> = <span class="string">&quot;sink2&quot;</span></span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">10</span>us</span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.packetNameFormat</span> = <span class="string">&quot;source2-%c&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sink applications</span></span><br><span class="line">*.sink*.<span class="attr">numApps</span> = <span class="number">1</span></span><br><span class="line">*.sink*.app<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;UdpSinkApp&quot;</span></span><br><span class="line">*.sink*.app<span class="section">[0]</span>.<span class="attr">io.localPort</span> = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Ethernet interface and queueing</span></span><br><span class="line">*.*.eth<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;LayeredEthernetInterface&quot;</span></span><br><span class="line">*.*.eth<span class="section">[*]</span>.<span class="attr">bitrate</span> = <span class="number">1</span>Gbps</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.typename</span> = <span class="string">&quot;GatingPriorityQueue&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.numQueues</span> = <span class="number">2</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.classifier.typename</span> = <span class="string">&quot;ContentBasedClassifier&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.classifier.packetFilters</span> = [<span class="string">&quot;source1*&quot;</span>, <span class="string">&quot;source2*&quot;</span>]</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.queue<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;DropTailQueue&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">initiallyOpen</span> = <span class="literal">false</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">durations</span> = [<span class="number">10</span>us, <span class="number">10</span>us]</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[1]</span>.<span class="attr">offset</span> = <span class="number">10</span>us</span><br><span class="line"></span><br><span class="line"><span class="section">[Config NoClockDrift]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Without clocks, network nodes are synchronized by simulation time&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Config ConstantClockDriftRate]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks with constant drift rate diverge over time&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;OscillatorBasedClock&quot;</span></span><br><span class="line">*.source*.<span class="attr">clock.oscillator.typename</span> = <span class="string">&quot;ConstantDriftOscillator&quot;</span></span><br><span class="line">*.<span class="attr">source1.clock.oscillator.driftRate</span> = <span class="number">500</span>ppm</span><br><span class="line">*.<span class="attr">source2.clock.oscillator.driftRate</span> = -<span class="number">400</span>ppm</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.clockModule</span> = <span class="string">&quot;^.^.clock&quot;</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch1.clock.typename</span> = <span class="string">&quot;OscillatorBasedClock&quot;</span></span><br><span class="line">*.<span class="attr">switch1.clock.oscillator.typename</span> = <span class="string">&quot;ConstantDriftOscillator&quot;</span></span><br><span class="line">*.<span class="attr">switch1.clock.oscillator.driftRate</span> = <span class="number">300</span>ppm</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">clockModule</span> = <span class="string">&quot;^.^.^.^.clock&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Config OutOfBandSynchronization]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks are periodically synchronized out-of-band, without a real protocol&quot;</span></span><br><span class="line"><span class="attr">extends</span> = ConstantClockDriftRate</span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line">*.source*.<span class="attr">clock.defaultOverdueClockEventHandlingMode</span> = <span class="string">&quot;execute&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">2</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;SimpleClockSynchronizer&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">masterClockModule</span> = <span class="string">&quot;^.^.switch1.clock&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">slaveClockModule</span> = <span class="string">&quot;^.clock&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">synchronizationInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">synchronizationAccuracy</span> = uniform(-<span class="number">10</span>ns, <span class="number">10</span>ns)</span><br><span class="line"></span><br><span class="line"><span class="section">[Config GptpSynchronization]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks are periodically synchronized using gPTP&quot;</span></span><br><span class="line"><span class="attr">extends</span> = ConstantClockDriftRate</span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">hasGptp</span> = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">gptp.syncInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.switch*.<span class="attr">gptp.pdelayInterval</span> = <span class="number">1</span>ms</span><br><span class="line">*.switch*.<span class="attr">gptp.pdelayInitialOffset</span> = <span class="number">0</span>ms</span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch1.gptp.gptpNodeType</span> = <span class="string">&quot;MASTER_NODE&quot;</span></span><br><span class="line">*.<span class="attr">switch1.gptp.masterPorts</span> = [<span class="string">&quot;eth0&quot;</span>, <span class="string">&quot;eth1&quot;</span>, <span class="string">&quot;eth2&quot;</span>]  <span class="comment"># eth*</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch2.gptp.gptpNodeType</span> = <span class="string">&quot;SLAVE_NODE&quot;</span></span><br><span class="line">*.<span class="attr">switch2.gptp.slavePort</span> = <span class="string">&quot;eth0&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line"></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">20</span>us</span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">30</span>us</span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">2</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;Gptp&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">gptpNodeType</span> = <span class="string">&quot;SLAVE_NODE&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">slavePort</span> = <span class="string">&quot;eth0&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">syncInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">pdelayInterval</span> = <span class="number">1</span>ms</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221101225018707.png" alt="image-20221101225018707"></p>
+]]></content>
+      <tags>
+        <tag>TSN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to Clone Linux</title>
+    <url>/How-to-Clone-Linux/</url>
+    <content><![CDATA[<p><strong>配置过Linux系统的同学应该经常会碰见以下问题：</strong></p>
+<ol>
+<li>操作失误，导致配置好的系统出错，修复困难</li>
+<li>为多台电脑进行一样的配置</li>
+<li>将配置好的虚拟机移动为物理机（V2P）</li>
+<li>树莓派怎么备份</li>
+</ol>
+<p><strong>对于上述问题，可以通过两种方式解决：</strong></p>
+<ol>
+<li><p>部分备份（使用软件备份某几个文件夹）</p>
+</li>
+<li><p>制作系统镜像文件</p>
+</li>
+</ol>
+<p>其区别如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">rm -rf&#x2F;* 后能否恢复</th>
+<th align="center">备份速度</th>
+<th align="center">能否移植</th>
+<th align="center">适用范围</th>
+<th align="center">典型软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">部分备份</td>
+<td align="center">不能</td>
+<td align="center">快</td>
+<td align="center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">&amp;#x274c;</span></td>
+<td align="center">用户级</td>
+<td align="center"><code>systemback</code> <code>Timeshift</code></td>
+</tr>
+<tr>
+<td align="center">制作系统镜像文件</td>
+<td align="center">能</td>
+<td align="center">慢</td>
+<td align="center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">&amp;#x2714;</span></td>
+<td align="center">系统级</td>
+<td align="center"><code>systemback</code> <code>Clonezilla</code></td>
+</tr>
+</tbody></table>
+<h1 id="一、部分备份"><a href="#一、部分备份" class="headerlink" title="一、部分备份"></a>一、部分备份</h1><p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
+<p>这里<strong>首推</strong><code>Timeshift</code>，具体备份教程参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/94105263">如何使用 TimeShift 备份和还原 Ubuntu Linux</a></p>
+<p>原因如下：</p>
+<ol>
+<li>timeshift界面简洁，操作简单</li>
+<li>timeshift可设置定期自动备份</li>
+<li>timeshift可直接通过选定用户名完成该用户所有文件的备份</li>
+</ol>
+<blockquote>
+<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift </p>
+</blockquote>
+<p>其次，推荐<code>systemback</code>，具体备份教程参考这篇文章：<a href="https://www.unixmen.com/systemback-restore-linux-system-previous-state/">Systemback: Restore Your Linux System To Previous State</a></p>
+<blockquote>
+<p>注：systemback默认备份系统文件和root用户的文件，不会备份普通用户文件，需要去 <em>Function menu</em> -&gt; <em>include</em> 下将需要备份的文件夹添加进去。</p>
+</blockquote>
+<h1 id="二、制作镜像文件"><a href="#二、制作镜像文件" class="headerlink" title="二、制作镜像文件"></a>二、制作镜像文件</h1><p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
+<p>这里<strong>首推</strong><code>systemback</code>，具体教程参考这篇文章：<a href="https://www.guyuehome.com/34452">一文搞定基于 systemback 的 Ubuntu 系统镜像制作与安装</a></p>
+<p>原因如下：</p>
+<ol>
+<li>与后文中提到的Clonezilla相比，不需要烧录启动U盘</li>
+<li>与Clonezilla相比，操作更简单</li>
+<li>可以便捷的实现大硬盘到小硬盘的迁移</li>
+<li>可以重命名拷贝系统的用户名</li>
+<li>可以制作成可启动的iso镜像</li>
+</ol>
+<blockquote>
+<p>注：</p>
+<ol>
+<li>建议拷贝系统的用户名与原用户名一致，防止环境变量出错</li>
+<li>systemback可直接通过图形化界面制作小于4G的iso文件，对于大于4G的文件，只能制作成sblive文件。唯一区别在于iso文件可以直接从U盘拷贝到windows电脑上存储起来，但是sblive文件windows拷贝不出来。</li>
+</ol>
+</blockquote>
+<p>其次，推荐<code>Clonezilla</code>，具体备份教程参考这篇文章：<a href="https://clonezilla.org/clonezilla-usage/general-live-use.php">Clonezilla</a></p>
+<p>其主要优势在于：</p>
+<ol>
+<li>不限操作系统，windows，mac，linux都可以使用</li>
+<li>制作的镜像文件在windows下可以读取，可以直接以文件夹的形式存储到windows电脑中</li>
+</ol>
+<p>但是缺点在于：</p>
+<ol>
+<li>需要先准备一个U盘，用<code>UltraISO</code>烧录进去Clonezilla的镜像文件，然后进入bios里面制作，然后再插一个U盘来存储镜像文件</li>
+<li>对于大硬盘向小硬盘的迁移，我用Clonezilla迁移失败了，没有systemback好用</li>
+</ol>
+<blockquote>
+<p>注：<strong>Clonezilla制作的镜像文件千万不要重命名</strong>，要命名就制作的时候一次命名好，否则会导致还原的时候无法读取文件名</p>
+</blockquote>
+<h1 id="附录一-大硬盘向小硬盘移动"><a href="#附录一-大硬盘向小硬盘移动" class="headerlink" title="附录一 大硬盘向小硬盘移动"></a>附录一 大硬盘向小硬盘移动</h1><p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
+<p>打个比方，我现在需要将A电脑上的Ubuntu移动到B电脑上。A电脑硬盘大小500G，但是只使用了5G，B电脑硬盘大小128G。</p>
+<p>我的建议是：</p>
+<ol>
+<li>找一个空闲U盘，烧录<code>Gparted</code>镜像，进入BIOS修改分区大小，将A电脑上500G的分区分成使用的10G和未分配的490G</li>
+<li>打开A电脑，启动<code>systemback</code>，将其系统的10G制作成镜像文件烧录到U盘里</li>
+<li>通过U盘启动B电脑，安装系统</li>
+<li>在B电脑中安装<code>Gparted</code>软件，扩展分区</li>
+</ol>
+<h1 id="附录二-虚拟机U盘启动"><a href="#附录二-虚拟机U盘启动" class="headerlink" title="附录二 虚拟机U盘启动"></a>附录二 虚拟机U盘启动</h1><p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
+<blockquote>
+<p>注：<strong>以管理员身份运行</strong>来打开VMware，否则无法将U盘配置为虚拟机硬盘</p>
+</blockquote>
+<h1 id="附录三-树莓派备份"><a href="#附录三-树莓派备份" class="headerlink" title="附录三 树莓派备份"></a>附录三 树莓派备份</h1><p>树莓派备份主要有4种方式：</p>
+<ol>
+<li><strong>推荐使用</strong><code>PiShrink</code>具体教程参考此文：<a href="https://shumeipai.nxez.com/2020/09/11/pishrink-make-raspberry-pi-images-smaller.html">PiShrink：制作更小的树莓派镜像文件</a></li>
+<li>Clonezilla好像有arm架构版，可以用于备份树莓派</li>
+<li>树莓派官方操作系统下，<em>附件</em> -&gt; <code>SD Card Copier</code> 软件可以实现</li>
+<li>可以将SD卡插入windows电脑，用<code>Win32Diskimager</code>制作iso文件。缺点在于16G的SD卡哪怕只用了2G，拷出来也是16G。具体参考此文章：<a href="https://blog.csdn.net/u010235853/article/details/77891327">使用Win32DiskImager来备份树莓派镜像文件</a></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -544,189 +727,6 @@
 <p>对于帧抢占模式，高优先级流量可以抢占正在传输的低优先级流量，从而减少排队时延，与严格优先级相比，其确定性更佳。但由于交换机处理帧抢占也需要一定的时间，所以其确定性略差与门控模式。但其可以保证网络的充分利用。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182145614.jpg" alt="frame preemption"></p>
 <center>图15 Frame Preemption示例时序图</center>
-]]></content>
-      <tags>
-        <tag>TSN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Inet 4.4 TSN Introduction</title>
-    <url>/Inet-4-4-TSN-Introduction/</url>
-    <content><![CDATA[<h1 id="Inet-4-4-TSN-Introduction"><a href="#Inet-4-4-TSN-Introduction" class="headerlink" title="Inet 4.4 TSN Introduction"></a>Inet 4.4 TSN Introduction</h1><h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>本系列主要对Inet 4.4中TSN showcase进行分析，具体请参考：<a href="https://inet.omnetpp.org/docs/users-guide/ch-tsn.html">参考网站</a></p>
-<h3 id="1-1-TSN设备"><a href="#1-1-TSN设备" class="headerlink" title="1.1 TSN设备"></a>1.1 TSN设备</h3><ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnClock.html">TsnClock</a> 模拟TSN时钟，负责gPTP时间同步</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnDevice.html">TsnDevice</a> TSN端设备</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnSwitch.html">TsnSwitch</a> TSN交换机</li>
-</ul>
-<h3 id="1-2-时间同步"><a href="#1-2-时间同步" class="headerlink" title="1.2 时间同步"></a>1.2 时间同步</h3><p>IEEE 802.1AS-2020</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasTimeSynchronization</code>和<code>hasGptp</code>参数启用时间同步。</p>
-<p>inet为时间同步提供了两个方面，一方面是时钟模块，一方面是时间同步协议模块</p>
-<p>时钟模块</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 震荡时钟</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 可设置时间的时钟</li>
-</ul>
-<p>时间同步协议模块</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpBridge.html">GptpBridge</a> gPTP网桥节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpEndstation.html">GptpEndstation</a> gPTP终端节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpMaster.html">GptpMaster</a> gPTP主节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpSlave.html">GptpSlave</a> gPTP从节点</li>
-</ul>
-<p>为了仿真时间同步失败情况（主时钟丢失或链路断开），需要多个时间同步域，不同时钟域独立运行，用户模块决定所使用的时钟。</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.MultiClock.html">MultiClock</a> 包含不同时钟域的多个子时钟</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.MultiDomainGptp.html">MultiDomainGptp</a> 包含不同时钟域的多个gPTP子模块</li>
-</ul>
-<h3 id="1-3-TSN流过滤"><a href="#1-3-TSN流过滤" class="headerlink" title="1.3 TSN流过滤"></a>1.3 TSN流过滤</h3><p>IEEE 802.1Q IEEE 802.1Qci-2017</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasIngressTrafficFiltering</code>参数启用流过滤。</p>
-<p>有两种模型，分别为 SimpleIeee8021qFilter 和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qFilter.html">Ieee8021qFilter</a> ，前者更接近802.1Qci，后者更接近802.1Q。前者在结构和功能上更加完善，同时使用更加简单。</p>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.SimpleIeee8021qFilter.html">SimpleIeee8021qFilter</a> 包括多个子模块，对接收到的数据包进行处理，实现流量过滤 </p>
-<p><img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221101221710422.png" alt="image-20221101221710422"></p>
-<ul>
-<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamClassifier.html">StreamClassifier</a> 根据流的名称映射到不同的入队列</p>
-</li>
-<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketMeter.html">IPacketMeter</a> 数据包计数模块，可根据不同的规则对流量进行标记，默认采用 DualRateThreeColorMeter，其可选择以下模块</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateTwoColorMeter.html">SingleRateTwoColorMeter</a> 根据 CIR 和 CBS 参数将数据包标记为绿色或红色</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateThreeColorMeter.html">SingleRateThreeColorMeter</a> 根据 CIR、CBS 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.DualRateThreeColorMeter.html">DualRateThreeColorMeter</a> 根据 CIR、CBS、EIR 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
-</ul>
-<p>以上模块是是基于通用令牌桶实现的：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.TokenBucketMeter.html">TokenBucketMeter</a> 单个令牌桶，标记数据包通过会丢弃</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.MultiTokenBucketMeter.html">MultiTokenBucketMeter</a> 包含 N 个令牌桶的溢出链，并使用 N+1 个标签之一标记数据包</li>
-</ul>
-</li>
-<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketFilter.html">IPacketFilter</a> 包过滤模块，默认采用 LabelFilter ，其可实现丢弃红色数据包，通过绿色和黄色数据包</p>
-</li>
-<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketGate.html">IPacketGate</a> 数据包门模块，控制数据包是否通过</p>
-</li>
-<li><p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.common.PacketMultiplexer.html">PacketMultiplexer</a> 多路复用器，类似于多路复用接口</p>
-</li>
-</ul>
-<p>可通过不同子模块的组合，实现不同的流过滤规则。</p>
-<h3 id="1-4-TSN调度和整形"><a href="#1-4-TSN调度和整形" class="headerlink" title="1.4 TSN调度和整形"></a>1.4 TSN调度和整形</h3><p>IEEE 802.1Q IEEE 802.1Qbv-2015</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasEgressTrafficShaping</code>参数启用流整形。</p>
-<p>支持3种整形器，TAS,CBS,ATS</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.CreditBasedShaper.html">CreditBasedShaper</a> CBS整形器，根据当前信用值决定数据包是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qCreditBasedGate.html">Ieee8021qCreditBasedGate</a>门组成</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.TimeAwareShaper.html">TimeAwareShaper</a> TAS整形器，根据GCL决定当前队列数据是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.gate.PeriodicGate.html">PeriodicGate</a> 门组成</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.AsynchronousShaper.html">AsynchronousShaper</a> ATS整形器，根据数据包的传输合格时间（<a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet-EligibilityTimeTag.html">EligibilityTimeTag</a>）对数据进行重新排队候传输。</li>
-</ul>
-<h3 id="1-5-TSN帧复制与消除"><a href="#1-5-TSN帧复制与消除" class="headerlink" title="1.5 TSN帧复制与消除"></a>1.5 TSN帧复制与消除</h3><p>IEEE 802.1CB-2017</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasStreamRedundancy</code>参数启用流复制与消除。</p>
-<p>由4个部分组成，分别负责不同的工作。</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamIdentifierLayer.html">StreamIdentifierLayer</a> 负责根据其内容和数据等来为传出的数据包分配流名称，只可以用于自身产生应用流量的网络节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamRelayLayer.html">StreamRelayLayer</a> 负责传入流的重复帧删除和传出流的复制拆分</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.StreamFilterLayer.html">StreamFilterLayer</a> 负责传入传出流的过滤（非必要）</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamCoderLayer.html">StreamCoderLayer</a> 负责传入流的解码和传出流的编码。通过检查传入流的各种标签域映射进行匹配，解析数据流</li>
-</ul>
-<h3 id="1-6-TSN帧抢占"><a href="#1-6-TSN帧抢占" class="headerlink" title="1.6 TSN帧抢占"></a>1.6 TSN帧抢占</h3><p>IEEE 802.1Q IEEE 802.1Qbu</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasFramePreemption</code>参数启用帧抢占。</p>
-<p>由特殊的MAC层和PHC层一起实现。</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetPreemptingMacLayer.html">EthernetPreemptingMacLayer</a> 包含多个MAC子层的以太网MAC层</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.physicallayer.wired.ethernet.EthernetPreemptingPhyLayer.html">EthernetPreemptingPhyLayer</a> 允许数据帧抢占的PHC层</li>
-</ul>
-<h3 id="1-7-Cut-through-Switching"><a href="#1-7-Cut-through-Switching" class="headerlink" title="1.7 Cut-through Switching"></a>1.7 Cut-through Switching</h3><p>传统交换机采用<code>存储-转发</code>的架构，需要接收到全部数据帧之后判断其转发端口，再进行转发。Cut-through Switching可实现在接收到数据包MAC头后判断转发端口，直接转发，减少数据包在交换机处浪费的时间。（只有当出端口速度&gt;&#x3D;入端口速度时，才可以使用)</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasCutthroughSwitching</code>参数启用Cut-through Switching。</p>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughInterface.html">EthernetCutthroughInterface</a> Cut-through网卡，允许数据帧直接从输入接口传输至输出接口。内部主要通过 EthernetCutthroughLayer 实现</p>
-<img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221102221431411.png" alt="image-20221102221431411" style="zoom: 50%;" />
-
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughLayer.html">EthernetCutthroughLayer</a> 内部由 EthernetCutthroughSource 和 EthernetCutthroughSink 组成</p>
-<img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221102221749931.png" alt="image-20221102221749931" style="zoom:50%;" />
-
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSource.html">EthernetCutthroughSource</a> 转发入的Cut-through Switch</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSink.html">EthernetCutthroughSink</a> 转发出的Cut-through Switch</li>
-</ul>
-<h3 id="1-8-TSN网络自动配置"><a href="#1-8-TSN网络自动配置" class="headerlink" title="1.8 TSN网络自动配置"></a>1.8 TSN网络自动配置</h3><p>inet提供了3种网络自动配置机制，可能会用到不同层的的配置器，如 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator.html">Ipv4NetworkConfigurator</a> 和  <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.MacForwardingTableConfigurator.html">MacForwardingTableConfigurator</a> </p>
-<ul>
-<li>门调度配置，通过配置GCL</li>
-<li>流冗余配置，通过流复制和消除，实现网络中流量的冗余传输</li>
-<li>故障保护配置</li>
-</ul>
-<p>对于门控调度配置，inet提供了3中不同的的调度器</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.EagerGateScheduleConfigurator.html">EagerGateScheduleConfigurator</a> 按照流量优先级分配时隙</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.z3.Z3GateScheduleConfigurator.html">Z3GateScheduleConfigurator</a> 使用SAT求解器计算GCL</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.TSNschedGateScheduleConfigurator.html">TSNschedGateScheduleConfigurator</a> 使用<a href="https://github.com/ACassimiro/TSNsched">TSNsched</a>计算调度</li>
-</ul>
-<p>对于流冗余配置，inet提供了1个调度器</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.StreamRedundancyConfigurator.html">StreamRedundancyConfigurator</a> 为网络中所有节点的流量配置流赋值与消除</li>
-</ul>
-<p>对于失败保护配置，inet提供了1个调度器</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.FailureProtectionConfigurator.html">FailureProtectionConfigurator</a> 配置门调度和流冗余配置器以提供针对指定链路和节点故障的保护</li>
-</ul>
-<h2 id="二、showcase"><a href="#二、showcase" class="headerlink" title="二、showcase"></a>二、showcase</h2><h3 id="2-1-时间同步"><a href="#2-1-时间同步" class="headerlink" title="2.1 时间同步"></a>2.1 时间同步</h3><p><a href="https://inet.omnetpp.org/docs/showcases/tsn/timesynchronization/index.html">参考网站</a></p>
-<p>局域网中存在大量网络设备，每台网络设备都具有自身的时钟。即使在开始时设置相同的时间，也会因为时钟漂移造成误差，需要不断发送报文同步时间。</p>
-<h4 id="2-1-1-时钟漂移"><a href="#2-1-1-时钟漂移" class="headerlink" title="2.1.1 时钟漂移"></a>2.1.1 时钟漂移</h4><h4 id="2-1-1-1-概述"><a href="#2-1-1-1-概述" class="headerlink" title="2.1.1.1 概述"></a>2.1.1.1 概述</h4><p><a href="https://inet.omnetpp.org/docs/showcases/tsn/timesynchronization/clockdrift/doc/index.html">参考网站</a></p>
-<p>在默认情况下，inet的节点中没有本地时钟，而是依靠仿真时间充当全局时间。为了模拟具有本地时间的网络节点，需要在网络节点中加入本地时钟模块。inet中本地时钟由振荡器组成，可以仿真恒定和随机时钟漂移率。</p>
-<p>inet中提供以下时钟模型：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 基于振荡器的时钟，通过振荡器子模块可以实现恒定、理想、随机时钟漂移率</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 基于振荡器的时钟，但可以通过C++或者脚本设置时间</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.IdealClock.html">IdealClock</a> 理想时钟，时钟时间和仿真时间一致，可用于测试</li>
-</ul>
-<p>inet中提供以下振荡器模型：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.IdealOscillator.html">IdealOscillator</a> 理想振荡器</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.ConstantDriftOscillator.html">ConstantDriftOscillator</a> 恒定漂移振荡器</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.RandomDriftOscillator.html">RandomDriftOscillator</a> 随机漂移振荡器</li>
-</ul>
-<p>inet中时间同步器在应用层实现，inet中只有 <strong><font color=red>SettableClock</font></strong> 时钟模型支持同步器。</p>
-<p>inet中提供以下同步器：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.applications.clock.SimpleClockSynchronizer.html">SimpleClockSynchronizer</a> 使用带外机制进行时间同步，对时间同步细节不重要的仿真很有用</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
-</ul>
-<p>SimpleClockSynchronizer 同步器定期将从时钟时间与主时钟时间同步。可通过参数设置同步时间间隔，可以设置同步精度</p>
-<p>Gptp 同步器，通过gPTP协议，同步网络中所有设备</p>
-<h4 id="2-1-1-2-示例"><a href="#2-1-1-2-示例" class="headerlink" title="2.1.1.2 示例"></a>2.1.1.2 示例</h4><p>inet官方提供了4种仿真示例</p>
-<ul>
-<li>NoClockDrift 无时钟偏移</li>
-<li>ConstantClockDriftRate 固定速率时钟偏移，并且不进行同步</li>
-<li>OutOfBandSynchronization 固定速率时钟偏移，利用 SimpleClockSynchronizer 同步器同步</li>
-<li>GptpSynchronization 随机速率时钟偏移，利用Gptp 同步器同步</li>
-</ul>
-<p><img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221103212622326.png" alt="image-20221103212622326"></p>
-<p>NoClockDrift 网络中没有时钟偏移，所有节点采用仿真时间</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[General]</span></span><br><span class="line"><span class="attr">network</span> = ClockDriftShowcase</span><br><span class="line"><span class="comment">#abstract-config = true (requires omnet 6)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># disable legacy Ethernet</span></span><br><span class="line">*.*.<span class="attr">ethernet.typename</span> = <span class="string">&quot;EthernetLayer&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># avoid ARP</span></span><br><span class="line">**.<span class="attr">hasGlobalArp</span> = <span class="literal">true</span></span><br><span class="line"><span class="comment">#*.*.ipv4.arp.typename = &quot;GlobalArp&quot;</span></span><br><span class="line"><span class="comment">#*.switch1.macTable.forwardingTable = [&#123;address: &quot;switch2&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink1&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink2&quot;, interface: &quot;eth0&quot;&#125;]</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#*.switch2.macTable.forwardingTable = [&#123;address: &quot;switch1&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink1&quot;, interface: &quot;eth1&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink2&quot;, interface: &quot;eth2&quot;&#125;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># source applications</span></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">1</span></span><br><span class="line">*.source*.app<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;UdpSourceApp&quot;</span></span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.packetLength</span> = <span class="number">800</span>B</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.productionInterval</span> = <span class="number">20</span>us</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">io.destPort</span> = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">io.destAddress</span> = <span class="string">&quot;sink1&quot;</span></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">source.packetNameFormat</span> = <span class="string">&quot;source1-%c&quot;</span></span><br><span class="line"></span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">io.destAddress</span> = <span class="string">&quot;sink2&quot;</span></span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">10</span>us</span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.packetNameFormat</span> = <span class="string">&quot;source2-%c&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sink applications</span></span><br><span class="line">*.sink*.<span class="attr">numApps</span> = <span class="number">1</span></span><br><span class="line">*.sink*.app<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;UdpSinkApp&quot;</span></span><br><span class="line">*.sink*.app<span class="section">[0]</span>.<span class="attr">io.localPort</span> = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Ethernet interface and queueing</span></span><br><span class="line">*.*.eth<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;LayeredEthernetInterface&quot;</span></span><br><span class="line">*.*.eth<span class="section">[*]</span>.<span class="attr">bitrate</span> = <span class="number">1</span>Gbps</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.typename</span> = <span class="string">&quot;GatingPriorityQueue&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.numQueues</span> = <span class="number">2</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.classifier.typename</span> = <span class="string">&quot;ContentBasedClassifier&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.classifier.packetFilters</span> = [<span class="string">&quot;source1*&quot;</span>, <span class="string">&quot;source2*&quot;</span>]</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.queue<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;DropTailQueue&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">initiallyOpen</span> = <span class="literal">false</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">durations</span> = [<span class="number">10</span>us, <span class="number">10</span>us]</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[1]</span>.<span class="attr">offset</span> = <span class="number">10</span>us</span><br><span class="line"></span><br><span class="line"><span class="section">[Config NoClockDrift]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Without clocks, network nodes are synchronized by simulation time&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Config ConstantClockDriftRate]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks with constant drift rate diverge over time&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;OscillatorBasedClock&quot;</span></span><br><span class="line">*.source*.<span class="attr">clock.oscillator.typename</span> = <span class="string">&quot;ConstantDriftOscillator&quot;</span></span><br><span class="line">*.<span class="attr">source1.clock.oscillator.driftRate</span> = <span class="number">500</span>ppm</span><br><span class="line">*.<span class="attr">source2.clock.oscillator.driftRate</span> = -<span class="number">400</span>ppm</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.clockModule</span> = <span class="string">&quot;^.^.clock&quot;</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch1.clock.typename</span> = <span class="string">&quot;OscillatorBasedClock&quot;</span></span><br><span class="line">*.<span class="attr">switch1.clock.oscillator.typename</span> = <span class="string">&quot;ConstantDriftOscillator&quot;</span></span><br><span class="line">*.<span class="attr">switch1.clock.oscillator.driftRate</span> = <span class="number">300</span>ppm</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">clockModule</span> = <span class="string">&quot;^.^.^.^.clock&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Config OutOfBandSynchronization]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks are periodically synchronized out-of-band, without a real protocol&quot;</span></span><br><span class="line"><span class="attr">extends</span> = ConstantClockDriftRate</span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line">*.source*.<span class="attr">clock.defaultOverdueClockEventHandlingMode</span> = <span class="string">&quot;execute&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">2</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;SimpleClockSynchronizer&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">masterClockModule</span> = <span class="string">&quot;^.^.switch1.clock&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">slaveClockModule</span> = <span class="string">&quot;^.clock&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">synchronizationInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">synchronizationAccuracy</span> = uniform(-<span class="number">10</span>ns, <span class="number">10</span>ns)</span><br><span class="line"></span><br><span class="line"><span class="section">[Config GptpSynchronization]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks are periodically synchronized using gPTP&quot;</span></span><br><span class="line"><span class="attr">extends</span> = ConstantClockDriftRate</span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">hasGptp</span> = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">gptp.syncInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.switch*.<span class="attr">gptp.pdelayInterval</span> = <span class="number">1</span>ms</span><br><span class="line">*.switch*.<span class="attr">gptp.pdelayInitialOffset</span> = <span class="number">0</span>ms</span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch1.gptp.gptpNodeType</span> = <span class="string">&quot;MASTER_NODE&quot;</span></span><br><span class="line">*.<span class="attr">switch1.gptp.masterPorts</span> = [<span class="string">&quot;eth0&quot;</span>, <span class="string">&quot;eth1&quot;</span>, <span class="string">&quot;eth2&quot;</span>]  <span class="comment"># eth*</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch2.gptp.gptpNodeType</span> = <span class="string">&quot;SLAVE_NODE&quot;</span></span><br><span class="line">*.<span class="attr">switch2.gptp.slavePort</span> = <span class="string">&quot;eth0&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line"></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">20</span>us</span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">30</span>us</span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">2</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;Gptp&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">gptpNodeType</span> = <span class="string">&quot;SLAVE_NODE&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">slavePort</span> = <span class="string">&quot;eth0&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">syncInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">pdelayInterval</span> = <span class="number">1</span>ms</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<p><img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221101225018707.png" alt="image-20221101225018707"></p>
 ]]></content>
       <tags>
         <tag>TSN</tag>
