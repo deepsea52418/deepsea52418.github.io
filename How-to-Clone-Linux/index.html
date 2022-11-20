@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to Clone Linux | Deepsea52418</title><meta name="keywords" content="Linux"><meta name="author" content="Deepsea52418"><meta name="copyright" content="Deepsea52418"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="配置过Linux系统的同学应该经常会碰见以下问题：  操作失误，导致配置好的系统出错，修复困难 为多台电脑进行一样的配置 将配置好的虚拟机移动为物理机（V2P） 树莓派怎么备份  对于上述问题，可以通过两种方式解决：  部分备份（使用软件备份某几个文件夹）  制作系统镜像文件   其区别如下：     rm -rf&#x2F;* 后能否恢复 备份速度 能否移植 适用范围 典型软件    部分备份">
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to Clone Linux | Deepsea52418</title><meta name="keywords" content="Linux"><meta name="author" content="Deepsea52418"><meta name="copyright" content="Deepsea52418"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="配置过Linux系统的同学应该经常会碰见以下问题：  操作失误，导致配置好的系统出错，修复困难 为多台电脑进行一样的配置 将配置好的虚拟机移动为物理机（V2P） 树莓派怎么备份  对于上述问题，可以通过两种方式解决：   部分备份（使用软件备份某几个文件夹）   制作系统镜像文件   其区别如下：     rm -rf&#x2F;* 后能否恢复 备份速度 能否移植 适用范围 典型软件     部分备份 不能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How to Clone Linux">
 <meta property="og:url" content="https://deepsea52418.github.io/How-to-Clone-Linux/">
 <meta property="og:site_name" content="Deepsea52418">
-<meta property="og:description" content="配置过Linux系统的同学应该经常会碰见以下问题：  操作失误，导致配置好的系统出错，修复困难 为多台电脑进行一样的配置 将配置好的虚拟机移动为物理机（V2P） 树莓派怎么备份  对于上述问题，可以通过两种方式解决：  部分备份（使用软件备份某几个文件夹）  制作系统镜像文件   其区别如下：     rm -rf&#x2F;* 后能否恢复 备份速度 能否移植 适用范围 典型软件    部分备份">
+<meta property="og:description" content="配置过Linux系统的同学应该经常会碰见以下问题：  操作失误，导致配置好的系统出错，修复困难 为多台电脑进行一样的配置 将配置好的虚拟机移动为物理机（V2P） 树莓派怎么备份  对于上述问题，可以通过两种方式解决：   部分备份（使用软件备份某几个文件夹）   制作系统镜像文件   其区别如下：     rm -rf&#x2F;* 后能否恢复 备份速度 能否移植 适用范围 典型软件     部分备份 不能">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
 <meta property="article:published_time" content="2022-05-01T10:01:47.000Z">
@@ -156,41 +156,46 @@
 </ol>
 <p><strong>对于上述问题，可以通过两种方式解决：</strong></p>
 <ol>
-<li><p>部分备份（使用软件备份某几个文件夹）</p>
+<li>
+<p>部分备份（使用软件备份某几个文件夹）</p>
 </li>
-<li><p>制作系统镜像文件</p>
+<li>
+<p>制作系统镜像文件</p>
 </li>
 </ol>
 <p>其区别如下：</p>
 <table>
 <thead>
 <tr>
-<th align="center"></th>
-<th align="center">rm -rf&#x2F;* 后能否恢复</th>
-<th align="center">备份速度</th>
-<th align="center">能否移植</th>
-<th align="center">适用范围</th>
-<th align="center">典型软件</th>
+<th style="text-align:center"></th>
+<th style="text-align:center">rm -rf/* 后能否恢复</th>
+<th style="text-align:center">备份速度</th>
+<th style="text-align:center">能否移植</th>
+<th style="text-align:center">适用范围</th>
+<th style="text-align:center">典型软件</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">部分备份</td>
-<td align="center">不能</td>
-<td align="center">快</td>
-<td align="center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">&amp;#x274c;</span></td>
-<td align="center">用户级</td>
-<td align="center"><code>systemback</code> <code>Timeshift</code></td>
+<tbody>
+<tr>
+<td style="text-align:center">部分备份</td>
+<td style="text-align:center">不能</td>
+<td style="text-align:center">快</td>
+<td style="text-align:center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">❌</span></td>
+<td style="text-align:center">用户级</td>
+<td style="text-align:center"><code>systemback</code> <code>Timeshift</code></td>
 </tr>
 <tr>
-<td align="center">制作系统镜像文件</td>
-<td align="center">能</td>
-<td align="center">慢</td>
-<td align="center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">&amp;#x2714;</span></td>
-<td align="center">系统级</td>
-<td align="center"><code>systemback</code> <code>Clonezilla</code></td>
+<td style="text-align:center">制作系统镜像文件</td>
+<td style="text-align:center">能</td>
+<td style="text-align:center">慢</td>
+<td style="text-align:center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">✔</span></td>
+<td style="text-align:center">系统级</td>
+<td style="text-align:center"><code>systemback</code> <code>Clonezilla</code></td>
 </tr>
-</tbody></table>
-<h1 id="一、部分备份"><a href="#一、部分备份" class="headerlink" title="一、部分备份"></a>一、部分备份</h1><p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
+</tbody>
+</table>
+<h1>一、部分备份</h1>
+<p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
 <p>这里<strong>首推</strong><code>Timeshift</code>，具体备份教程参考这篇文章：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94105263">如何使用 TimeShift 备份和还原 Ubuntu Linux</a></p>
 <p>原因如下：</p>
 <ol>
@@ -199,13 +204,14 @@
 <li>timeshift可直接通过选定用户名完成该用户所有文件的备份</li>
 </ol>
 <blockquote>
-<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift </p>
+<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift</p>
 </blockquote>
 <p>其次，推荐<code>systemback</code>，具体备份教程参考这篇文章：<a target="_blank" rel="noopener" href="https://www.unixmen.com/systemback-restore-linux-system-previous-state/">Systemback: Restore Your Linux System To Previous State</a></p>
 <blockquote>
 <p>注：systemback默认备份系统文件和root用户的文件，不会备份普通用户文件，需要去 <em>Function menu</em> -&gt; <em>include</em> 下将需要备份的文件夹添加进去。</p>
 </blockquote>
-<h1 id="二、制作镜像文件"><a href="#二、制作镜像文件" class="headerlink" title="二、制作镜像文件"></a>二、制作镜像文件</h1><p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
+<h1>二、制作镜像文件</h1>
+<p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
 <p>这里<strong>首推</strong><code>systemback</code>，具体教程参考这篇文章：<a target="_blank" rel="noopener" href="https://www.guyuehome.com/34452">一文搞定基于 systemback 的 Ubuntu 系统镜像制作与安装</a></p>
 <p>原因如下：</p>
 <ol>
@@ -236,7 +242,8 @@
 <blockquote>
 <p>注：<strong>Clonezilla制作的镜像文件千万不要重命名</strong>，要命名就制作的时候一次命名好，否则会导致还原的时候无法读取文件名</p>
 </blockquote>
-<h1 id="附录一-大硬盘向小硬盘移动"><a href="#附录一-大硬盘向小硬盘移动" class="headerlink" title="附录一 大硬盘向小硬盘移动"></a>附录一 大硬盘向小硬盘移动</h1><p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
+<h1>附录一 大硬盘向小硬盘移动</h1>
+<p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
 <p>打个比方，我现在需要将A电脑上的Ubuntu移动到B电脑上。A电脑硬盘大小500G，但是只使用了5G，B电脑硬盘大小128G。</p>
 <p>我的建议是：</p>
 <ol>
@@ -245,15 +252,17 @@
 <li>通过U盘启动B电脑，安装系统</li>
 <li>在B电脑中安装<code>Gparted</code>软件，扩展分区</li>
 </ol>
-<h1 id="附录二-虚拟机U盘启动"><a href="#附录二-虚拟机U盘启动" class="headerlink" title="附录二 虚拟机U盘启动"></a>附录二 虚拟机U盘启动</h1><p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a target="_blank" rel="noopener" href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
+<h1>附录二 虚拟机U盘启动</h1>
+<p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a target="_blank" rel="noopener" href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
 <blockquote>
 <p>注：<strong>以管理员身份运行</strong>来打开VMware，否则无法将U盘配置为虚拟机硬盘</p>
 </blockquote>
-<h1 id="附录三-树莓派备份"><a href="#附录三-树莓派备份" class="headerlink" title="附录三 树莓派备份"></a>附录三 树莓派备份</h1><p>树莓派备份主要有4种方式：</p>
+<h1>附录三 树莓派备份</h1>
+<p>树莓派备份主要有4种方式：</p>
 <ol>
 <li><strong>推荐使用</strong><code>PiShrink</code>具体教程参考此文：<a target="_blank" rel="noopener" href="https://shumeipai.nxez.com/2020/09/11/pishrink-make-raspberry-pi-images-smaller.html">PiShrink：制作更小的树莓派镜像文件</a></li>
 <li>Clonezilla好像有arm架构版，可以用于备份树莓派</li>
 <li>树莓派官方操作系统下，<em>附件</em> -&gt; <code>SD Card Copier</code> 软件可以实现</li>
 <li>可以将SD卡插入windows电脑，用<code>Win32Diskimager</code>制作iso文件。缺点在于16G的SD卡哪怕只用了2G，拷出来也是16G。具体参考此文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010235853/article/details/77891327">使用Win32DiskImager来备份树莓派镜像文件</a></li>
 </ol>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Deepsea52418</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://deepsea52418.github.io/How-to-Clone-Linux/">https://deepsea52418.github.io/How-to-Clone-Linux/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://deepsea52418.github.io" target="_blank">Deepsea52418</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/TSN-Simulation-NeSTiNg/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">TSN Simulation - NeSTiNg</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Blog/202211152204715.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Deepsea52418</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/deepsea52418" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:deepsea52418@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%83%A8%E5%88%86%E5%A4%87%E4%BB%BD"><span class="toc-text">一、部分备份</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6"><span class="toc-text">二、制作镜像文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95%E4%B8%80-%E5%A4%A7%E7%A1%AC%E7%9B%98%E5%90%91%E5%B0%8F%E7%A1%AC%E7%9B%98%E7%A7%BB%E5%8A%A8"><span class="toc-text">附录一 大硬盘向小硬盘移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95%E4%BA%8C-%E8%99%9A%E6%8B%9F%E6%9C%BAU%E7%9B%98%E5%90%AF%E5%8A%A8"><span class="toc-text">附录二 虚拟机U盘启动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95%E4%B8%89-%E6%A0%91%E8%8E%93%E6%B4%BE%E5%A4%87%E4%BB%BD"><span class="toc-text">附录三 树莓派备份</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Inet-4-4-TSN-Introduction/" title="Inet 4.4 TSN Introduction"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Inet 4.4 TSN Introduction"/></a><div class="content"><a class="title" href="/Inet-4-4-TSN-Introduction/" title="Inet 4.4 TSN Introduction">Inet 4.4 TSN Introduction</a><time datetime="2022-11-19T16:00:00.000Z" title="发表于 2022-11-20 00:00:00">2022-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Use-VPN/" title="How to Use VPN"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Use VPN"/></a><div class="content"><a class="title" href="/How-to-Use-VPN/" title="How to Use VPN">How to Use VPN</a><time datetime="2022-11-15T03:49:56.000Z" title="发表于 2022-11-15 11:49:56">2022-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/TSN-Simulation-NeSTiNg/" title="TSN Simulation - NeSTiNg"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TSN Simulation - NeSTiNg"/></a><div class="content"><a class="title" href="/TSN-Simulation-NeSTiNg/" title="TSN Simulation - NeSTiNg">TSN Simulation - NeSTiNg</a><time datetime="2022-11-11T16:00:00.000Z" title="发表于 2022-11-12 00:00:00">2022-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Clone-Linux/" title="How to Clone Linux"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Clone Linux"/></a><div class="content"><a class="title" href="/How-to-Clone-Linux/" title="How to Clone Linux">How to Clone Linux</a><time datetime="2022-05-01T10:01:47.000Z" title="发表于 2022-05-01 18:01:47">2022-05-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Deepsea52418</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://deepsea52418.github.io/How-to-Clone-Linux/">https://deepsea52418.github.io/How-to-Clone-Linux/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://deepsea52418.github.io" target="_blank">Deepsea52418</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/TSN-Simulation-NeSTiNg/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">TSN Simulation - NeSTiNg</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Blog/202211152204715.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Deepsea52418</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/deepsea52418" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:deepsea52418@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、部分备份</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、制作镜像文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">附录一 大硬盘向小硬盘移动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">附录二 虚拟机U盘启动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">附录三 树莓派备份</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Inet-4-4-TSN-Introduction/" title="Inet 4.4 TSN Introduction"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Inet 4.4 TSN Introduction"/></a><div class="content"><a class="title" href="/Inet-4-4-TSN-Introduction/" title="Inet 4.4 TSN Introduction">Inet 4.4 TSN Introduction</a><time datetime="2022-11-19T16:00:00.000Z" title="发表于 2022-11-20 00:00:00">2022-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Use-VPN/" title="How to Use VPN"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Use VPN"/></a><div class="content"><a class="title" href="/How-to-Use-VPN/" title="How to Use VPN">How to Use VPN</a><time datetime="2022-11-15T03:49:56.000Z" title="发表于 2022-11-15 11:49:56">2022-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/TSN-Simulation-NeSTiNg/" title="TSN Simulation - NeSTiNg"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TSN Simulation - NeSTiNg"/></a><div class="content"><a class="title" href="/TSN-Simulation-NeSTiNg/" title="TSN Simulation - NeSTiNg">TSN Simulation - NeSTiNg</a><time datetime="2022-11-11T16:00:00.000Z" title="发表于 2022-11-12 00:00:00">2022-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Clone-Linux/" title="How to Clone Linux"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Clone Linux"/></a><div class="content"><a class="title" href="/How-to-Clone-Linux/" title="How to Clone Linux">How to Clone Linux</a><time datetime="2022-05-01T10:01:47.000Z" title="发表于 2022-05-01 18:01:47">2022-05-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
