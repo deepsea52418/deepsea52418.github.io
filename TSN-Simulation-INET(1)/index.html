@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TSN Simulation - INET（1） | Deepsea52418</title><meta name="keywords" content="TSN"><meta name="author" content="Deepsea52418"><meta name="copyright" content="Deepsea52418"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="在之前的文章中，对TSN仿真框架NeSTiNg进行了简单的介绍与分析。然后，在今年6月推出的INET 4.4中，包含了TSN相关功能，同时其实现的功能更多，可扩展性更好。在本系列中，将根据INET官方文档，对其支持的TSN功能进行分析。 一、概述1.1 TSN设备为了方便TSN功能的配置，INET提供了几个TSN特定的网络设备。其在INET基本网络节点的基础上额外添加了TSN特定参数。  TsnC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TSN Simulation - INET（1）">
+<meta property="og:url" content="https://deepsea52418.github.io/TSN-Simulation-INET(1)/">
+<meta property="og:site_name" content="Deepsea52418">
+<meta property="og:description" content="在之前的文章中，对TSN仿真框架NeSTiNg进行了简单的介绍与分析。然后，在今年6月推出的INET 4.4中，包含了TSN相关功能，同时其实现的功能更多，可扩展性更好。在本系列中，将根据INET官方文档，对其支持的TSN功能进行分析。 一、概述1.1 TSN设备为了方便TSN功能的配置，INET提供了几个TSN特定的网络设备。其在INET基本网络节点的基础上额外添加了TSN特定参数。  TsnC">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-11-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-11-20T14:03:08.773Z">
+<meta property="article:author" content="Deepsea52418">
+<meta property="article:tag" content="TSN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://deepsea52418.github.io/TSN-Simulation-INET(1)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'TSN Simulation - INET（1）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-20 22:03:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Blog/202211152204715.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Deepsea52418</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">TSN Simulation - INET（1）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-19T16:00:00.000Z" title="发表于 2022-11-20 00:00:00">2022-11-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-20T14:03:08.773Z" title="更新于 2022-11-20 22:03:08">2022-11-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="TSN Simulation - INET（1）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>在<a href="https://deepsea52418.github.io/TSN-Simulation-NeSTiNg/">之前的文章</a>中，对TSN仿真框架<code>NeSTiNg</code>进行了简单的介绍与分析。然后，在今年6月推出的INET 4.4中，包含了TSN相关功能，同时其实现的功能更多，可扩展性更好。在本系列中，将根据<a target="_blank" rel="noopener" href="https://inet.omnetpp.org/docs/users-guide/ch-tsn.html">INET官方文档</a>，对其支持的TSN功能进行分析。</p>
+<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><h3 id="1-1-TSN设备"><a href="#1-1-TSN设备" class="headerlink" title="1.1 TSN设备"></a>1.1 TSN设备</h3><p>为了方便TSN功能的配置，INET提供了几个TSN特定的网络设备。其在INET基本网络节点的基础上额外添加了TSN特定参数。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnClock.html">TsnClock</a> 模拟TSN时钟，负责gPTP时间同步</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnDevice.html">TsnDevice</a> TSN端设备</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnSwitch.html">TsnSwitch</a> TSN交换机</li>
+</ul>
+<h3 id="1-2-时间同步"><a href="#1-2-时间同步" class="headerlink" title="1.2 时间同步"></a>1.2 时间同步</h3><p>在本章节，主要实现【IEEE 802.1AS-2020】协议。INET主要在两个方面仿真了时钟同步，一方面是时钟模块，一方面是时间同步协议模块。</p>
+<p>时钟模块</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 基于震荡器的时钟</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 可设置时间的时钟</li>
+</ul>
+<p>时间同步协议实现模块</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpBridge.html">GptpBridge</a> gPTP网桥节点</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpEndstation.html">GptpEndstation</a> gPTP终端节点</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpMaster.html">GptpMaster</a> gPTP主节点</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpSlave.html">GptpSlave</a> gPTP从节点</li>
+</ul>
+<p>为了仿真时间同步失败情况（主时钟丢失或链路断开），需要多个时间同步域，不同时钟域独立运行，用户模块决定所使用的时钟。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.MultiClock.html">MultiClock</a> 包含不同时钟域的多个子时钟</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.MultiDomainGptp.html">MultiDomainGptp</a> 包含不同时钟域的多个gPTP子模块</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasTimeSynchronization</code>和<code>hasGptp</code>参数启用时间同步。</strong></p>
+<h3 id="1-3-TSN流过滤"><a href="#1-3-TSN流过滤" class="headerlink" title="1.3 TSN流过滤"></a>1.3 TSN流过滤</h3><p>在本章节，主要实现【IEEE 802.1Qci-2017】协议。在INET有两种模型，分别为 <a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.SimpleIeee8021qFilter.html">SimpleIeee8021qFilter</a> 和 <a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qFilter.html">Ieee8021qFilter</a> ，前者更接近802.1Qci，后者更接近802.1Q。前者在结构和功能上更加完善，同时使用更加简单。</p>
+<p><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.SimpleIeee8021qFilter.html">SimpleIeee8021qFilter</a> 包括多个子模块，对接收到的数据包进行处理，实现流量过滤 </p>
+<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Inet%204.4/1/202211202134266.png" alt="image-20221120213451204"></p>
+<center>图1 SimpleIeee8021qFilter模块功能结构</center>
+
+<p>其内部包含以下功能模块：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamClassifier.html">StreamClassifier</a> 根据流的名称映射到不同的入队列</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketMeter.html">IPacketMeter</a> 数据包计数模块，可根据不同的规则对流量进行标记，默认采用 DualRateThreeColorMeter，其可选择以下模块<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateTwoColorMeter.html">SingleRateTwoColorMeter</a> 根据 CIR 和 CBS 参数将数据包标记为绿色或红色</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateThreeColorMeter.html">SingleRateThreeColorMeter</a> 根据 CIR、CBS 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.DualRateThreeColorMeter.html">DualRateThreeColorMeter</a> 根据 CIR、CBS、EIR 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketFilter.html">IPacketFilter</a> 包过滤模块，默认采用 LabelFilter ，其可实现丢弃红色数据包，通过绿色和黄色数据包</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketGate.html">IPacketGate</a> 数据包门模块，控制数据包是否通过</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.common.PacketMultiplexer.html">PacketMultiplexer</a> 多路复用接口</li>
+</ul>
+<p>可通过不同子模块的组合，实现不同的流过滤规则。</p>
+<p>其中 IPacketMeter 中模块基于通用令牌桶实现：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.TokenBucketMeter.html">TokenBucketMeter</a> 实现 SingleRateTwoColorMeter。单个令牌桶，标记数据包通过或丢弃</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.MultiTokenBucketMeter.html">MultiTokenBucketMeter</a> 实现 SingleRateThreeColorMeter 和 DualRateThreeColorMeter。包含多个令牌桶，根据多个令牌桶的规则标记数据包的通过或丢弃。</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasIngressTrafficFiltering</code>参数启用流过滤。</strong></p>
+<h3 id="1-4-TSN调度和整形"><a href="#1-4-TSN调度和整形" class="headerlink" title="1.4 TSN调度和整形"></a>1.4 TSN调度和整形</h3><p>在本章节，主要实现【IEEE 802.1Qbv-2015】协议。在INET中，目前支持3种3种整形器，分别是基于门控的TAS整形器,基于信用的CBS整形器和异步整形器ATS</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.CreditBasedShaper.html">CreditBasedShaper</a> CBS整形器，根据当前信用值决定数据包是否传输，由标准数据包队列和 <a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qCreditBasedGate.html">Ieee8021qCreditBasedGate</a>门组成</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.TimeAwareShaper.html">TimeAwareShaper</a> TAS整形器，根据GCL决定当前队列数据是否传输，由标准数据包队列和 <a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.gate.PeriodicGate.html">PeriodicGate</a> 门组成</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.AsynchronousShaper.html">AsynchronousShaper</a> ATS整形器，根据数据包的传输合格时间（<a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet-EligibilityTimeTag.html">EligibilityTimeTag</a>）对数据进行重新排队候传输。</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasEgressTrafficShaping</code>参数启用流整形。</strong></p>
+<h3 id="1-5-TSN帧复制与消除"><a href="#1-5-TSN帧复制与消除" class="headerlink" title="1.5 TSN帧复制与消除"></a>1.5 TSN帧复制与消除</h3><p>在本章节，主要实现【IEEE 802.1CB-2017】协议。主要由以下4个部分组成，分别负责不同的工作。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamIdentifierLayer.html">StreamIdentifierLayer</a> 负责根据其内容和数据等来为传出的数据包分配流名称，只可以用于自身产生应用流量的网络节点</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamRelayLayer.html">StreamRelayLayer</a> 负责传入流的重复帧删除和传出流的复制拆分</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.StreamFilterLayer.html">StreamFilterLayer</a> 负责传入传出流的过滤（非必要）</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamCoderLayer.html">StreamCoderLayer</a> 负责传入流的解码和传出流的编码。通过检查传入流的各种标签域映射进行匹配，解析数据流</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasStreamRedundancy</code>参数启用流复制与消除。</strong></p>
+<h3 id="1-6-TSN帧抢占"><a href="#1-6-TSN帧抢占" class="headerlink" title="1.6 TSN帧抢占"></a>1.6 TSN帧抢占</h3><p>在本章节，主要实现【IEEE 802.1Qbu】协议。帧抢占要求网口能够中断正在进行的传输并切换到更高优先级帧的传输，需要由特殊的MAC层和PHC层一起实现。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetPreemptingMacLayer.html">EthernetPreemptingMacLayer</a> 包含多个MAC子层的以太网MAC层</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.physicallayer.wired.ethernet.EthernetPreemptingPhyLayer.html">EthernetPreemptingPhyLayer</a> 允许数据帧抢占的PHC层</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasFramePreemption</code>参数启用帧抢占。</strong></p>
+<h3 id="1-7-Cut-through-Switching"><a href="#1-7-Cut-through-Switching" class="headerlink" title="1.7 Cut-through Switching"></a>1.7 Cut-through Switching</h3><p>传统交换机采用<code>存储-转发</code>的架构，需要接收到全部数据帧之后判断其转发端口，再进行转发。Cut-through Switching可实现在接收到数据包MAC头后判断转发端口，直接转发，减少数据包在交换机处浪费的时间。<strong>（注意：只有当出端口速度&gt;&#x3D;入端口速度时，才可以使用)</strong></p>
+<p><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughInterface.html">EthernetCutthroughInterface</a> Cut-through网卡，允许数据帧直接从输入接口传输至输出接口。内部主要通过 EthernetCutthroughLayer 实现</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Inet%204.4/1/202211202152023.png" alt="image-20221120215235961" style="zoom:50%;" />
+
+<center>图2 EthernetCutthroughInterface模块功能结构</center>
+
+<p><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughLayer.html">EthernetCutthroughLayer</a> 内部由 EthernetCutthroughSource 和 EthernetCutthroughSink 组成</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Inet%204.4/1/202211202154217.png" alt="image-20221120215410143" style="zoom:50%;" />
+
+<center>图3 EthernetCutthroughLayer模块功能结构</center>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSource.html">EthernetCutthroughSource</a> 转发入的Cut-through Switch</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSink.html">EthernetCutthroughSink</a> 转发出的Cut-through Switch</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasCutthroughSwitching</code>参数启用Cut-through Switching。</strong></p>
+<h3 id="1-8-TSN网络自动配置"><a href="#1-8-TSN网络自动配置" class="headerlink" title="1.8 TSN网络自动配置"></a>1.8 TSN网络自动配置</h3><p>inet提供了3种网络自动配置机制，可能会用到不同层的的配置器，如 <a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator.html">Ipv4NetworkConfigurator</a> 和  <a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.MacForwardingTableConfigurator.html">MacForwardingTableConfigurator</a> </p>
+<ul>
+<li>门调度配置：通过配置GCL，实现网络流量确定性传输</li>
+<li>冗余配置：通过流复制和消除，实现网络中流量的冗余传输</li>
+<li>故障保护配置：结合门调度配置和冗余配置</li>
+</ul>
+<p>对于门控调度配置，inet提供了3中不同的的调度器</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.EagerGateScheduleConfigurator.html">EagerGateScheduleConfigurator</a> 按照流量优先级分配时隙</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.z3.Z3GateScheduleConfigurator.html">Z3GateScheduleConfigurator</a> 使用SAT求解器计算GCL</li>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.TSNschedGateScheduleConfigurator.html">TSNschedGateScheduleConfigurator</a> 使用<a target="_blank" rel="noopener" href="https://github.com/ACassimiro/TSNsched">TSNsched</a>计算调度</li>
+</ul>
+<p>对于流冗余配置，inet提供了1个调度器</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.StreamRedundancyConfigurator.html">StreamRedundancyConfigurator</a> 为网络中所有节点的流量配置流赋值与消除</li>
+</ul>
+<p>对于失败保护配置，inet提供了1个调度器</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.FailureProtectionConfigurator.html">FailureProtectionConfigurator</a> 配置门调度和流冗余配置器以提供针对指定链路和节点故障的保护</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Deepsea52418</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://deepsea52418.github.io/TSN-Simulation-INET(1)/">https://deepsea52418.github.io/TSN-Simulation-INET(1)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://deepsea52418.github.io" target="_blank">Deepsea52418</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/TSN/">TSN</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/How-to-Use-VPN/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">How to Use VPN</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/TSN-Simulation-NeSTiNg/" title="TSN Simulation - NeSTiNg"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-12</div><div class="title">TSN Simulation - NeSTiNg</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Blog/202211152204715.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Deepsea52418</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/deepsea52418" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:deepsea52418@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-text">一、概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-TSN%E8%AE%BE%E5%A4%87"><span class="toc-text">1.1 TSN设备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="toc-text">1.2 时间同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-TSN%E6%B5%81%E8%BF%87%E6%BB%A4"><span class="toc-text">1.3 TSN流过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-TSN%E8%B0%83%E5%BA%A6%E5%92%8C%E6%95%B4%E5%BD%A2"><span class="toc-text">1.4 TSN调度和整形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-TSN%E5%B8%A7%E5%A4%8D%E5%88%B6%E4%B8%8E%E6%B6%88%E9%99%A4"><span class="toc-text">1.5 TSN帧复制与消除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-TSN%E5%B8%A7%E6%8A%A2%E5%8D%A0"><span class="toc-text">1.6 TSN帧抢占</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-Cut-through-Switching"><span class="toc-text">1.7 Cut-through Switching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-TSN%E7%BD%91%E7%BB%9C%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">1.8 TSN网络自动配置</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/TSN-Simulation-INET(1)/" title="TSN Simulation - INET（1）"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TSN Simulation - INET（1）"/></a><div class="content"><a class="title" href="/TSN-Simulation-INET(1)/" title="TSN Simulation - INET（1）">TSN Simulation - INET（1）</a><time datetime="2022-11-19T16:00:00.000Z" title="发表于 2022-11-20 00:00:00">2022-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Use-VPN/" title="How to Use VPN"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Use VPN"/></a><div class="content"><a class="title" href="/How-to-Use-VPN/" title="How to Use VPN">How to Use VPN</a><time datetime="2022-11-15T03:49:56.000Z" title="发表于 2022-11-15 11:49:56">2022-11-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/TSN-Simulation-NeSTiNg/" title="TSN Simulation - NeSTiNg"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TSN Simulation - NeSTiNg"/></a><div class="content"><a class="title" href="/TSN-Simulation-NeSTiNg/" title="TSN Simulation - NeSTiNg">TSN Simulation - NeSTiNg</a><time datetime="2022-11-11T16:00:00.000Z" title="发表于 2022-11-12 00:00:00">2022-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/How-to-Clone-Linux/" title="How to Clone Linux"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to Clone Linux"/></a><div class="content"><a class="title" href="/How-to-Clone-Linux/" title="How to Clone Linux">How to Clone Linux</a><time datetime="2022-05-01T10:01:47.000Z" title="发表于 2022-05-01 18:01:47">2022-05-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

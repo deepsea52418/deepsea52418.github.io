@@ -1,430 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>How to Clone Linux</title>
-    <url>/How-to-Clone-Linux/</url>
-    <content><![CDATA[<p><strong>配置过Linux系统的同学应该经常会碰见以下问题：</strong></p>
-<ol>
-<li>操作失误，导致配置好的系统出错，修复困难</li>
-<li>为多台电脑进行一样的配置</li>
-<li>将配置好的虚拟机移动为物理机（V2P）</li>
-<li>树莓派怎么备份</li>
-</ol>
-<p><strong>对于上述问题，可以通过两种方式解决：</strong></p>
-<ol>
-<li>
-<p>部分备份（使用软件备份某几个文件夹）</p>
-</li>
-<li>
-<p>制作系统镜像文件</p>
-</li>
-</ol>
-<p>其区别如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">rm -rf/* 后能否恢复</th>
-<th style="text-align:center">备份速度</th>
-<th style="text-align:center">能否移植</th>
-<th style="text-align:center">适用范围</th>
-<th style="text-align:center">典型软件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">部分备份</td>
-<td style="text-align:center">不能</td>
-<td style="text-align:center">快</td>
-<td style="text-align:center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">❌</span></td>
-<td style="text-align:center">用户级</td>
-<td style="text-align:center"><code>systemback</code> <code>Timeshift</code></td>
-</tr>
-<tr>
-<td style="text-align:center">制作系统镜像文件</td>
-<td style="text-align:center">能</td>
-<td style="text-align:center">慢</td>
-<td style="text-align:center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">✔</span></td>
-<td style="text-align:center">系统级</td>
-<td style="text-align:center"><code>systemback</code> <code>Clonezilla</code></td>
-</tr>
-</tbody>
-</table>
-<h1>一、部分备份</h1>
-<p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
-<p>这里<strong>首推</strong><code>Timeshift</code>，具体备份教程参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/94105263">如何使用 TimeShift 备份和还原 Ubuntu Linux</a></p>
-<p>原因如下：</p>
-<ol>
-<li>timeshift界面简洁，操作简单</li>
-<li>timeshift可设置定期自动备份</li>
-<li>timeshift可直接通过选定用户名完成该用户所有文件的备份</li>
-</ol>
-<blockquote>
-<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift</p>
-</blockquote>
-<p>其次，推荐<code>systemback</code>，具体备份教程参考这篇文章：<a href="https://www.unixmen.com/systemback-restore-linux-system-previous-state/">Systemback: Restore Your Linux System To Previous State</a></p>
-<blockquote>
-<p>注：systemback默认备份系统文件和root用户的文件，不会备份普通用户文件，需要去 <em>Function menu</em> -&gt; <em>include</em> 下将需要备份的文件夹添加进去。</p>
-</blockquote>
-<h1>二、制作镜像文件</h1>
-<p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
-<p>这里<strong>首推</strong><code>systemback</code>，具体教程参考这篇文章：<a href="https://www.guyuehome.com/34452">一文搞定基于 systemback 的 Ubuntu 系统镜像制作与安装</a></p>
-<p>原因如下：</p>
-<ol>
-<li>与后文中提到的Clonezilla相比，不需要烧录启动U盘</li>
-<li>与Clonezilla相比，操作更简单</li>
-<li>可以便捷的实现大硬盘到小硬盘的迁移</li>
-<li>可以重命名拷贝系统的用户名</li>
-<li>可以制作成可启动的iso镜像</li>
-</ol>
-<blockquote>
-<p>注：</p>
-<ol>
-<li>建议拷贝系统的用户名与原用户名一致，防止环境变量出错</li>
-<li>systemback可直接通过图形化界面制作小于4G的iso文件，对于大于4G的文件，只能制作成sblive文件。唯一区别在于iso文件可以直接从U盘拷贝到windows电脑上存储起来，但是sblive文件windows拷贝不出来。</li>
-</ol>
-</blockquote>
-<p>其次，推荐<code>Clonezilla</code>，具体备份教程参考这篇文章：<a href="https://clonezilla.org/clonezilla-usage/general-live-use.php">Clonezilla</a></p>
-<p>其主要优势在于：</p>
-<ol>
-<li>不限操作系统，windows，mac，linux都可以使用</li>
-<li>制作的镜像文件在windows下可以读取，可以直接以文件夹的形式存储到windows电脑中</li>
-</ol>
-<p>但是缺点在于：</p>
-<ol>
-<li>需要先准备一个U盘，用<code>UltraISO</code>烧录进去Clonezilla的镜像文件，然后进入bios里面制作，然后再插一个U盘来存储镜像文件</li>
-<li>对于大硬盘向小硬盘的迁移，我用Clonezilla迁移失败了，没有systemback好用</li>
-</ol>
-<blockquote>
-<p>注：<strong>Clonezilla制作的镜像文件千万不要重命名</strong>，要命名就制作的时候一次命名好，否则会导致还原的时候无法读取文件名</p>
-</blockquote>
-<h1>附录一 大硬盘向小硬盘移动</h1>
-<p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
-<p>打个比方，我现在需要将A电脑上的Ubuntu移动到B电脑上。A电脑硬盘大小500G，但是只使用了5G，B电脑硬盘大小128G。</p>
-<p>我的建议是：</p>
-<ol>
-<li>找一个空闲U盘，烧录<code>Gparted</code>镜像，进入BIOS修改分区大小，将A电脑上500G的分区分成使用的10G和未分配的490G</li>
-<li>打开A电脑，启动<code>systemback</code>，将其系统的10G制作成镜像文件烧录到U盘里</li>
-<li>通过U盘启动B电脑，安装系统</li>
-<li>在B电脑中安装<code>Gparted</code>软件，扩展分区</li>
-</ol>
-<h1>附录二 虚拟机U盘启动</h1>
-<p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
-<blockquote>
-<p>注：<strong>以管理员身份运行</strong>来打开VMware，否则无法将U盘配置为虚拟机硬盘</p>
-</blockquote>
-<h1>附录三 树莓派备份</h1>
-<p>树莓派备份主要有4种方式：</p>
-<ol>
-<li><strong>推荐使用</strong><code>PiShrink</code>具体教程参考此文：<a href="https://shumeipai.nxez.com/2020/09/11/pishrink-make-raspberry-pi-images-smaller.html">PiShrink：制作更小的树莓派镜像文件</a></li>
-<li>Clonezilla好像有arm架构版，可以用于备份树莓派</li>
-<li>树莓派官方操作系统下，<em>附件</em> -&gt; <code>SD Card Copier</code> 软件可以实现</li>
-<li>可以将SD卡插入windows电脑，用<code>Win32Diskimager</code>制作iso文件。缺点在于16G的SD卡哪怕只用了2G，拷出来也是16G。具体参考此文章：<a href="https://blog.csdn.net/u010235853/article/details/77891327">使用Win32DiskImager来备份树莓派镜像文件</a></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Inet 4.4 TSN Introduction</title>
-    <url>/Inet-4-4-TSN-Introduction/</url>
-    <content><![CDATA[<h1>Inet 4.4 TSN Introduction</h1>
-<h2 id="一、概述">一、概述</h2>
-<p>本系列主要对Inet 4.4中TSN showcase进行分析，具体请参考：<a href="https://inet.omnetpp.org/docs/users-guide/ch-tsn.html">参考网站</a></p>
-<h3 id="1-1-TSN设备">1.1 TSN设备</h3>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnClock.html">TsnClock</a> 模拟TSN时钟，负责gPTP时间同步</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnDevice.html">TsnDevice</a> TSN端设备</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnSwitch.html">TsnSwitch</a> TSN交换机</li>
-</ul>
-<h3 id="1-2-时间同步">1.2 时间同步</h3>
-<p>IEEE 802.1AS-2020</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasTimeSynchronization</code>和<code>hasGptp</code>参数启用时间同步。</p>
-<p>inet为时间同步提供了两个方面，一方面是时钟模块，一方面是时间同步协议模块</p>
-<p>时钟模块</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 震荡时钟</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 可设置时间的时钟</li>
-</ul>
-<p>时间同步协议模块</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpBridge.html">GptpBridge</a> gPTP网桥节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpEndstation.html">GptpEndstation</a> gPTP终端节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpMaster.html">GptpMaster</a> gPTP主节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpSlave.html">GptpSlave</a> gPTP从节点</li>
-</ul>
-<p>为了仿真时间同步失败情况（主时钟丢失或链路断开），需要多个时间同步域，不同时钟域独立运行，用户模块决定所使用的时钟。</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.MultiClock.html">MultiClock</a> 包含不同时钟域的多个子时钟</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.MultiDomainGptp.html">MultiDomainGptp</a> 包含不同时钟域的多个gPTP子模块</li>
-</ul>
-<h3 id="1-3-TSN流过滤">1.3 TSN流过滤</h3>
-<p>IEEE 802.1Q IEEE 802.1Qci-2017</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasIngressTrafficFiltering</code>参数启用流过滤。</p>
-<p>有两种模型，分别为 SimpleIeee8021qFilter 和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qFilter.html">Ieee8021qFilter</a> ，前者更接近802.1Qci，后者更接近802.1Q。前者在结构和功能上更加完善，同时使用更加简单。</p>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.SimpleIeee8021qFilter.html">SimpleIeee8021qFilter</a> 包括多个子模块，对接收到的数据包进行处理，实现流量过滤</p>
-<p><img src="C:%5CUsers%5CDeepsea%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221101221710422.png" alt="image-20221101221710422"></p>
-<ul>
-<li>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamClassifier.html">StreamClassifier</a> 根据流的名称映射到不同的入队列</p>
-</li>
-<li>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketMeter.html">IPacketMeter</a> 数据包计数模块，可根据不同的规则对流量进行标记，默认采用 DualRateThreeColorMeter，其可选择以下模块</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateTwoColorMeter.html">SingleRateTwoColorMeter</a> 根据 CIR 和 CBS 参数将数据包标记为绿色或红色</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateThreeColorMeter.html">SingleRateThreeColorMeter</a> 根据 CIR、CBS 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.DualRateThreeColorMeter.html">DualRateThreeColorMeter</a> 根据 CIR、CBS、EIR 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
-</ul>
-<p>以上模块是是基于通用令牌桶实现的：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.TokenBucketMeter.html">TokenBucketMeter</a> 单个令牌桶，标记数据包通过会丢弃</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.MultiTokenBucketMeter.html">MultiTokenBucketMeter</a> 包含 N 个令牌桶的溢出链，并使用 N+1 个标签之一标记数据包</li>
-</ul>
-</li>
-<li>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketFilter.html">IPacketFilter</a> 包过滤模块，默认采用 LabelFilter ，其可实现丢弃红色数据包，通过绿色和黄色数据包</p>
-</li>
-<li>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketGate.html">IPacketGate</a> 数据包门模块，控制数据包是否通过</p>
-</li>
-<li>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.common.PacketMultiplexer.html">PacketMultiplexer</a> 多路复用器，类似于多路复用接口</p>
-</li>
-</ul>
-<p>可通过不同子模块的组合，实现不同的流过滤规则。</p>
-<h3 id="1-4-TSN调度和整形">1.4 TSN调度和整形</h3>
-<p>IEEE 802.1Q IEEE 802.1Qbv-2015</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasEgressTrafficShaping</code>参数启用流整形。</p>
-<p>支持3种整形器，TAS,CBS,ATS</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.CreditBasedShaper.html">CreditBasedShaper</a> CBS整形器，根据当前信用值决定数据包是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qCreditBasedGate.html">Ieee8021qCreditBasedGate</a>门组成</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.TimeAwareShaper.html">TimeAwareShaper</a> TAS整形器，根据GCL决定当前队列数据是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.gate.PeriodicGate.html">PeriodicGate</a> 门组成</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.AsynchronousShaper.html">AsynchronousShaper</a> ATS整形器，根据数据包的传输合格时间（<a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet-EligibilityTimeTag.html">EligibilityTimeTag</a>）对数据进行重新排队候传输。</li>
-</ul>
-<h3 id="1-5-TSN帧复制与消除">1.5 TSN帧复制与消除</h3>
-<p>IEEE 802.1CB-2017</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasStreamRedundancy</code>参数启用流复制与消除。</p>
-<p>由4个部分组成，分别负责不同的工作。</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamIdentifierLayer.html">StreamIdentifierLayer</a> 负责根据其内容和数据等来为传出的数据包分配流名称，只可以用于自身产生应用流量的网络节点</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamRelayLayer.html">StreamRelayLayer</a> 负责传入流的重复帧删除和传出流的复制拆分</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.StreamFilterLayer.html">StreamFilterLayer</a> 负责传入传出流的过滤（非必要）</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamCoderLayer.html">StreamCoderLayer</a> 负责传入流的解码和传出流的编码。通过检查传入流的各种标签域映射进行匹配，解析数据流</li>
-</ul>
-<h3 id="1-6-TSN帧抢占">1.6 TSN帧抢占</h3>
-<p>IEEE 802.1Q IEEE 802.1Qbu</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasFramePreemption</code>参数启用帧抢占。</p>
-<p>由特殊的MAC层和PHC层一起实现。</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetPreemptingMacLayer.html">EthernetPreemptingMacLayer</a> 包含多个MAC子层的以太网MAC层</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.physicallayer.wired.ethernet.EthernetPreemptingPhyLayer.html">EthernetPreemptingPhyLayer</a> 允许数据帧抢占的PHC层</li>
-</ul>
-<h3 id="1-7-Cut-through-Switching">1.7 Cut-through Switching</h3>
-<p>传统交换机采用<code>存储-转发</code>的架构，需要接收到全部数据帧之后判断其转发端口，再进行转发。Cut-through Switching可实现在接收到数据包MAC头后判断转发端口，直接转发，减少数据包在交换机处浪费的时间。（只有当出端口速度&gt;=入端口速度时，才可以使用)</p>
-<p>在TsnDevice和TsnSwitch中，通过<code>hasCutthroughSwitching</code>参数启用Cut-through Switching。</p>
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughInterface.html">EthernetCutthroughInterface</a> Cut-through网卡，允许数据帧直接从输入接口传输至输出接口。内部主要通过 EthernetCutthroughLayer 实现</p>
-<img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221102221431411.png" alt="image-20221102221431411" style="zoom: 50%;" />
-<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughLayer.html">EthernetCutthroughLayer</a> 内部由 EthernetCutthroughSource 和 EthernetCutthroughSink 组成</p>
-<img src="C:\Users\Deepsea\AppData\Roaming\Typora\typora-user-images\image-20221102221749931.png" alt="image-20221102221749931" style="zoom:50%;" />
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSource.html">EthernetCutthroughSource</a> 转发入的Cut-through Switch</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSink.html">EthernetCutthroughSink</a> 转发出的Cut-through Switch</li>
-</ul>
-<h3 id="1-8-TSN网络自动配置">1.8 TSN网络自动配置</h3>
-<p>inet提供了3种网络自动配置机制，可能会用到不同层的的配置器，如 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator.html">Ipv4NetworkConfigurator</a> 和  <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.MacForwardingTableConfigurator.html">MacForwardingTableConfigurator</a></p>
-<ul>
-<li>门调度配置，通过配置GCL</li>
-<li>流冗余配置，通过流复制和消除，实现网络中流量的冗余传输</li>
-<li>故障保护配置</li>
-</ul>
-<p>对于门控调度配置，inet提供了3中不同的的调度器</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.EagerGateScheduleConfigurator.html">EagerGateScheduleConfigurator</a> 按照流量优先级分配时隙</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.z3.Z3GateScheduleConfigurator.html">Z3GateScheduleConfigurator</a> 使用SAT求解器计算GCL</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.TSNschedGateScheduleConfigurator.html">TSNschedGateScheduleConfigurator</a> 使用<a href="https://github.com/ACassimiro/TSNsched">TSNsched</a>计算调度</li>
-</ul>
-<p>对于流冗余配置，inet提供了1个调度器</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.StreamRedundancyConfigurator.html">StreamRedundancyConfigurator</a> 为网络中所有节点的流量配置流赋值与消除</li>
-</ul>
-<p>对于失败保护配置，inet提供了1个调度器</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.FailureProtectionConfigurator.html">FailureProtectionConfigurator</a> 配置门调度和流冗余配置器以提供针对指定链路和节点故障的保护</li>
-</ul>
-<h2 id="二、showcase">二、showcase</h2>
-<h3 id="2-1-时间同步">2.1 时间同步</h3>
-<p><a href="https://inet.omnetpp.org/docs/showcases/tsn/timesynchronization/index.html">参考网站</a></p>
-<p>局域网中存在大量网络设备，每台网络设备都具有自身的时钟。即使在开始时设置相同的时间，也会因为时钟漂移造成误差，需要不断发送报文同步时间。</p>
-<h4 id="2-1-1-时钟漂移">2.1.1 时钟漂移</h4>
-<h4 id="2-1-1-1-概述">2.1.1.1 概述</h4>
-<p><a href="https://inet.omnetpp.org/docs/showcases/tsn/timesynchronization/clockdrift/doc/index.html">参考网站</a></p>
-<p>在默认情况下，inet的节点中没有本地时钟，而是依靠仿真时间充当全局时间。为了模拟具有本地时间的网络节点，需要在网络节点中加入本地时钟模块。inet中本地时钟由振荡器组成，可以仿真恒定和随机时钟漂移率。</p>
-<p>inet中提供以下时钟模型：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 基于振荡器的时钟，通过振荡器子模块可以实现恒定、理想、随机时钟漂移率</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 基于振荡器的时钟，但可以通过C++或者脚本设置时间</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.IdealClock.html">IdealClock</a> 理想时钟，时钟时间和仿真时间一致，可用于测试</li>
-</ul>
-<p>inet中提供以下振荡器模型：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.IdealOscillator.html">IdealOscillator</a> 理想振荡器</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.ConstantDriftOscillator.html">ConstantDriftOscillator</a> 恒定漂移振荡器</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.oscillator.RandomDriftOscillator.html">RandomDriftOscillator</a> 随机漂移振荡器</li>
-</ul>
-<p>inet中时间同步器在应用层实现，inet中只有 <strong><font color=red>SettableClock</font></strong> 时钟模型支持同步器。</p>
-<p>inet中提供以下同步器：</p>
-<ul>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.applications.clock.SimpleClockSynchronizer.html">SimpleClockSynchronizer</a> 使用带外机制进行时间同步，对时间同步细节不重要的仿真很有用</li>
-<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
-</ul>
-<p>SimpleClockSynchronizer 同步器定期将从时钟时间与主时钟时间同步。可通过参数设置同步时间间隔，可以设置同步精度</p>
-<p>Gptp 同步器，通过gPTP协议，同步网络中所有设备</p>
-<h4 id="2-1-1-2-示例">2.1.1.2 示例</h4>
-<p>inet官方提供了4种仿真示例</p>
-<ul>
-<li>NoClockDrift 无时钟偏移</li>
-<li>ConstantClockDriftRate 固定速率时钟偏移，并且不进行同步</li>
-<li>OutOfBandSynchronization 固定速率时钟偏移，利用 SimpleClockSynchronizer 同步器同步</li>
-<li>GptpSynchronization 随机速率时钟偏移，利用Gptp 同步器同步</li>
-</ul>
-<p><img src="C:%5CUsers%5CDeepsea%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221103212622326.png" alt="image-20221103212622326"></p>
-<p>NoClockDrift 网络中没有时钟偏移，所有节点采用仿真时间</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[General]</span></span><br><span class="line"><span class="attr">network</span> = ClockDriftShowcase</span><br><span class="line"><span class="comment">#abstract-config = true (requires omnet 6)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># disable legacy Ethernet</span></span><br><span class="line">*.*.<span class="attr">ethernet.typename</span> = <span class="string">&quot;EthernetLayer&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># avoid ARP</span></span><br><span class="line">**.<span class="attr">hasGlobalArp</span> = <span class="literal">true</span></span><br><span class="line"><span class="comment">#*.*.ipv4.arp.typename = &quot;GlobalArp&quot;</span></span><br><span class="line"><span class="comment">#*.switch1.macTable.forwardingTable = [&#123;address: &quot;switch2&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink1&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink2&quot;, interface: &quot;eth0&quot;&#125;]</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#*.switch2.macTable.forwardingTable = [&#123;address: &quot;switch1&quot;, interface: &quot;eth0&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink1&quot;, interface: &quot;eth1&quot;&#125;,</span></span><br><span class="line"><span class="comment">#                                      &#123;address: &quot;sink2&quot;, interface: &quot;eth2&quot;&#125;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># source applications</span></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">1</span></span><br><span class="line">*.source*.app<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;UdpSourceApp&quot;</span></span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.packetLength</span> = <span class="number">800</span>B</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.productionInterval</span> = <span class="number">20</span>us</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">io.destPort</span> = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">io.destAddress</span> = <span class="string">&quot;sink1&quot;</span></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">source.packetNameFormat</span> = <span class="string">&quot;source1-%c&quot;</span></span><br><span class="line"></span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">io.destAddress</span> = <span class="string">&quot;sink2&quot;</span></span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">10</span>us</span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.packetNameFormat</span> = <span class="string">&quot;source2-%c&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sink applications</span></span><br><span class="line">*.sink*.<span class="attr">numApps</span> = <span class="number">1</span></span><br><span class="line">*.sink*.app<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;UdpSinkApp&quot;</span></span><br><span class="line">*.sink*.app<span class="section">[0]</span>.<span class="attr">io.localPort</span> = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Ethernet interface and queueing</span></span><br><span class="line">*.*.eth<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;LayeredEthernetInterface&quot;</span></span><br><span class="line">*.*.eth<span class="section">[*]</span>.<span class="attr">bitrate</span> = <span class="number">1</span>Gbps</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.typename</span> = <span class="string">&quot;GatingPriorityQueue&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.numQueues</span> = <span class="number">2</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.classifier.typename</span> = <span class="string">&quot;ContentBasedClassifier&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.<span class="attr">macLayer.queue.classifier.packetFilters</span> = [<span class="string">&quot;source1*&quot;</span>, <span class="string">&quot;source2*&quot;</span>]</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.queue<span class="section">[*]</span>.<span class="attr">typename</span> = <span class="string">&quot;DropTailQueue&quot;</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">initiallyOpen</span> = <span class="literal">false</span></span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">durations</span> = [<span class="number">10</span>us, <span class="number">10</span>us]</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[1]</span>.<span class="attr">offset</span> = <span class="number">10</span>us</span><br><span class="line"></span><br><span class="line"><span class="section">[Config NoClockDrift]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Without clocks, network nodes are synchronized by simulation time&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Config ConstantClockDriftRate]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks with constant drift rate diverge over time&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;OscillatorBasedClock&quot;</span></span><br><span class="line">*.source*.<span class="attr">clock.oscillator.typename</span> = <span class="string">&quot;ConstantDriftOscillator&quot;</span></span><br><span class="line">*.<span class="attr">source1.clock.oscillator.driftRate</span> = <span class="number">500</span>ppm</span><br><span class="line">*.<span class="attr">source2.clock.oscillator.driftRate</span> = -<span class="number">400</span>ppm</span><br><span class="line">*.source*.app<span class="section">[0]</span>.<span class="attr">source.clockModule</span> = <span class="string">&quot;^.^.clock&quot;</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch1.clock.typename</span> = <span class="string">&quot;OscillatorBasedClock&quot;</span></span><br><span class="line">*.<span class="attr">switch1.clock.oscillator.typename</span> = <span class="string">&quot;ConstantDriftOscillator&quot;</span></span><br><span class="line">*.<span class="attr">switch1.clock.oscillator.driftRate</span> = <span class="number">300</span>ppm</span><br><span class="line">*.switch1.eth<span class="section">[0]</span>.macLayer.queue.gate<span class="section">[*]</span>.<span class="attr">clockModule</span> = <span class="string">&quot;^.^.^.^.clock&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Config OutOfBandSynchronization]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks are periodically synchronized out-of-band, without a real protocol&quot;</span></span><br><span class="line"><span class="attr">extends</span> = ConstantClockDriftRate</span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line">*.source*.<span class="attr">clock.defaultOverdueClockEventHandlingMode</span> = <span class="string">&quot;execute&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">2</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;SimpleClockSynchronizer&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">masterClockModule</span> = <span class="string">&quot;^.^.switch1.clock&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">slaveClockModule</span> = <span class="string">&quot;^.clock&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">synchronizationInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">synchronizationAccuracy</span> = uniform(-<span class="number">10</span>ns, <span class="number">10</span>ns)</span><br><span class="line"></span><br><span class="line"><span class="section">[Config GptpSynchronization]</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Clocks are periodically synchronized using gPTP&quot;</span></span><br><span class="line"><span class="attr">extends</span> = ConstantClockDriftRate</span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">hasGptp</span> = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">gptp.syncInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.switch*.<span class="attr">gptp.pdelayInterval</span> = <span class="number">1</span>ms</span><br><span class="line">*.switch*.<span class="attr">gptp.pdelayInitialOffset</span> = <span class="number">0</span>ms</span><br><span class="line"></span><br><span class="line">*.switch*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch1.gptp.gptpNodeType</span> = <span class="string">&quot;MASTER_NODE&quot;</span></span><br><span class="line">*.<span class="attr">switch1.gptp.masterPorts</span> = [<span class="string">&quot;eth0&quot;</span>, <span class="string">&quot;eth1&quot;</span>, <span class="string">&quot;eth2&quot;</span>]  <span class="comment"># eth*</span></span><br><span class="line"></span><br><span class="line">*.<span class="attr">switch2.gptp.gptpNodeType</span> = <span class="string">&quot;SLAVE_NODE&quot;</span></span><br><span class="line">*.<span class="attr">switch2.gptp.slavePort</span> = <span class="string">&quot;eth0&quot;</span></span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">clock.typename</span> = <span class="string">&quot;SettableClock&quot;</span></span><br><span class="line"></span><br><span class="line">*.source1.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">20</span>us</span><br><span class="line">*.source2.app<span class="section">[0]</span>.<span class="attr">source.initialProductionOffset</span> = <span class="number">30</span>us</span><br><span class="line"></span><br><span class="line">*.source*.<span class="attr">numApps</span> = <span class="number">2</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;Gptp&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">gptpNodeType</span> = <span class="string">&quot;SLAVE_NODE&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">slavePort</span> = <span class="string">&quot;eth0&quot;</span></span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">syncInterval</span> = <span class="number">500</span>us</span><br><span class="line">*.source*.app<span class="section">[1]</span>.<span class="attr">pdelayInterval</span> = <span class="number">1</span>ms</span><br></pre></td></tr></table></figure>
-<p><img src="C:%5CUsers%5CDeepsea%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221101225018707.png" alt="image-20221101225018707"></p>
-]]></content>
-      <tags>
-        <tag>TSN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to Use VPN</title>
-    <url>/How-to-Use-VPN/</url>
-    <content><![CDATA[<p>在国内，经常会碰到由于资源在境外导致无法访问的情况，为了解决这种问题，一种选择是镜像源，另一种选择是翻墙。本文将对后一种方式进行阐述。</p>
-<h1>一、基础</h1>
-<p>对于VPN的原理，本文不再赘述，详细可通过<a href="https://zhuanlan.zhihu.com/p/71536075">此文章</a>学习。我简单讲一下我的理解，方便后面配置。</p>
-<p>国内由于GFW的存在，无法访问国外的服务器（如Google等)。即从<code>218.x.x.x</code>到<code>31.x.x.x</code>被<strong>GFW</strong>(即国内防火墙）阻拦。</p>
-<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211131643971.png" alt="2"></p>
-<center>图1 无VPN情况访问外网</center>   
-<p>而VPN的实现方式是让你的流量从<code>218.x.x.x</code>代理到本地的<code>127.0.0.1</code>（本地回环地址），再通过代理软件将流量传输至代理服务器，经由代理服务器访问目标网站，这样就可以实现绕过GFW访问外网。</p>
-<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211131640388.png" alt="1"></p>
-<center>图2 有VPN情况访问外网</center>   
-<p>综上，我们知道要实现翻墙需要三个部分：</p>
-<ul>
-<li>本地端口号</li>
-<li>代理软件</li>
-<li>代理服务器</li>
-</ul>
-<p>其中，本地端口号是自己设置的；代理软件一般是免费开源的，如常见的<strong>ShadowsocksR</strong>，<strong>clash</strong>等；代理服务器一般是收费的，简单可以分为自建服务器（自己搭梯子）和购买供应商服务（机场）。其中自建服务器的优点在于相对便宜，缺点在于麻烦，并且可选择性少。机场的优点是方便，一般供应商会提供多个不同国家地区的服务器节点可供选择，但缺点是稍贵，而且担心机场跑路。</p>
-<p><strong>本文选择机场的方式翻墙</strong></p>
-<h1>二、购买机场</h1>
-<p>要想通过机场的方式翻墙，首先需要购买机场服务。</p>
-<p>这里我给出我自己使用的机场，可通过<a href="https://portal.shadowsocks.nz/aff.php?aff=45497">此链接</a>进行注册购买,我使用了2年了还算不错，每月100G流量，包年19.95美金，可允许两台设备同时在线。当然自己也可以选择信任的机场。</p>
-<p>购买完成后，进入【首页/客户中心/我的产品与服务/产品详细】下找到**【ClashX配置 】<strong>和</strong>【GUI-Config配置】**，这两个是我们购买的机场订阅链接，后面需要用到。</p>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142247764.png" alt="image-20221114224711704" style="zoom: 50%;" />
-<center>图3 服务器订阅链接</center>   
-<h1>三、代理软件配置</h1>
-<h2 id="3-1-Windows">3.1 Windows</h2>
-<h3 id="3-1-1-基础配置">3.1.1 基础配置</h3>
-<p>windows下推荐使用<code>clash for windows</code>，可在其<a href="https://github.com/Fndroid/clash_for_windows_pkg/releases">github</a>中下载最新版本。可阅读其<a href="https://docs.cfw.lbyczf.com/">中文官网</a>了解更多功能。</p>
-<p>安装好后界面如下：</p>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211141740751.png" alt="image-20221114174005613" style="zoom: 33%;" />
-<center>图4 ClashX配置</center>   
-<p>其中，我们重点关注 <strong>Port</strong>, <strong>Allow LAN</strong>, <strong>System Proxy</strong>, <strong>Start with Windows</strong> 这四项。</p>
-<ul>
-<li>
-<p>Port 即为代理端口，如图4所示，此时Clash for windows将流量代理到<strong>127.0.0.1:7890</strong>，可以通过windows设置下的【网络和Internet/代理/使用代理服务器】查看代理端口是否一致。一般来说启动软件时，windows会自动打开【使用代理服务器】这个开关。<strong>注意：有时候电脑无法上网等问题，可能是由于代理软件和windows代理不一致导致</strong></p>
-</li>
-<li>
-<p>Allow LAN 如果需要局域网内其他设备（如虚拟机）通过网络代理的方式进行翻墙，需要打开此设置</p>
-</li>
-<li>
-<p>System Proxy 系统代理，这个是必须要打开的</p>
-</li>
-<li>
-<p>Start with Windows 这个建议也打开，后面完全设置完之后，可以实现无感上网（即自动根据访问ip判断是否翻墙）</p>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211141744929.png" alt="image-20221114174440551"></p>
-<center>图5 Windows代理服务器配置</center>   
-<p>接下来配置代理服务器，选择Profiles，在URL框中粘贴购买的机场订阅链接（即图3中ClashX配置），点击下载。</p>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142248089.png" alt="image-20221114224801035" style="zoom:50%;" />
-<center>图6 配置代理服务器</center>   
-<p>下载完成后，会在Proxies中出现很多节点，测试延迟后选择自己需要的节点，双击即可。</p>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142248586.png" alt="image-20221114224839533" style="zoom:50%;" />
-<center>图7 选择需要的节点</center>   
-<p>其中有4种模式可以选择：</p>
-<ul>
-<li>Global 全局代理，对所有的上网流量进行代理</li>
-<li>Rule 按照设定好的规则进行代理</li>
-<li>Direct 直接连接，所有上网流量不进行代理</li>
-<li>Script 运行自定义脚本，一般不使用</li>
-</ul>
-<p>配置完成后，选择Global模式，连接一个国外的服务器，打开百度搜索IP，查看当前IP情况。<strong>注意：建议使用<a href="www.ip138.com">此网站</a>进行验证，这个网站比较蠢，有的厉害一点的网站可以看到翻墙之前的IP属地信息，使人误以为翻墙失败</strong></p>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142249537.png" alt="image-20221114224910500" style="zoom:50%;" />
-<center>图8 查询IP</center>   
-<p>至此Windows成功翻墙</p>
-<h3 id="3-1-2-自动代理配置">3.1.2 自动代理配置</h3>
-<p>上文中实现了全局代理，将所有流量代理到国外，这对我们日常访问国内网站带来了不便，为此我们需要进行自动代理配置。可参考<a href="https://github.com/Fndroid/clash_for_windows_pkg/issues/2193">此链接</a>,其原理是通过IP匹配的方式，对于非大陆IP采用代理，大陆IP采用直连。其<a href="https://github.com/Loyalsoldier/clash-rules">匹配规则</a>每天更新。</p>
-<p>打开 【Settings / Profiles / Parsers】，在其中写入以下内容，写入完成后，切换到<code>Direct</code>，在<code>Profiles</code>中更新订阅信息，并重启<code>Clash for windows</code>。若侧面出现<code>Providers</code>一栏，说明规则集加载成功。</p>
-<p><strong>注意：由于网络问题，可能造成规则集下载失败无法加载，需要多尝试几次</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">parsers:</span> <span class="comment"># array</span></span><br><span class="line">  <span class="comment"># - reg: ^.*$ 匹配所有订阅，或  - url: https://example.com/profile.yaml 指定订阅</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">reg:</span> <span class="string">^.*$</span></span><br><span class="line">  <span class="comment"># 删除服务商提供的策略组和规则</span></span><br><span class="line">    <span class="attr">code:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      module.exports.parse = (raw, &#123; yaml &#125;) =&gt; &#123;</span></span><br><span class="line"><span class="string">        const rawObj = yaml.parse(raw)</span></span><br><span class="line"><span class="string">        const groups = []</span></span><br><span class="line"><span class="string">        const rules = []</span></span><br><span class="line"><span class="string">        return yaml.stringify(&#123; ...rawObj, &#x27;proxy-groups&#x27;: groups, rules &#125;)</span></span><br><span class="line"><span class="string">      &#125; </span></span><br><span class="line"><span class="string"></span>  <span class="comment"># 建立自己的配置</span></span><br><span class="line">    <span class="attr">yaml:</span></span><br><span class="line">      <span class="attr">prepend-proxy-groups:</span> <span class="comment"># 建立策略组</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">🔯</span> <span class="string">代理模式</span> </span><br><span class="line">          <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">绕过大陆丨黑名单(GFWlist)</span> <span class="comment"># 黑名单模式，意为「只有命中规则的网络流量，才使用代理」</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">绕过大陆丨白名单(Whitelist)</span> <span class="comment"># 白名单模式，意为「没有命中规则的网络流量，统统使用代理」</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">🔰</span> <span class="string">选择节点</span> </span><br><span class="line">          <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">🛑</span> <span class="string">广告拦截</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">DIRECT</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">REJECT</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">PROXY</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">绕过大陆丨黑名单(GFWlist)</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">url-test</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">http://www.gstatic.com/generate_204</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">DIRECT</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">绕过大陆丨白名单(Whitelist)</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">url-test</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">http://www.gstatic.com/generate_204</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">PROXY</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">PROXY</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">url-test</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">http://www.gstatic.com/generate_204</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">🔰</span> <span class="string">选择节点</span></span><br><span class="line">            </span><br><span class="line">  <span class="comment"># 策略组示例</span></span><br><span class="line">       <span class="comment"># - name: 分组名</span></span><br><span class="line">         <span class="comment"># type: select       # 手动选点   </span></span><br><span class="line">               <span class="comment"># url-test     # 自动选择延迟最低的节点</span></span><br><span class="line">               <span class="comment"># fallback     # 节点故障时自动切换下一个</span></span><br><span class="line">               <span class="comment"># laod-balance # 均衡使用分组内的节点</span></span><br><span class="line">         <span class="comment"># url: http://www.gstatic.com/generate_204 # 测试地址 非select类型分组必要</span></span><br><span class="line">         <span class="comment"># interval: 300 # 自动测试间隔时间，单位秒 非select类型分组必要</span></span><br><span class="line">         <span class="comment"># tolerance: 50 # 允许的偏差，节点之间延迟差小于该值不切换 非必要</span></span><br><span class="line">         <span class="comment"># proxies:  </span></span><br><span class="line">           <span class="comment"># - 节点名称或其他分组套娃</span></span><br><span class="line">          </span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">proxy-groups.🔰</span> <span class="string">选择节点.proxies=[]proxyNames</span> <span class="comment"># 向指定策略组添加订阅中的节点名，可使用正则过滤</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">proxy-groups.🔰</span> <span class="string">选择节点.proxies.0+DIRECT</span> <span class="comment"># 向指定分组第一个位置添加一个 DIRECT 节点名</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 一些可能用到的正则过滤节点示例，使分组更细致</span></span><br><span class="line">        <span class="comment"># []proxyNames|a                         # 包含a</span></span><br><span class="line">        <span class="comment"># []proxyNames|^(.*)(a|b)+(.*)$          # 包含a或b</span></span><br><span class="line">        <span class="comment"># []proxyNames|^(?=.*a)(?=.*b).*$        # 包含a和b</span></span><br><span class="line">        <span class="comment"># []proxyNames|^((?!b).)*a((?!b).)*$     # 包含a且不包含b</span></span><br><span class="line">        <span class="comment"># []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c</span></span><br><span class="line">        </span><br><span class="line">  <span class="comment"># 添加规则</span></span><br><span class="line">      <span class="attr">prepend-rules:</span> <span class="comment"># 规则由上往下遍历，如上面规则已经命中，则不再往下处理</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,applications,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">DOMAIN,clash.razord.top,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">DOMAIN,yacd.haishan.me,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,private,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,reject,🛑</span> <span class="string">广告拦截</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,icloud,DIRECT</span> <span class="comment">#</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,apple,DIRECT</span> <span class="comment"># 这三个为国内可直连地址，如果希望走代理改为PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,google,DIRECT</span> <span class="comment"># </span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,tld-not-cn,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,gfw,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,greatfire,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,telegramcidr,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,lancidr,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,cncidr,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">GEOIP,,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">GEOIP,CN,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,direct,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,proxy,🔯</span> <span class="string">代理模式</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">MATCH,🔯</span> <span class="string">代理模式</span> <span class="comment"># 规则之外的</span></span><br><span class="line">  <span class="comment"># 添加规则集</span></span><br><span class="line">      <span class="attr">mix-rule-providers:</span> </span><br><span class="line">        <span class="attr">reject:</span> <span class="comment"># 广告域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/reject.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">icloud:</span> <span class="comment"># iCloud 域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/icloud.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">apple:</span> <span class="comment"># Apple 在中国大陆可直连的域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/apple.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">google:</span> <span class="comment"># Google 在中国大陆可直连的域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/google.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">proxy:</span> <span class="comment"># 代理域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/proxy.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">direct:</span> <span class="comment"># 直连域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/direct.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">private:</span> <span class="comment"># 私有网络专用域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/private.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">gfw:</span> <span class="comment"># GFWList 域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/gfw.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">greatfire:</span> <span class="comment"># GreatFire 域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/greatfire.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/greatfire.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">tld-not-cn:</span> <span class="comment"># 非中国大陆使用的顶级域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/tld-not-cn.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">telegramcidr:</span> <span class="comment"># Telegram 使用的 IP 地址列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">ipcidr</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/telegramcidr.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">cncidr:</span> <span class="comment"># 中国大陆 IP 地址列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">ipcidr</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/cncidr.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">lancidr:</span> <span class="comment"># 局域网 IP 及保留 IP 地址列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">ipcidr</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/lancidr.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">applications:</span> <span class="comment"># 需要直连的常见软件列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">classical</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/applications.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br></pre></td></tr></table></figure>
-<p>再次启动后，到<code>Rule</code>下依次选择<code>代理模式</code>-&gt;<code>绕过大陆白名单</code>-&gt;<code>选择节点</code>-&gt;<code>选择自己需要的节点</code></p>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142249268.png" alt="image-20221114224941214" style="zoom:50%;" />
-<center>图9 以Rule模式运行</center>   
-<p>至此自动代理配置完成，可在浏览器中进行以下实验</p>
-<ul>
-<li>
-<p>浏览器打开百度，搜索ip   查询结果为国内</p>
-</li>
-<li>
-<p>浏览器打开谷歌，搜索ip   查询结果为国外</p>
-</li>
-</ul>
-<h2 id="3-2-Linux">3.2 Linux</h2>
-<p>在Linux下，我个人使用体验最好的的代理软件是<code>Trajan-Qt5</code>，但是由于某些原因，作者删除了其github仓库，目前可以通过<a href="https://dl.trojan-cdn.com/trojan/linux/Trojan-Qt5-Linux.1.1.6.7z">此链接</a>下载之前的版本。</p>
-<p>目前我在 Debian 10.09，Ubuntu 18.04, Ubuntu 20.04系统上使用时没有遇到问题。</p>
-<p>在Linux下，有两种不同的翻墙方式，一种方式是在Linux下安装翻墙软件，直接进行翻墙。另一种方式是通过局域网代理的方式，将linux流量代理到windows系统下，在windows下实现翻墙。其中第一种方式更便捷。</p>
-<h3 id="3-2-1-直接方式">3.2.1 直接方式</h3>
-<p>在linux中下载好<code>Trajan-Qt5</code>，并下载图3中的<code>GUI-Config配置</code>。在Linux中解压安装包并赋予执行权限。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install p7zip-full					# 下载7z</span><br><span class="line"><span class="meta">#</span><span class="bash"> 双击压缩包解压</span></span><br><span class="line">cd Trojan-Qt5-Linux.1.1.6/</span><br><span class="line">sudo chmod 777 Trojan-Qt5-Linux.AppImage		# 赋予可执行权限</span><br><span class="line">./Trojan-Qt5-Linux.AppImage						# 打开Trojan</span><br></pre></td></tr></table></figure>
-<p>之后导入下载好的<code>GUI-Config配置</code>即可。</p>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142250284.png" alt="image-20221114225029244" style="zoom:50%;" />
-<center>图10 导入配置文件</center>   
-<p>此时，在界面下方显示网络被代理到<strong>127.0.0.1:58591</strong>，通过可通过linux系统的【Setting /Network /Network Proxy】进行查看。</p>
-<p>同时，可将Trojan-Qt5-Linux.AppImage移动到/usr/bin目录下，即可直接通过输入<code>Trojan-Qt5-Linux.AppImage</code>启动软件。</p>
-<h3 id="3-2-2-间接方式">3.2.2 间接方式</h3>
-<p>在使用Linux虚拟机时，可以通过间接方式，将Linux虚拟机中流量代理到windows主机中，由windows主机完成翻墙。</p>
-<p>首先查询windows主机IP地址</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> win + R</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cmd</span></span><br><span class="line">ipconfig</span><br></pre></td></tr></table></figure>
-<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142250376.png" alt="image-20221114225054343" style="zoom:50%;" />
-<center>图11 查询主机IP地址</center>   
-<p>虚拟机打开【Setting /Network /Network Proxy】，选择 Manual，将 HTTP Proxy 与 HTTPS Proxy 设置为主机IPv4地址，端口为<strong>7890</strong>（原因见图4），同时在 clash for windows 中打开 Allow LAN，即可实现代理。</p>
-<p><strong>注意：这种方法不成功的原因可能有1.主机与虚拟机无法ping通 2.主机虚拟机不在同一网段 3.主机防火墙 4.代理端口等</strong></p>
-<h2 id="3-3-Android">3.3 Android</h2>
-<p>Android下推荐使用<code>clash for Android</code>，可在其<a href="https://github.com/Kr328/ClashForAndroid/releases">github</a>中下载最新版本。其配置方式与 clash for windows大同小异，在此不做赘述。</p>
-<h1>四、Apt Git配置</h1>
-<p>当我们完成上文的操作后，已可以正常访问 Github、Youtube等网站。但是用<code>git</code>、<code>apt</code>等指令下载时速度还是很慢，这是因为这两条指令默认不走代理端口。</p>
-<p><strong>注意：按照上文中的配置，windows下代理端口为<code>7890</code>，Linux下代理端口为<code>58591</code>，如果自行更改端口，请对应修改指令</strong></p>
-<h2 id="4-1-Apt配置代理">4.1 Apt配置代理</h2>
-<p>可参考<a href="https://blog.csdn.net/lonelysky/article/details/81059339">此链接</a>，在 /etc/apt/apt.conf.d 文件夹下新建了一个<code>apt-proxy.conf</code>文件，在文件中写入以下语句：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Acquire::http::Proxy &quot;http://127.0.0.1:58591/&quot;;</span><br><span class="line">Acquire::https::Proxy &quot;http://127.0.0.1:58591/&quot;;</span><br></pre></td></tr></table></figure>
-<p>其原理是<code>apt</code>指令每次执行都会读取<code>apt.conf.d</code>文件夹下所有配置，但在执行apt指令前需要打开代理软件。</p>
-<h2 id="4-2-Git配置代理">4.2 Git配置代理</h2>
-<p>可参考<a href="https://www.jianshu.com/p/739f139cf13c">此链接</a>,直接在终端输入以下指令即可</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global https.proxy http://127.0.0.1:58591</span><br><span class="line"></span><br><span class="line">git config --global https.proxy https://127.0.0.1:58591</span><br><span class="line"></span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line"></span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>VPN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>TSN Simulation - NeSTiNg</title>
     <url>/TSN-Simulation-NeSTiNg/</url>
-    <content><![CDATA[<h1>一、简介</h1>
-<p>TSN（Time-Sensitive Networking）时间敏感网络，即在非确定性的以太网中实现确定性的最小时间延时的协议族，是IEEE 802.1工作组中的TSN工作组开发的一套协议标准。其定义了以太网数据传输的时间敏感机制，为标准以太网增加了确定性和可靠性，以确保数据实时、确定和可靠地传输。</p>
-<p>OMNeT++(Objective Modular Network TestBed in C++) 是基于 Eclipse 开发的开源的基于组件的模块化的开放网络仿真平台，是近年来在科学和工业领域里逐渐流行的一种优秀的网络仿真平台。其作为离散事件仿真器，具备强大完善的图形界面接口和可嵌入式仿真内核，同NS2等仿真平台相比，OMNeT++可运行于多个操作系统平台，可以简便定义网络拓扑结构，具备编程，调试和跟踪支持等功能。</p>
+    <content><![CDATA[<h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><p>TSN（Time-Sensitive Networking）时间敏感网络，即在非确定性的以太网中实现确定性的最小时间延时的协议族，是IEEE 802.1工作组中的TSN工作组开发的一套协议标准。其定义了以太网数据传输的时间敏感机制，为标准以太网增加了确定性和可靠性，以确保数据实时、确定和可靠地传输。 </p>
+<p>OMNeT++(Objective Modular Network TestBed in C++) 是基于 Eclipse 开发的开源的基于组件的模块化的开放网络仿真平台，是近年来在科学和工业领域里逐渐流行的一种优秀的网络仿真平台。其作为离散事件仿真器，具备强大完善的图形界面接口和可嵌入式仿真内核，同NS2等仿真平台相比，OMNeT++可运行于多个操作系统平台，可以简便定义网络拓扑结构，具备编程，调试和跟踪支持等功能。 </p>
 <p>目前，OMNeT++中常用的TSN仿真库如下：</p>
 <table>
   <tr>
@@ -464,119 +44,114 @@
     <td><center>结构相对简单易理解，可以用作TSN仿真入门理解</center></td> 
   </tr>
 </table>
+
+
 <p><strong>注意：本文主体是在2022年4月完成的，当时 NeSTiNg 还是不错的选择，但是今年6月推出的 INET 4.4 ，其功能完善并且文档齐全，更推荐直接学习 <font color=red>INET 4.4</font></strong></p>
-<h1>二、搭建仿真环境</h1>
-<h2 id="2-1-仿真环境">2.1 仿真环境</h2>
-<p>本文采用的仿真环境为：</p>
+<h1 id="二、搭建仿真环境"><a href="#二、搭建仿真环境" class="headerlink" title="二、搭建仿真环境"></a>二、搭建仿真环境</h1><h2 id="2-1-仿真环境"><a href="#2-1-仿真环境" class="headerlink" title="2.1 仿真环境"></a>2.1 仿真环境</h2><p>本文采用的仿真环境为：</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">版本</th>
-<th style="text-align:center">功能</th>
+<th align="center"></th>
+<th align="center">版本</th>
+<th align="center">功能</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">Ubuntu</td>
-<td style="text-align:center">18.04</td>
-<td style="text-align:center">仿真平台操作系统</td>
+<tbody><tr>
+<td align="center">Ubuntu</td>
+<td align="center">18.04</td>
+<td align="center">仿真平台操作系统</td>
 </tr>
 <tr>
-<td style="text-align:center">OMNeT++</td>
-<td style="text-align:center">5.5.1</td>
-<td style="text-align:center">仿真平台</td>
+<td align="center">OMNeT++</td>
+<td align="center">5.5.1</td>
+<td align="center">仿真平台</td>
 </tr>
 <tr>
-<td style="text-align:center">INET Framework</td>
-<td style="text-align:center">4.1.2</td>
-<td style="text-align:center">提供多种网络协议仿真</td>
+<td align="center">INET Framework</td>
+<td align="center">4.1.2</td>
+<td align="center">提供多种网络协议仿真</td>
 </tr>
 <tr>
-<td style="text-align:center">NeSTiNg</td>
-<td style="text-align:center">/</td>
-<td style="text-align:center">提供多种TSN模型</td>
+<td align="center">NeSTiNg</td>
+<td align="center">&#x2F;</td>
+<td align="center">提供多种TSN模型</td>
 </tr>
-</tbody>
-</table>
-<h2 id="2-2-编译安装">2.2 编译安装</h2>
-<p>网上有大量OMNeT++的安装教程，在此不做赘述。具体可参照以下链接。</p>
+</tbody></table>
+<h2 id="2-2-编译安装"><a href="#2-2-编译安装" class="headerlink" title="2.2 编译安装"></a>2.2 编译安装</h2><p>网上有大量OMNeT++的安装教程，在此不做赘述。具体可参照以下链接。</p>
 <blockquote>
-<p><a href="https://blog.csdn.net/weixin_37702021/article/details/121306656">https://blog.csdn.net/weixin_37702021/article/details/121306656</a><br>
-<a href="https://doc.omnetpp.org/omnetpp/InstallGuide.pdf">https://doc.omnetpp.org/omnetpp/InstallGuide.pdf</a></p>
+<p><a href="https://blog.csdn.net/weixin_37702021/article/details/121306656">https://blog.csdn.net/weixin_37702021/article/details/121306656</a><br><a href="https://doc.omnetpp.org/omnetpp/InstallGuide.pdf">https://doc.omnetpp.org/omnetpp/InstallGuide.pdf</a></p>
 </blockquote>
-<h2 id="2-3-常见问题">2.3 常见问题</h2>
-<ul>
+<h2 id="2-3-常见问题"><a href="#2-3-常见问题" class="headerlink" title="2.3 常见问题"></a>2.3 常见问题</h2><ul>
 <li><strong><font color=red>安装过程中不要使用root用户</font></strong></li>
 <li>配置过程中需要下载大量国外资源，建议配置apt代理和git代理，具体可参考<a href="https://deepsea52418.github.io/How-to-Use-VPN/">此文章</a></li>
 </ul>
-<h1>三、仿真模型分析</h1>
-<p>在本章节，我们将根据ned文件描述，分析 NeSTiNg 中引入的TSN终端和TSN交换机模型具体功能及结构。</p>
-<h2 id="3-1-TSN交换机">3.1 TSN交换机</h2>
-<h3 id="3-1-1-交换机缓冲架构">3.1.1 交换机缓冲架构</h3>
-<p>一台交换机具有多个输入输出端口，交换机内部通过交换矩阵将端口连接起来。交换机内有一块资源存储缓冲区，用于存储待转发的数据包。根据缓冲区位置的不同，可以分为以下<a href="https://www.sdnlab.com/author/15680/">四种架构</a>：<br>
-(a) 输出端口缓冲架构：将缓冲区置于出端口位置。其相比于输入端口缓冲具有更好的吞吐性。但每个输出端口需要 N 倍于线路带宽的处理能力来处理来自 N 个输入端口的帧，对处理芯片性能要求高。<br>
-(b) 输入端口缓冲+虚拟输出队列（VOQs）架构：可以满足处理速度，但吞吐量低，是目前最常用的架构。<br>
-© 交叉点缓冲架构：吞吐量大，但是对于具有N个端口的交换机需要O(N*N)的缓存空间。所需空间大，空间利用率低。<br>
-© 交换-内存-交换 (SMS) 架构：每个输入和输出端口共享中间的所有缓冲区，空间利用率高。</p>
+<h1 id="三、仿真模型分析"><a href="#三、仿真模型分析" class="headerlink" title="三、仿真模型分析"></a>三、仿真模型分析</h1><p>在本章节，我们将根据ned文件描述，分析 NeSTiNg 中引入的TSN终端和TSN交换机模型具体功能及结构。</p>
+<h2 id="3-1-TSN交换机"><a href="#3-1-TSN交换机" class="headerlink" title="3.1 TSN交换机"></a>3.1 TSN交换机</h2><h3 id="3-1-1-交换机缓冲架构"><a href="#3-1-1-交换机缓冲架构" class="headerlink" title="3.1.1 交换机缓冲架构"></a>3.1.1 交换机缓冲架构</h3><p>一台交换机具有多个输入输出端口，交换机内部通过交换矩阵将端口连接起来。交换机内有一块资源存储缓冲区，用于存储待转发的数据包。根据缓冲区位置的不同，可以分为以下<a href="https://www.sdnlab.com/author/15680/">四种架构</a>：<br>(a) 输出端口缓冲架构：将缓冲区置于出端口位置。其相比于输入端口缓冲具有更好的吞吐性。但每个输出端口需要 N 倍于线路带宽的处理能力来处理来自 N 个输入端口的帧，对处理芯片性能要求高。<br>(b) 输入端口缓冲+虚拟输出队列（VOQs）架构：可以满足处理速度，但吞吐量低，是目前最常用的架构。<br>(c) 交叉点缓冲架构：吞吐量大，但是对于具有N个端口的交换机需要O(N*N)的缓存空间。所需空间大，空间利用率低。<br>(c) 交换-内存-交换 (SMS) 架构：每个输入和输出端口共享中间的所有缓冲区，空间利用率高。</p>
 <img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211181451219.png" alt="image-20221118145125137" style="zoom:50%;" />
+
 <center>图1 交换机缓冲架构</center>   
 ### 3.1.2 NeSTiNg交换机架构
+
 <p>在 NeSTiNg 中提供了一个支持帧抢占的TSN交换机<code>VlanEtherSwitchPreemptable</code>，其采用<strong>输出端口缓冲</strong>的架构，流量在交换机中完成交换后，在对应输出端口中进行排队。如图2所示为TSN交换机的上半部分，主要负责对来自lowerLayer的流量进行转发，并将其传输至输出端口队列进行排队。</p>
 <img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211181452314.png" alt="image-20221118145201262" style="zoom:50%;" />
+
 <center>图2 交换机上半部分内部结构</center>
+
 <p>其上半部分涉及到的模块功能如下：</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">模块</th>
-<th style="text-align:left">功能</th>
+<th align="left">模块</th>
+<th align="left">功能</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">interface Table</td>
-<td style="text-align:left">负责将新接入交换机设备的mac地址和对应端口绑定</td>
+<tbody><tr>
+<td align="left">interface Table</td>
+<td align="left">负责将新接入交换机设备的mac地址和对应端口绑定</td>
 </tr>
 <tr>
-<td style="text-align:left">Filtering Database</td>
-<td style="text-align:left">过滤数据库负责存储数据包的过滤和转发规则，用于中继模块</td>
+<td align="left">Filtering Database</td>
+<td align="left">过滤数据库负责存储数据包的过滤和转发规则，用于中继模块</td>
 </tr>
 <tr>
-<td style="text-align:left">clock</td>
-<td style="text-align:left">交换机时钟，负责时间同步</td>
+<td align="left">clock</td>
+<td align="left">交换机时钟，负责时间同步</td>
 </tr>
 <tr>
-<td style="text-align:left">scheduleSwap</td>
-<td style="text-align:left">调度交换模块</td>
+<td align="left">scheduleSwap</td>
+<td align="left">调度交换模块</td>
 </tr>
 <tr>
-<td style="text-align:left">ProcessingDelay</td>
-<td style="text-align:left">延迟模块，负责仿真流量在交换机内部寻找路由等所消耗时间</td>
+<td align="left">ProcessingDelay</td>
+<td align="left">延迟模块，负责仿真流量在交换机内部寻找路由等所消耗时间</td>
 </tr>
 <tr>
-<td style="text-align:left">relayUnit</td>
-<td style="text-align:left">中继模块，负责仿真流量在交换机内部寻找目的端口</td>
+<td align="left">relayUnit</td>
+<td align="left">中继模块，负责仿真流量在交换机内部寻找目的端口</td>
 </tr>
 <tr>
-<td style="text-align:left">queuing</td>
-<td style="text-align:left">输出端口队列，存储转发至该端口待传输的数据包</td>
+<td align="left">queuing</td>
+<td align="left">输出端口队列，存储转发至该端口待传输的数据包</td>
 </tr>
 <tr>
-<td style="text-align:left">lowerLayer</td>
-<td style="text-align:left">下层接口，负责将流量传入物理层传输</td>
+<td align="left">lowerLayer</td>
+<td align="left">下层接口，负责将流量传入物理层传输</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>如图3所示为TSN交换机的下半部分，主要负责对来自MAC层的流量进行处理。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182114917.png" alt="image-20220401172420972"></p>
 <center>图3 交换机下半部分内部结构</center>
+
 <p>如图4所示为TSN交换机网卡中结构，流量从MAC层进入后，经由VLAN Tag处理和出入规则调节器（ ingressTC , egressTC )后，进入TSN交换机。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182113137.png" alt="image-20220401172518711"></p>
 <center>图4 网卡内部结构</center>
+
 <p>如图5所示为输出端口队列（即图2中queuing）内部结构，由以下模块组成：</p>
 <img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182126073.png" alt="image-20221118212624983" style="zoom:50%;" />
+
 <center>图5 输出队列内部结构</center>  
+
+
 <table>
 <thead>
 <tr>
@@ -584,8 +159,7 @@
 <th>功能</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>gateController</td>
 <td>负责控制GCL，控制门（tGates）的开关</td>
 </tr>
@@ -609,130 +183,484 @@
 <td>transmissionSelection</td>
 <td>传输选择，当同一时间端口中有多个队列的流量都可传输时，选择优先传输的流量</td>
 </tr>
-</tbody>
-</table>
-<p>在此，我们利用一个流量从交换机入端口（ingress）到出端口（egress）的流程来演示流量在交换机内部的操作。（条件设定：流量vlan pcp=7；当前时间=0s；processingDelay=5us；tsAlgorithms=FIFO；交换机内部端口队列中无存储流量，无正在传输流量；GCL=01111111 100us 10000000 100us；流量从0号端口入，1号端口出）</p>
-<p>在端设备连接到交换机上时，interface Table在交换机内部将端口号与mac地址绑定。filtering Database存储数据包过滤与转发的规则。流量从0号端口进入交换机时，filtering Database决定是否接收该数据包，数据包从物理层经由lowerLayer[0]进入交换机，relayUnit根据流量目的地址，将其转发至1号端口。整个过程耗时5us。流量进入1号端口queuingFrames，其根据流量PCP值，将其映射至queues[7]等待传输。tsAlgorithms配置为FIFO模式，因此该流量在queues[7]中不在重新排队。此时时间为5us，tGates[7]=0，关门，7号队列流量无法传输。当时间到达100us时，tGates[7]=1，开门。流量进入transmissionSelection中，由于只有7号队列的流量，所以直接进入lowerLayer[1]，传输至物理层。</p>
-<h2 id="3-2-TSN终端">3.2 TSN终端</h2>
-<h3 id="3-2-1-VlanEtherHostSched">3.2.1 VlanEtherHostSched</h3>
-<p>该模块实现了可根据给定时间表发送带有VLAN Tag数据的简单主机，一般充当实时性通信的双方。其具体结构如下图所示：</p>
+</tbody></table>
+<p>在此，我们利用一个流量从交换机入端口（ingress）到出端口（egress）的流程来演示流量在交换机内部的操作。（条件设定：流量vlan pcp&#x3D;7；当前时间&#x3D;0s；processingDelay&#x3D;5us；tsAlgorithms&#x3D;FIFO；交换机内部端口队列中无存储流量，无正在传输流量；GCL&#x3D;01111111 100us 10000000 100us；流量从0号端口入，1号端口出）</p>
+<p>在端设备连接到交换机上时，interface Table在交换机内部将端口号与mac地址绑定。filtering Database存储数据包过滤与转发的规则。流量从0号端口进入交换机时，filtering Database决定是否接收该数据包，数据包从物理层经由lowerLayer[0]进入交换机，relayUnit根据流量目的地址，将其转发至1号端口。整个过程耗时5us。流量进入1号端口queuingFrames，其根据流量PCP值，将其映射至queues[7]等待传输。tsAlgorithms配置为FIFO模式，因此该流量在queues[7]中不在重新排队。此时时间为5us，tGates[7]&#x3D;0，关门，7号队列流量无法传输。当时间到达100us时，tGates[7]&#x3D;1，开门。流量进入transmissionSelection中，由于只有7号队列的流量，所以直接进入lowerLayer[1]，传输至物理层。</p>
+<h2 id="3-2-TSN终端"><a href="#3-2-TSN终端" class="headerlink" title="3.2 TSN终端"></a>3.2 TSN终端</h2><h3 id="3-2-1-VlanEtherHostSched"><a href="#3-2-1-VlanEtherHostSched" class="headerlink" title="3.2.1 VlanEtherHostSched"></a>3.2.1 VlanEtherHostSched</h3><p>该模块实现了可根据给定时间表发送带有VLAN Tag数据的简单主机，一般充当实时性通信的双方。其具体结构如下图所示：</p>
 <img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182129920.png" alt="image-20221118212907797" style="zoom: 25%;" />
+
 <center>图6 VlanEtherHostSched模型</center>
-<h3 id="3-2-2-VlanEtherHostQ">3.2.2 VlanEtherHostQ</h3>
-<p>该模块实现了可以发送带有VLAN Tag数据的简单主机，一般充当非实时性通信的双方。其具体结构如下图所示：</p>
+
+<h3 id="3-2-2-VlanEtherHostQ"><a href="#3-2-2-VlanEtherHostQ" class="headerlink" title="3.2.2 VlanEtherHostQ"></a>3.2.2 VlanEtherHostQ</h3><p>该模块实现了可以发送带有VLAN Tag数据的简单主机，一般充当非实时性通信的双方。其具体结构如下图所示：</p>
 <img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182136212.png" alt="image-20220401173004381" style="zoom:150%;" />
+
 <center>图7 VlanEtherHostQ模型</center>
+
 <p><strong>注意：VlanEtherHostQ、VlanEtherHostSched中以太网网卡模型与VlanEtherSwitchPreemptable中以太网网卡结构不同，此处暂不做分析。</strong></p>
-<h1>四、仿真实验</h1>
-<p>在本章节，将结合 <a href="https://www2.informatik.uni-stuttgart.de/bibliothek/ftp/ncstrl.ustuttgart_fi/INPROC-2019-04/INPROC-2019-04.pdf">NeSTiNg论文</a> 与源代码，分析其具体实现方式，并复现论文实验结果。NeSTiNg官方提供的3个例程模拟TSN网络。例程位于【 Nesting / simulation / examples】目录下，分别为：</p>
+<h1 id="四、仿真实验"><a href="#四、仿真实验" class="headerlink" title="四、仿真实验"></a>四、仿真实验</h1><p>在本章节，将结合 <a href="https://www2.informatik.uni-stuttgart.de/bibliothek/ftp/ncstrl.ustuttgart_fi/INPROC-2019-04/INPROC-2019-04.pdf">NeSTiNg论文</a> 与源代码，分析其具体实现方式，并复现论文实验结果。NeSTiNg官方提供的3个例程模拟TSN网络。例程位于【 Nesting &#x2F; simulation &#x2F; examples】目录下，分别为：</p>
 <ul>
 <li>01_example_strict_priority：严格优先级</li>
 <li>02_example_gating：门控</li>
 <li>03_example_frame_preemption：帧抢占</li>
 </ul>
-<h2 id="4-1-ned文件详解">4.1 ned文件详解</h2>
-<p>在ned文件中，指出链路传播延迟=0.1us，链路带宽1Gbps。交换机采用VlanEtherSwitchPreemptable模型，robotController采用VlanEtherHostSched模型，其余终端采用VlanEtherHostQ模型。</p>
+<h2 id="4-1-ned文件详解"><a href="#4-1-ned文件详解" class="headerlink" title="4.1 ned文件详解"></a>4.1 ned文件详解</h2><p>在ned文件中，指出链路传播延迟&#x3D;0.1us，链路带宽1Gbps。交换机采用VlanEtherSwitchPreemptable模型，robotController采用VlanEtherHostSched模型，其余终端采用VlanEtherHostQ模型。</p>
 <p>3个例程采用同一个ned文件（TestScenario.ned）描述的网络拓扑。网络拓扑如下图所示，其中workstation1与workstation2向backupServer发送数据包，robotCotroller向roboticArm发生数据包。</p>
 <img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182137478.png" alt="image-20221118213756420" style="zoom:50%;" />
+
   <center>图8 网络拓扑</center>   
+
 <table>
 <thead>
 <tr>
-<th style="text-align:center">源</th>
-<th style="text-align:center">目的</th>
-<th style="text-align:center">优先级</th>
-<th style="text-align:center">发送间隔</th>
-<th style="text-align:center">帧大小</th>
-<th style="text-align:center">帧传输时间</th>
+<th align="center">源</th>
+<th align="center">目的</th>
+<th align="center">优先级</th>
+<th align="center">发送间隔</th>
+<th align="center">帧大小</th>
+<th align="center">帧传输时间</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">RobotController</td>
-<td style="text-align:center">RoboticArm</td>
-<td style="text-align:center">7</td>
-<td style="text-align:center">400us</td>
-<td style="text-align:center">354B</td>
-<td style="text-align:center">2.832us</td>
+<tbody><tr>
+<td align="center">RobotController</td>
+<td align="center">RoboticArm</td>
+<td align="center">7</td>
+<td align="center">400us</td>
+<td align="center">354B</td>
+<td align="center">2.832us</td>
 </tr>
 <tr>
-<td style="text-align:center">workStation1</td>
-<td style="text-align:center">BackupServer</td>
-<td style="text-align:center">6</td>
-<td style="text-align:center">12us</td>
-<td style="text-align:center">1500B</td>
-<td style="text-align:center">12us</td>
+<td align="center">workStation1</td>
+<td align="center">BackupServer</td>
+<td align="center">6</td>
+<td align="center">12us</td>
+<td align="center">1500B</td>
+<td align="center">12us</td>
 </tr>
 <tr>
-<td style="text-align:center">workStation2</td>
-<td style="text-align:center">BackupServer</td>
-<td style="text-align:center">5</td>
-<td style="text-align:center">12us</td>
-<td style="text-align:center">1500B</td>
-<td style="text-align:center">12us</td>
+<td align="center">workStation2</td>
+<td align="center">BackupServer</td>
+<td align="center">5</td>
+<td align="center">12us</td>
+<td align="center">1500B</td>
+<td align="center">12us</td>
 </tr>
-</tbody>
-</table>
-<h2 id="4-2-严格优先级">4.2 严格优先级</h2>
-<h3 id="4-2-1-example-strict-priority-ini文件">4.2.1 example_strict_priority.ini文件</h3>
-<p>在本小节我们对01_example_strict_priority.ini文件内容进行全面的解析，对于另外两个ini文件我们仅描述其不同点。</p>
+</tbody></table>
+<h2 id="4-2-严格优先级"><a href="#4-2-严格优先级" class="headerlink" title="4.2 严格优先级"></a>4.2 严格优先级</h2><h3 id="4-2-1-example-strict-priority-ini文件"><a href="#4-2-1-example-strict-priority-ini文件" class="headerlink" title="4.2.1 example_strict_priority.ini文件"></a>4.2.1 example_strict_priority.ini文件</h3><p>在本小节我们对01_example_strict_priority.ini文件内容进行全面的解析，对于另外两个ini文件我们仅描述其不同点。</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[General]</span>  </span><br><span class="line"><span class="comment"># 指定使用的网络拓扑文件名</span></span><br><span class="line"><span class="attr">network</span> = TestScenario  </span><br><span class="line"><span class="attr">record-eventlog</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="attr">debug-on-errors</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="comment"># 仿真结果输出文件夹名</span></span><br><span class="line"><span class="attr">result-dir</span> = results_strict_priority  </span><br><span class="line"><span class="attr">sim-time-limit</span> = <span class="number">1</span>s   </span><br><span class="line">**.<span class="attr">displayAddresses</span> = <span class="literal">true</span>  </span><br><span class="line">**.<span class="attr">verbose</span> = <span class="literal">true</span> </span><br><span class="line"><span class="comment"># 配置终端设备MAC地址 </span></span><br><span class="line">**.<span class="attr">robotController.eth.address</span> = <span class="string">&quot;00-00-00-00-00-01&quot;</span>  </span><br><span class="line">**.<span class="attr">workstation1.eth.address</span> = <span class="string">&quot;00-00-00-00-00-02&quot;</span>  </span><br><span class="line">**.<span class="attr">workstation2.eth.address</span> = <span class="string">&quot;00-00-00-00-00-03&quot;</span>  </span><br><span class="line">**.<span class="attr">roboticArm.eth.address</span> = <span class="string">&quot;00-00-00-00-00-04&quot;</span>  </span><br><span class="line">**.<span class="attr">backupServer.eth.address</span> = <span class="string">&quot;00-00-00-00-00-05&quot;</span>  </span><br><span class="line"><span class="comment"># 交换机默认延迟是4us,在此处延迟设定为5us </span></span><br><span class="line">**.switch*.<span class="attr">processingDelay.delay</span> = <span class="number">5</span>us </span><br><span class="line"><span class="comment"># 配置交换机路由表</span></span><br><span class="line">**.<span class="attr">filteringDatabase.database</span> = xmldoc(<span class="string">&quot;xml/TestScenarioRouting.xml&quot;</span>, <span class="string">&quot;/filteringDatabases/&quot;</span>)  </span><br><span class="line"><span class="comment"># 配置交换机GCL和流量整形算法</span></span><br><span class="line"><span class="comment"># 注：本人认为只需要在交换机A的3号端口进行配置即可，没必要在交换机B的0号端口进行配置，因为数据包拥塞发生在A的3号端口到B的2号端口上</span></span><br><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_AllOpen.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchA&#x27;]/port[@id=&#x27;3&#x27;]/schedule&quot;</span>)  </span><br><span class="line">**.switchB.eth<span class="section">[0]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_AllOpen.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchB&#x27;]/port[@id=&#x27;0&#x27;]/schedule&quot;</span>)  </span><br><span class="line"><span class="comment"># 注：此处enableHoldAndRelease作用暂不了解，怀疑可能和配置网卡发送方式有关</span></span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.<span class="attr">queue.gateController.enableHoldAndRelease</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.<span class="attr">queue.numberOfQueues</span> = <span class="number">8</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[0]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[1]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[2]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[3]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[4]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[5]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[6]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.tsAlgorithms<span class="section">[7]</span>.<span class="attr">typename</span> = <span class="string">&quot;StrictPriority&quot;</span>  </span><br><span class="line"><span class="comment"># 注：此处expressQueue作用暂不了解</span></span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[0]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[1]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[2]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[3]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[4]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[5]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[6]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[7]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="comment"># 设定交换机队列缓冲区大小,约29个MTU</span></span><br><span class="line">**.queues<span class="section">[*]</span>.<span class="attr">bufferCapacity</span> = <span class="number">363360</span>b  </span><br><span class="line"><span class="comment"># 设定交换机是否运行帧抢占  </span></span><br><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">mac.enablePreemptingFrames</span> = <span class="literal">false</span>    </span><br><span class="line"><span class="comment"># 配置RobotController的GCL  </span></span><br><span class="line">**.<span class="attr">robotController.trafGenSchedApp.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_AllOpen.xml&quot;</span>)   </span><br><span class="line"><span class="comment"># 配置workstation的流量大小、优先级、发送间隔、VLAN Tag</span></span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.destAddress</span> = <span class="string">&quot;00-00-00-00-00-05&quot;</span> </span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.packetLength</span> = <span class="number">1500</span>Byte-<span class="number">4</span>Byte </span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.sendInterval</span> = <span class="number">12</span>us  </span><br><span class="line">**.workstation*.<span class="attr">trafGenApp.vlanTagEnabled</span> = <span class="literal">true</span>  </span><br><span class="line">**.<span class="attr">workstation1.trafGenApp.pcp</span> = <span class="number">6</span>  </span><br><span class="line">**.<span class="attr">workstation2.trafGenApp.pcp</span> = <span class="number">5</span>  </span><br><span class="line"><span class="comment"># 配置RoboticArm为仅接收。numPacketsPerBurst = 0 表示不发送数据包，以下三个参数必须配置，否则无法运行 </span></span><br><span class="line">**.<span class="attr">roboticArm.trafGenApp.numPacketsPerBurst</span> = <span class="number">0</span>  </span><br><span class="line">**.<span class="attr">roboticArm.trafGenApp.sendInterval</span> = <span class="number">1</span>ms  </span><br><span class="line">**.<span class="attr">roboticArm.trafGenApp.packetLength</span> = <span class="number">100</span>B   </span><br><span class="line"><span class="comment"># 配置BackupServer为仅接收  </span></span><br><span class="line">**.<span class="attr">backupServer.trafGenApp.numPacketsPerBurst</span> = <span class="number">0</span>  </span><br><span class="line">**.<span class="attr">backupServer.trafGenApp.sendInterval</span> = <span class="number">1</span>ms  </span><br><span class="line">**.<span class="attr">backupServer.trafGenApp.packetLength</span> = <span class="number">100</span>B  </span><br></pre></td></tr></table></figure>
-<h3 id="4-2-2-TestScenarioSchedule-AllOpen-xml文件">4.2.2 TestScenarioSchedule_AllOpen.xml文件</h3>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>    </span><br><span class="line"><span class="tag">&lt;<span class="name">schedules</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">defaultcycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">defaultcycle</span>&gt;</span>   </span><br><span class="line"># 设定robotController发送周期为400us，流量大小354B，优先级7 </span><br><span class="line">    <span class="tag">&lt;<span class="name">host</span> <span class="attr">name</span>=<span class="string">&quot;robotController&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">cycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">cycle</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line"># 不知道这个start的设置是不是保护带？  </span><br><span class="line">            <span class="tag">&lt;<span class="name">start</span>&gt;</span>10us<span class="tag">&lt;/<span class="name">start</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">queue</span>&gt;</span>7<span class="tag">&lt;/<span class="name">queue</span>&gt;</span>    </span><br><span class="line">         		  <span class="tag">&lt;<span class="name">dest</span>&gt;</span>00:00:00:00:00:04<span class="tag">&lt;/<span class="name">dest</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">size</span>&gt;</span>354B<span class="tag">&lt;/<span class="name">size</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">flowId</span>&gt;</span>1<span class="tag">&lt;/<span class="name">flowId</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">host</span>&gt;</span>    </span><br><span class="line"># 设定交换机所有门一直打开</span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchA&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;3&quot;</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>11111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchB&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;0&quot;</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>11111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>    </span><br><span class="line">              	 <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;/<span class="name">schedules</span>&gt;</span> </span><br></pre></td></tr></table></figure>
-<h3 id="4-2-3-StrictPriority算法">4.2.3 StrictPriority算法</h3>
-<p>暂未了解算法具体代码。大体意思是流量严格按照高优先级到低优先级的顺序发送，只要有高优先级流量存在，低优先级就需要等待高优先级发送完成后才可发送。</p>
-<h3 id="4-2-4-实验结果">4.2.4 实验结果</h3>
-<p>通过观察RoboticArm端应用程序统计的端到端延迟（endToEndDelay:vector TestScenario.roboticArm.tranfGenApp），可以看到延迟范围是19.5us-31.8us，且呈现一定的周期性。</p>
+
+<h3 id="4-2-2-TestScenarioSchedule-AllOpen-xml文件"><a href="#4-2-2-TestScenarioSchedule-AllOpen-xml文件" class="headerlink" title="4.2.2 TestScenarioSchedule_AllOpen.xml文件"></a>4.2.2 TestScenarioSchedule_AllOpen.xml文件</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>    </span><br><span class="line"><span class="tag">&lt;<span class="name">schedules</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">defaultcycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">defaultcycle</span>&gt;</span>   </span><br><span class="line"># 设定robotController发送周期为400us，流量大小354B，优先级7 </span><br><span class="line">    <span class="tag">&lt;<span class="name">host</span> <span class="attr">name</span>=<span class="string">&quot;robotController&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">cycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">cycle</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line"># 不知道这个start的设置是不是保护带？  </span><br><span class="line">            <span class="tag">&lt;<span class="name">start</span>&gt;</span>10us<span class="tag">&lt;/<span class="name">start</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">queue</span>&gt;</span>7<span class="tag">&lt;/<span class="name">queue</span>&gt;</span>    </span><br><span class="line">         		  <span class="tag">&lt;<span class="name">dest</span>&gt;</span>00:00:00:00:00:04<span class="tag">&lt;/<span class="name">dest</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">size</span>&gt;</span>354B<span class="tag">&lt;/<span class="name">size</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">flowId</span>&gt;</span>1<span class="tag">&lt;/<span class="name">flowId</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">host</span>&gt;</span>    </span><br><span class="line"># 设定交换机所有门一直打开</span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchA&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;3&quot;</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>11111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchB&quot;</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;0&quot;</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>    </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>    </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>11111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>    </span><br><span class="line">              	 <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>    </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>    </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;/<span class="name">schedules</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-3-StrictPriority算法"><a href="#4-2-3-StrictPriority算法" class="headerlink" title="4.2.3 StrictPriority算法"></a>4.2.3 StrictPriority算法</h3><p>暂未了解算法具体代码。大体意思是流量严格按照高优先级到低优先级的顺序发送，只要有高优先级流量存在，低优先级就需要等待高优先级发送完成后才可发送。</p>
+<h3 id="4-2-4-实验结果"><a href="#4-2-4-实验结果" class="headerlink" title="4.2.4 实验结果"></a>4.2.4 实验结果</h3><p>通过观察RoboticArm端应用程序统计的端到端延迟（endToEndDelay:vector TestScenario.roboticArm.tranfGenApp），可以看到延迟范围是19.5us-31.8us，且呈现一定的周期性。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182140745.png" alt="image-20220401204800560"></p>
 <center>图9 严格优先级 端到端延迟 单位：s</center>
-<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits/sec sent =986962179）</p>
-<p>SwitchA.eth[3]流量带宽为：0.987Gbps(TestScenario.switchA.eth[3].mac bits/sec sent = 986655162)</p>
-<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits/sec sent =7523725)</p>
-<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)=100）</p>
-<h3 id="4-2-5-小结">4.2.5 小结</h3>
-<p>在严格优先级中，初始时刻，网络中仅workStation1和workStation2的流量，由于workStation1流量优先级较高，优先发送。当到达10us时，RobotController发出一个优先级为7的流量，但此时交换机中正在由流量被发送，因此需要等待到12us时才可从交换机中发出，产生约2us的排队时延。RobotController发送完成后，workStation1继续传输，由于流量间隔为12us，且workStation2流量优先级较低，所以workStation2的流量在SwitchA处一直排队，无法传输。</p>
+
+<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits&#x2F;sec sent &#x3D;986962179）</p>
+<p>SwitchA.eth[3]流量带宽为：0.987Gbps(TestScenario.switchA.eth[3].mac bits&#x2F;sec sent &#x3D; 986655162)</p>
+<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits&#x2F;sec sent &#x3D;7523725)</p>
+<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)&#x3D;100）</p>
+<h3 id="4-2-5-小结"><a href="#4-2-5-小结" class="headerlink" title="4.2.5 小结"></a>4.2.5 小结</h3><p>在严格优先级中，初始时刻，网络中仅workStation1和workStation2的流量，由于workStation1流量优先级较高，优先发送。当到达10us时，RobotController发出一个优先级为7的流量，但此时交换机中正在由流量被发送，因此需要等待到12us时才可从交换机中发出，产生约2us的排队时延。RobotController发送完成后，workStation1继续传输，由于流量间隔为12us，且workStation2流量优先级较低，所以workStation2的流量在SwitchA处一直排队，无法传输。</p>
 <p>RobotController传输的最好情况是其流量到达交换机时刚好上一个流量传输完；最坏情况是刚好上一个流量开始传输。最好情况与最坏情况相差12us。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182142528.jpg" alt="Strict Priority"></p>
 <center>图10 StrictPriority时序图</center>
-<h2 id="4-3-门控">4.3 门控</h2>
-<h3 id="4-3-1-example-gating-ini文件">4.3.1 example_gating.ini文件</h3>
-<p>02_example_gating.ini文件与01_example_strict_priority.ini文件相比主要不同点集中在以下三条配置。其指定RobotController和交换机都采用TestScenarioSchedule_GatingOn.xml文件描述的门控。</p>
+
+<h2 id="4-3-门控"><a href="#4-3-门控" class="headerlink" title="4.3 门控"></a>4.3 门控</h2><h3 id="4-3-1-example-gating-ini文件"><a href="#4-3-1-example-gating-ini文件" class="headerlink" title="4.3.1 example_gating.ini文件"></a>4.3.1 example_gating.ini文件</h3><p>02_example_gating.ini文件与01_example_strict_priority.ini文件相比主要不同点集中在以下三条配置。其指定RobotController和交换机都采用TestScenarioSchedule_GatingOn.xml文件描述的门控。</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_GatingOn.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchA&#x27;]/port[@id=&#x27;3&#x27;]/schedule&quot;</span>)  </span><br><span class="line">**.switchB.eth<span class="section">[0]</span>.<span class="attr">queue.gateController.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_GatingOn.xml&quot;</span>, <span class="string">&quot;/schedules/switch[@name=&#x27;switchB&#x27;]/port[@id=&#x27;0&#x27;]/schedule&quot;</span>)  </span><br><span class="line">**.<span class="attr">robotController.trafGenSchedApp.initialSchedule</span> = xmldoc(<span class="string">&quot;xml/TestScenarioSchedule_GatingOn.xml&quot;</span>) </span><br></pre></td></tr></table></figure>
-<h3 id="4-3-2-TestScenarioSchedule-GatingOn-xml文件">4.3.2 TestScenarioSchedule_GatingOn.xml文件</h3>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">schedules</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">defaultcycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">defaultcycle</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">host</span> <span class="attr">name</span>=<span class="string">&quot;robotController&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">cycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">cycle</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">start</span>&gt;</span>10us<span class="tag">&lt;/<span class="name">start</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">queue</span>&gt;</span>7<span class="tag">&lt;/<span class="name">queue</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">dest</span>&gt;</span>00:00:00:00:00:04<span class="tag">&lt;/<span class="name">dest</span>&gt;</span>  </span><br><span class="line">           	<span class="tag">&lt;<span class="name">size</span>&gt;</span>354B<span class="tag">&lt;/<span class="name">size</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">flowId</span>&gt;</span>1<span class="tag">&lt;/<span class="name">flowId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">host</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchA&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;3&quot;</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line"># 指定一个周期=400us，其中前200us打开7号队列门，后200us打开0-6号队列门</span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>10000000<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">             		<span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                   	<span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>01111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchB&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;0&quot;</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>10000000<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>01111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">schedules</span>&gt;</span> </span><br></pre></td></tr></table></figure>
-<h3 id="4-3-3-实验结果">4.3.3 实验结果</h3>
-<p>观察RoboticArm端应用程序统计的端到端延迟，可以看到延迟确定性极佳，稳定在19.5us</p>
+
+<h3 id="4-3-2-TestScenarioSchedule-GatingOn-xml文件"><a href="#4-3-2-TestScenarioSchedule-GatingOn-xml文件" class="headerlink" title="4.3.2 TestScenarioSchedule_GatingOn.xml文件"></a>4.3.2 TestScenarioSchedule_GatingOn.xml文件</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">schedules</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">defaultcycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">defaultcycle</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">host</span> <span class="attr">name</span>=<span class="string">&quot;robotController&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">cycle</span>&gt;</span>400us<span class="tag">&lt;/<span class="name">cycle</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">start</span>&gt;</span>10us<span class="tag">&lt;/<span class="name">start</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">queue</span>&gt;</span>7<span class="tag">&lt;/<span class="name">queue</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">dest</span>&gt;</span>00:00:00:00:00:04<span class="tag">&lt;/<span class="name">dest</span>&gt;</span>  </span><br><span class="line">           	<span class="tag">&lt;<span class="name">size</span>&gt;</span>354B<span class="tag">&lt;/<span class="name">size</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">flowId</span>&gt;</span>1<span class="tag">&lt;/<span class="name">flowId</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">host</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchA&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;3&quot;</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line"># 指定一个周期=400us，其中前200us打开7号队列门，后200us打开0-6号队列门</span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>10000000<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">             		<span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                   	<span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>01111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">switch</span> <span class="attr">name</span>=<span class="string">&quot;switchB&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">port</span> <span class="attr">id</span>=<span class="string">&quot;0&quot;</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">schedule</span> <span class="attr">cycleTime</span>=<span class="string">&quot;400us&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>10000000<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">entry</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">length</span>&gt;</span>200us<span class="tag">&lt;/<span class="name">length</span>&gt;</span>  </span><br><span class="line">                    <span class="tag">&lt;<span class="name">bitvector</span>&gt;</span>01111111<span class="tag">&lt;/<span class="name">bitvector</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;/<span class="name">entry</span>&gt;</span>  </span><br><span class="line">           <span class="tag">&lt;/<span class="name">schedule</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">port</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">switch</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">schedules</span>&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-3-实验结果"><a href="#4-3-3-实验结果" class="headerlink" title="4.3.3 实验结果"></a>4.3.3 实验结果</h3><p>观察RoboticArm端应用程序统计的端到端延迟，可以看到延迟确定性极佳，稳定在19.5us</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182142850.png" alt="image-20220401204934774"></p>
 <center>图11 门控 端到端延迟 单位：s</center>
-<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits/sec sent =986945179）</p>
-<p>SwitchA.eth[3]流量带宽为：0.493Gbps(TestScenario.switchA.eth[3].mac bits/sec sent =492965016)</p>
-<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits/sec sent =7523725)</p>
-<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)=100）</p>
-<p>时间问题：按照Nesting论文中，d<em>tot</em>=3 *d<em>prop</em>+2*d<em>proc</em>+3*d<em>trans</em>=19.516us。其中交换机处理延迟d<em>proc</em>=5us，链路传输延迟d<em>trans</em>=0.1us，传播延迟(传输一帧用时) d<em>prop</em>=数据帧大小（应用层354B+802.3协议帧格式的30B=384B）/ 1Gbps = 3.072us</p>
+
+<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits&#x2F;sec sent &#x3D;986945179）</p>
+<p>SwitchA.eth[3]流量带宽为：0.493Gbps(TestScenario.switchA.eth[3].mac bits&#x2F;sec sent &#x3D;492965016)</p>
+<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits&#x2F;sec sent &#x3D;7523725)</p>
+<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)&#x3D;100）</p>
+<p>时间问题：按照Nesting论文中，d<em>tot</em>&#x3D;3 *d<em>prop</em>+2*d<em>proc</em>+3*d<em>trans</em>&#x3D;19.516us。其中交换机处理延迟d<em>proc</em>&#x3D;5us，链路传输延迟d<em>trans</em>&#x3D;0.1us，传播延迟(传输一帧用时) d<em>prop</em>&#x3D;数据帧大小（应用层354B+802.3协议帧格式的30B&#x3D;384B）&#x2F; 1Gbps &#x3D; 3.072us</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182149000.png" alt="image-20220401222703667"></p>
 <center>图12 IEEE802.3协议帧格式</center>
-<h3 id="4-3-4-小结">4.3.4 小结</h3>
-<p>在有门控列表存在的情况下，0时刻WorkStation向交换机A发送数据包，其中WorkStation1的流量进入交换机A的3号端口6号队列，WorkStation2的流量进入5号队列。但此时5号队列和6号队列的门关闭，无法传输，流量缓存在队列中。当10us时，RobotController发送数据包，进入7号队列，此时7号队列的门打开，流量完成传输。当200us时，0-6号队列门打开，6号队列优先级高于5号队列，有先传输。由于开门周期内6号队列总是有流量，所以5号队列的流量无法完成传输。</p>
+
+<h3 id="4-3-4-小结"><a href="#4-3-4-小结" class="headerlink" title="4.3.4 小结"></a>4.3.4 小结</h3><p>在有门控列表存在的情况下，0时刻WorkStation向交换机A发送数据包，其中WorkStation1的流量进入交换机A的3号端口6号队列，WorkStation2的流量进入5号队列。但此时5号队列和6号队列的门关闭，无法传输，流量缓存在队列中。当10us时，RobotController发送数据包，进入7号队列，此时7号队列的门打开，流量完成传输。当200us时，0-6号队列门打开，6号队列优先级高于5号队列，有先传输。由于开门周期内6号队列总是有流量，所以5号队列的流量无法完成传输。</p>
 <p>在GCL存在的情况下，交换机专门将每个周期的前200us预留给RobotController发送流量，其流量不会产生排队延迟。但是由于GCL的存在，对于WorkStation1来说，网络带宽变成了StrictPriority带宽的一半。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182143302.jpg" alt="Gating"></p>
 <center>图13 Gating示例时序图</center>
-<h2 id="4-4-帧抢占">4.4 帧抢占</h2>
-<h3 id="4-4-1-example-frame-preemption-ini文件">4.4.1 example_frame_preemption.ini文件</h3>
-<p>此文件主要的区别在以下几条设定，主要是关于交换机队列是否是快速队列和交换机是否设置为可抢占。其余设定与example_strict_priority.ini文件相同。</p>
+
+<h2 id="4-4-帧抢占"><a href="#4-4-帧抢占" class="headerlink" title="4.4 帧抢占"></a>4.4 帧抢占</h2><h3 id="4-4-1-example-frame-preemption-ini文件"><a href="#4-4-1-example-frame-preemption-ini文件" class="headerlink" title="4.4.1 example_frame_preemption.ini文件"></a>4.4.1 example_frame_preemption.ini文件</h3><p>此文件主要的区别在以下几条设定，主要是关于交换机队列是否是快速队列和交换机是否设置为可抢占。其余设定与example_strict_priority.ini文件相同。</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 暂时不知道这边设置的具体含义，可能和设置7号队列可抢占，0-6号队列不可抢占有关</span></span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[0]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[1]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[2]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[3]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[4]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[5]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[6]</span>.<span class="attr">expressQueue</span> = <span class="literal">false</span>  </span><br><span class="line">**.switch*.eth<span class="section">[*]</span>.queue.queues<span class="section">[7]</span>.<span class="attr">expressQueue</span> = <span class="literal">true</span>  </span><br><span class="line"><span class="comment"># 设定交换机A的3号端口为可抢占</span></span><br><span class="line">**.switchA.eth<span class="section">[3]</span>.<span class="attr">mac.enablePreemptingFrames</span> = <span class="literal">true</span>  </span><br></pre></td></tr></table></figure>
-<h3 id="4-4-2-实验结果">4.4.2 实验结果</h3>
-<p>观察RoboticArm端应用程序统计的端到端延迟，可以看到延迟在19.5us附近有小幅度抖动。</p>
+
+<h3 id="4-4-2-实验结果"><a href="#4-4-2-实验结果" class="headerlink" title="4.4.2 实验结果"></a>4.4.2 实验结果</h3><p>观察RoboticArm端应用程序统计的端到端延迟，可以看到延迟在19.5us附近有小幅度抖动。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182144880.png" alt="image-20220401205142569"></p>
 <center>图14 帧抢占 端到端延迟 单位：s</center>
-<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits/sec sent =986945179）</p>
-<p>SwitchA.eth[3]流量带宽为：1.01Gbps(TestScenario.switchA.eth[3].mac bits/sec sent = 1014668064) （注：流量带宽超过1Gbps原因未知）</p>
-<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits/sec sent =7523725)</p>
-<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)=100）</p>
-<h3 id="4-4-3-小结">4.4.3 小结</h3>
-<p>在帧抢占模式中，起始情况与严格优先级情况相同。当到达10us时，RobotController发送的流量达到交换机A的3号端口，此时交换机正在传输WorkStation1的流量，但高优先级帧抢占，终断正在传输的流量。当高优先级流量传输完成后，低优先级流量继续传输。</p>
+
+<p>workStation1流量带宽为：0.987Gbps （TestScenario.workStation1.eth.mac bits&#x2F;sec sent &#x3D;986945179）</p>
+<p>SwitchA.eth[3]流量带宽为：1.01Gbps(TestScenario.switchA.eth[3].mac bits&#x2F;sec sent &#x3D; 1014668064) （注：流量带宽超过1Gbps原因未知）</p>
+<p>robotController流量带宽为：0.0075Gbps (TestScenario.robotController.eth.mac bits&#x2F;sec sent &#x3D;7523725)</p>
+<p>workStation2丢包率为：100% （TestScenario.switchA.eth[2].mac rx channel idle(%)&#x3D;100）</p>
+<h3 id="4-4-3-小结"><a href="#4-4-3-小结" class="headerlink" title="4.4.3 小结"></a>4.4.3 小结</h3><p>在帧抢占模式中，起始情况与严格优先级情况相同。当到达10us时，RobotController发送的流量达到交换机A的3号端口，此时交换机正在传输WorkStation1的流量，但高优先级帧抢占，终断正在传输的流量。当高优先级流量传输完成后，低优先级流量继续传输。</p>
 <p>对于帧抢占模式，高优先级流量可以抢占正在传输的低优先级流量，从而减少排队时延，与严格优先级相比，其确定性更佳。但由于交换机处理帧抢占也需要一定的时间，所以其确定性略差与门控模式。但其可以保证网络的充分利用。</p>
 <p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/NeSTiNg/202211182145614.jpg" alt="frame preemption"></p>
 <center>图15 Frame Preemption示例时序图</center>
+]]></content>
+      <tags>
+        <tag>TSN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to Clone Linux</title>
+    <url>/How-to-Clone-Linux/</url>
+    <content><![CDATA[<p><strong>配置过Linux系统的同学应该经常会碰见以下问题：</strong></p>
+<ol>
+<li>操作失误，导致配置好的系统出错，修复困难</li>
+<li>为多台电脑进行一样的配置</li>
+<li>将配置好的虚拟机移动为物理机（V2P）</li>
+<li>树莓派怎么备份</li>
+</ol>
+<p><strong>对于上述问题，可以通过两种方式解决：</strong></p>
+<ol>
+<li><p>部分备份（使用软件备份某几个文件夹）</p>
+</li>
+<li><p>制作系统镜像文件</p>
+</li>
+</ol>
+<p>其区别如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">rm -rf&#x2F;* 后能否恢复</th>
+<th align="center">备份速度</th>
+<th align="center">能否移植</th>
+<th align="center">适用范围</th>
+<th align="center">典型软件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">部分备份</td>
+<td align="center">不能</td>
+<td align="center">快</td>
+<td align="center"><span class="github-emoji" alias="x" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/274c.png?v8">&amp;#x274c;</span></td>
+<td align="center">用户级</td>
+<td align="center"><code>systemback</code> <code>Timeshift</code></td>
+</tr>
+<tr>
+<td align="center">制作系统镜像文件</td>
+<td align="center">能</td>
+<td align="center">慢</td>
+<td align="center"><span class="github-emoji" alias="heavy_check_mark" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png?v8">&amp;#x2714;</span></td>
+<td align="center">系统级</td>
+<td align="center"><code>systemback</code> <code>Clonezilla</code></td>
+</tr>
+</tbody></table>
+<h1 id="一、部分备份"><a href="#一、部分备份" class="headerlink" title="一、部分备份"></a>一、部分备份</h1><p>部分备份是指把某几个文件夹用软件管理起来，如果发送意外删除，可以还原。但是如果发生<code>rm -rf/*</code>这种意外，就不要指望可以还原了。这种适合备份写的代码，不用担心代码被误删。</p>
+<p>这里<strong>首推</strong><code>Timeshift</code>，具体备份教程参考这篇文章：<a href="https://zhuanlan.zhihu.com/p/94105263">如何使用 TimeShift 备份和还原 Ubuntu Linux</a></p>
+<p>原因如下：</p>
+<ol>
+<li>timeshift界面简洁，操作简单</li>
+<li>timeshift可设置定期自动备份</li>
+<li>timeshift可直接通过选定用户名完成该用户所有文件的备份</li>
+</ol>
+<blockquote>
+<p>注：可通过<code>sudo timeshift-gtk</code>指令，图形化运行timeshift </p>
+</blockquote>
+<p>其次，推荐<code>systemback</code>，具体备份教程参考这篇文章：<a href="https://www.unixmen.com/systemback-restore-linux-system-previous-state/">Systemback: Restore Your Linux System To Previous State</a></p>
+<blockquote>
+<p>注：systemback默认备份系统文件和root用户的文件，不会备份普通用户文件，需要去 <em>Function menu</em> -&gt; <em>include</em> 下将需要备份的文件夹添加进去。</p>
+</blockquote>
+<h1 id="二、制作镜像文件"><a href="#二、制作镜像文件" class="headerlink" title="二、制作镜像文件"></a>二、制作镜像文件</h1><p>与部分备份相比，制作镜像文件最大的优势就是可以保存在其他位置，这样哪怕备份机全部损毁，也可以还原。而且可以实现系统的批量克隆。这种适合备份操作系统，不用担心操作失误导致系统损毁。</p>
+<p>这里<strong>首推</strong><code>systemback</code>，具体教程参考这篇文章：<a href="https://www.guyuehome.com/34452">一文搞定基于 systemback 的 Ubuntu 系统镜像制作与安装</a></p>
+<p>原因如下：</p>
+<ol>
+<li>与后文中提到的Clonezilla相比，不需要烧录启动U盘</li>
+<li>与Clonezilla相比，操作更简单</li>
+<li>可以便捷的实现大硬盘到小硬盘的迁移</li>
+<li>可以重命名拷贝系统的用户名</li>
+<li>可以制作成可启动的iso镜像</li>
+</ol>
+<blockquote>
+<p>注：</p>
+<ol>
+<li>建议拷贝系统的用户名与原用户名一致，防止环境变量出错</li>
+<li>systemback可直接通过图形化界面制作小于4G的iso文件，对于大于4G的文件，只能制作成sblive文件。唯一区别在于iso文件可以直接从U盘拷贝到windows电脑上存储起来，但是sblive文件windows拷贝不出来。</li>
+</ol>
+</blockquote>
+<p>其次，推荐<code>Clonezilla</code>，具体备份教程参考这篇文章：<a href="https://clonezilla.org/clonezilla-usage/general-live-use.php">Clonezilla</a></p>
+<p>其主要优势在于：</p>
+<ol>
+<li>不限操作系统，windows，mac，linux都可以使用</li>
+<li>制作的镜像文件在windows下可以读取，可以直接以文件夹的形式存储到windows电脑中</li>
+</ol>
+<p>但是缺点在于：</p>
+<ol>
+<li>需要先准备一个U盘，用<code>UltraISO</code>烧录进去Clonezilla的镜像文件，然后进入bios里面制作，然后再插一个U盘来存储镜像文件</li>
+<li>对于大硬盘向小硬盘的迁移，我用Clonezilla迁移失败了，没有systemback好用</li>
+</ol>
+<blockquote>
+<p>注：<strong>Clonezilla制作的镜像文件千万不要重命名</strong>，要命名就制作的时候一次命名好，否则会导致还原的时候无法读取文件名</p>
+</blockquote>
+<h1 id="附录一-大硬盘向小硬盘移动"><a href="#附录一-大硬盘向小硬盘移动" class="headerlink" title="附录一 大硬盘向小硬盘移动"></a>附录一 大硬盘向小硬盘移动</h1><p>对于制作系统镜像方面，最麻烦的问题在于大硬盘向小硬盘的移动。</p>
+<p>打个比方，我现在需要将A电脑上的Ubuntu移动到B电脑上。A电脑硬盘大小500G，但是只使用了5G，B电脑硬盘大小128G。</p>
+<p>我的建议是：</p>
+<ol>
+<li>找一个空闲U盘，烧录<code>Gparted</code>镜像，进入BIOS修改分区大小，将A电脑上500G的分区分成使用的10G和未分配的490G</li>
+<li>打开A电脑，启动<code>systemback</code>，将其系统的10G制作成镜像文件烧录到U盘里</li>
+<li>通过U盘启动B电脑，安装系统</li>
+<li>在B电脑中安装<code>Gparted</code>软件，扩展分区</li>
+</ol>
+<h1 id="附录二-虚拟机U盘启动"><a href="#附录二-虚拟机U盘启动" class="headerlink" title="附录二 虚拟机U盘启动"></a>附录二 虚拟机U盘启动</h1><p>对于虚拟机，在使用<code>systemback</code> 和<code>Clonezilla</code>时会涉及到bios启动，可参考此文章：<a href="http://www.kqidong.com/bios/4147.html">虚拟机bios设置u盘启动图解</a></p>
+<blockquote>
+<p>注：<strong>以管理员身份运行</strong>来打开VMware，否则无法将U盘配置为虚拟机硬盘</p>
+</blockquote>
+<h1 id="附录三-树莓派备份"><a href="#附录三-树莓派备份" class="headerlink" title="附录三 树莓派备份"></a>附录三 树莓派备份</h1><p>树莓派备份主要有4种方式：</p>
+<ol>
+<li><strong>推荐使用</strong><code>PiShrink</code>具体教程参考此文：<a href="https://shumeipai.nxez.com/2020/09/11/pishrink-make-raspberry-pi-images-smaller.html">PiShrink：制作更小的树莓派镜像文件</a></li>
+<li>Clonezilla好像有arm架构版，可以用于备份树莓派</li>
+<li>树莓派官方操作系统下，<em>附件</em> -&gt; <code>SD Card Copier</code> 软件可以实现</li>
+<li>可以将SD卡插入windows电脑，用<code>Win32Diskimager</code>制作iso文件。缺点在于16G的SD卡哪怕只用了2G，拷出来也是16G。具体参考此文章：<a href="https://blog.csdn.net/u010235853/article/details/77891327">使用Win32DiskImager来备份树莓派镜像文件</a></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to Use VPN</title>
+    <url>/How-to-Use-VPN/</url>
+    <content><![CDATA[<p>在国内，经常会碰到由于资源在境外导致无法访问的情况，为了解决这种问题，一种选择是镜像源，另一种选择是翻墙。本文将对后一种方式进行阐述。  </p>
+<h1 id="一、基础"><a href="#一、基础" class="headerlink" title="一、基础"></a>一、基础</h1><p>对于VPN的原理，本文不再赘述，详细可通过<a href="https://zhuanlan.zhihu.com/p/71536075">此文章</a>学习。我简单讲一下我的理解，方便后面配置。  </p>
+<p>国内由于GFW的存在，无法访问国外的服务器（如Google等)。即从<code>218.x.x.x</code>到<code>31.x.x.x</code>被<strong>GFW</strong>(即国内防火墙）阻拦。</p>
+<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211131643971.png" alt="2"></p>
+<center>图1 无VPN情况访问外网</center>   
+
+<p>而VPN的实现方式是让你的流量从<code>218.x.x.x</code>代理到本地的<code>127.0.0.1</code>（本地回环地址），再通过代理软件将流量传输至代理服务器，经由代理服务器访问目标网站，这样就可以实现绕过GFW访问外网。  </p>
+<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211131640388.png" alt="1"></p>
+<center>图2 有VPN情况访问外网</center>   
+
+<p>综上，我们知道要实现翻墙需要三个部分：</p>
+<ul>
+<li>本地端口号</li>
+<li>代理软件</li>
+<li>代理服务器</li>
+</ul>
+<p>其中，本地端口号是自己设置的；代理软件一般是免费开源的，如常见的<strong>ShadowsocksR</strong>，<strong>clash</strong>等；代理服务器一般是收费的，简单可以分为自建服务器（自己搭梯子）和购买供应商服务（机场）。其中自建服务器的优点在于相对便宜，缺点在于麻烦，并且可选择性少。机场的优点是方便，一般供应商会提供多个不同国家地区的服务器节点可供选择，但缺点是稍贵，而且担心机场跑路。  </p>
+<p><strong>本文选择机场的方式翻墙</strong></p>
+<h1 id="二、购买机场"><a href="#二、购买机场" class="headerlink" title="二、购买机场"></a>二、购买机场</h1><p>要想通过机场的方式翻墙，首先需要购买机场服务。  </p>
+<p>这里我给出我自己使用的机场，可通过<a href="https://portal.shadowsocks.nz/aff.php?aff=45497">此链接</a>进行注册购买,我使用了2年了还算不错，每月100G流量，包年19.95美金，可允许两台设备同时在线。当然自己也可以选择信任的机场。</p>
+<p>购买完成后，进入【首页&#x2F;客户中心&#x2F;我的产品与服务&#x2F;产品详细】下找到<strong>【ClashX配置 】</strong>和<strong>【GUI-Config配置】</strong>，这两个是我们购买的机场订阅链接，后面需要用到。</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142247764.png" alt="image-20221114224711704" style="zoom: 50%;" />
+
+<center>图3 服务器订阅链接</center>   
+
+<h1 id="三、代理软件配置"><a href="#三、代理软件配置" class="headerlink" title="三、代理软件配置"></a>三、代理软件配置</h1><h2 id="3-1-Windows"><a href="#3-1-Windows" class="headerlink" title="3.1 Windows"></a>3.1 Windows</h2><h3 id="3-1-1-基础配置"><a href="#3-1-1-基础配置" class="headerlink" title="3.1.1 基础配置"></a>3.1.1 基础配置</h3><p>windows下推荐使用<code>clash for windows</code>，可在其<a href="https://github.com/Fndroid/clash_for_windows_pkg/releases">github</a>中下载最新版本。可阅读其<a href="https://docs.cfw.lbyczf.com/">中文官网</a>了解更多功能。  </p>
+<p>安装好后界面如下：</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211141740751.png" alt="image-20221114174005613" style="zoom: 33%;" />
+
+<center>图4 ClashX配置</center>   
+
+<p>其中，我们重点关注 <strong>Port</strong>, <strong>Allow LAN</strong>, <strong>System Proxy</strong>, <strong>Start with Windows</strong> 这四项。</p>
+<ul>
+<li><p>Port 即为代理端口，如图4所示，此时Clash for windows将流量代理到<strong>127.0.0.1:7890</strong>，可以通过windows设置下的【网络和Internet&#x2F;代理&#x2F;使用代理服务器】查看代理端口是否一致。一般来说启动软件时，windows会自动打开【使用代理服务器】这个开关。<strong>注意：有时候电脑无法上网等问题，可能是由于代理软件和windows代理不一致导致</strong></p>
+</li>
+<li><p>Allow LAN 如果需要局域网内其他设备（如虚拟机）通过网络代理的方式进行翻墙，需要打开此设置</p>
+</li>
+<li><p>System Proxy 系统代理，这个是必须要打开的</p>
+</li>
+<li><p>Start with Windows 这个建议也打开，后面完全设置完之后，可以实现无感上网（即自动根据访问ip判断是否翻墙）</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211141744929.png" alt="image-20221114174440551"></p>
+<center>图5 Windows代理服务器配置</center>   
+
+<p>接下来配置代理服务器，选择Profiles，在URL框中粘贴购买的机场订阅链接（即图3中ClashX配置），点击下载。</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142248089.png" alt="image-20221114224801035" style="zoom:50%;" />
+
+<center>图6 配置代理服务器</center>   
+
+<p>下载完成后，会在Proxies中出现很多节点，测试延迟后选择自己需要的节点，双击即可。</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142248586.png" alt="image-20221114224839533" style="zoom:50%;" />
+
+<center>图7 选择需要的节点</center>   
+
+<p>其中有4种模式可以选择：</p>
+<ul>
+<li>Global 全局代理，对所有的上网流量进行代理</li>
+<li>Rule 按照设定好的规则进行代理</li>
+<li>Direct 直接连接，所有上网流量不进行代理</li>
+<li>Script 运行自定义脚本，一般不使用</li>
+</ul>
+<p>配置完成后，选择Global模式，连接一个国外的服务器，打开百度搜索IP，查看当前IP情况。<strong>注意：建议使用<a href="www.ip138.com">此网站</a>进行验证，这个网站比较蠢，有的厉害一点的网站可以看到翻墙之前的IP属地信息，使人误以为翻墙失败</strong></p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142249537.png" alt="image-20221114224910500" style="zoom:50%;" />
+
+<center>图8 查询IP</center>   
+
+<p>至此Windows成功翻墙</p>
+<h3 id="3-1-2-自动代理配置"><a href="#3-1-2-自动代理配置" class="headerlink" title="3.1.2 自动代理配置"></a>3.1.2 自动代理配置</h3><p>上文中实现了全局代理，将所有流量代理到国外，这对我们日常访问国内网站带来了不便，为此我们需要进行自动代理配置。可参考<a href="https://github.com/Fndroid/clash_for_windows_pkg/issues/2193">此链接</a>,其原理是通过IP匹配的方式，对于非大陆IP采用代理，大陆IP采用直连。其<a href="https://github.com/Loyalsoldier/clash-rules">匹配规则</a>每天更新。</p>
+<p>打开 【Settings &#x2F; Profiles &#x2F; Parsers】，在其中写入以下内容，写入完成后，切换到<code>Direct</code>，在<code>Profiles</code>中更新订阅信息，并重启<code>Clash for windows</code>。若侧面出现<code>Providers</code>一栏，说明规则集加载成功。   </p>
+<p><strong>注意：由于网络问题，可能造成规则集下载失败无法加载，需要多尝试几次</strong></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">parsers:</span> <span class="comment"># array</span></span><br><span class="line">  <span class="comment"># - reg: ^.*$ 匹配所有订阅，或  - url: https://example.com/profile.yaml 指定订阅</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">reg:</span> <span class="string">^.*$</span></span><br><span class="line">  <span class="comment"># 删除服务商提供的策略组和规则</span></span><br><span class="line">    <span class="attr">code:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      module.exports.parse = (raw, &#123; yaml &#125;) =&gt; &#123;</span></span><br><span class="line"><span class="string">        const rawObj = yaml.parse(raw)</span></span><br><span class="line"><span class="string">        const groups = []</span></span><br><span class="line"><span class="string">        const rules = []</span></span><br><span class="line"><span class="string">        return yaml.stringify(&#123; ...rawObj, &#x27;proxy-groups&#x27;: groups, rules &#125;)</span></span><br><span class="line"><span class="string">      &#125; </span></span><br><span class="line"><span class="string"></span>  <span class="comment"># 建立自己的配置</span></span><br><span class="line">    <span class="attr">yaml:</span></span><br><span class="line">      <span class="attr">prepend-proxy-groups:</span> <span class="comment"># 建立策略组</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">🔯</span> <span class="string">代理模式</span> </span><br><span class="line">          <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">绕过大陆丨黑名单(GFWlist)</span> <span class="comment"># 黑名单模式，意为「只有命中规则的网络流量，才使用代理」</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">绕过大陆丨白名单(Whitelist)</span> <span class="comment"># 白名单模式，意为「没有命中规则的网络流量，统统使用代理」</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">🔰</span> <span class="string">选择节点</span> </span><br><span class="line">          <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">🛑</span> <span class="string">广告拦截</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">DIRECT</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">REJECT</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">PROXY</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">绕过大陆丨黑名单(GFWlist)</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">url-test</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">http://www.gstatic.com/generate_204</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">DIRECT</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">绕过大陆丨白名单(Whitelist)</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">url-test</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">http://www.gstatic.com/generate_204</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">PROXY</span></span><br><span class="line">            </span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">PROXY</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">url-test</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">http://www.gstatic.com/generate_204</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          <span class="attr">proxies:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">🔰</span> <span class="string">选择节点</span></span><br><span class="line">            </span><br><span class="line">  <span class="comment"># 策略组示例</span></span><br><span class="line">       <span class="comment"># - name: 分组名</span></span><br><span class="line">         <span class="comment"># type: select       # 手动选点   </span></span><br><span class="line">               <span class="comment"># url-test     # 自动选择延迟最低的节点</span></span><br><span class="line">               <span class="comment"># fallback     # 节点故障时自动切换下一个</span></span><br><span class="line">               <span class="comment"># laod-balance # 均衡使用分组内的节点</span></span><br><span class="line">         <span class="comment"># url: http://www.gstatic.com/generate_204 # 测试地址 非select类型分组必要</span></span><br><span class="line">         <span class="comment"># interval: 300 # 自动测试间隔时间，单位秒 非select类型分组必要</span></span><br><span class="line">         <span class="comment"># tolerance: 50 # 允许的偏差，节点之间延迟差小于该值不切换 非必要</span></span><br><span class="line">         <span class="comment"># proxies:  </span></span><br><span class="line">           <span class="comment"># - 节点名称或其他分组套娃</span></span><br><span class="line">          </span><br><span class="line">      <span class="attr">commands:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">proxy-groups.🔰</span> <span class="string">选择节点.proxies=[]proxyNames</span> <span class="comment"># 向指定策略组添加订阅中的节点名，可使用正则过滤</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">proxy-groups.🔰</span> <span class="string">选择节点.proxies.0+DIRECT</span> <span class="comment"># 向指定分组第一个位置添加一个 DIRECT 节点名</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 一些可能用到的正则过滤节点示例，使分组更细致</span></span><br><span class="line">        <span class="comment"># []proxyNames|a                         # 包含a</span></span><br><span class="line">        <span class="comment"># []proxyNames|^(.*)(a|b)+(.*)$          # 包含a或b</span></span><br><span class="line">        <span class="comment"># []proxyNames|^(?=.*a)(?=.*b).*$        # 包含a和b</span></span><br><span class="line">        <span class="comment"># []proxyNames|^((?!b).)*a((?!b).)*$     # 包含a且不包含b</span></span><br><span class="line">        <span class="comment"># []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c</span></span><br><span class="line">        </span><br><span class="line">  <span class="comment"># 添加规则</span></span><br><span class="line">      <span class="attr">prepend-rules:</span> <span class="comment"># 规则由上往下遍历，如上面规则已经命中，则不再往下处理</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,applications,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">DOMAIN,clash.razord.top,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">DOMAIN,yacd.haishan.me,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,private,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,reject,🛑</span> <span class="string">广告拦截</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,icloud,DIRECT</span> <span class="comment">#</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,apple,DIRECT</span> <span class="comment"># 这三个为国内可直连地址，如果希望走代理改为PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,google,DIRECT</span> <span class="comment"># </span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,tld-not-cn,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,gfw,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,greatfire,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,telegramcidr,PROXY</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,lancidr,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,cncidr,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">GEOIP,,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">GEOIP,CN,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,direct,DIRECT</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">RULE-SET,proxy,🔯</span> <span class="string">代理模式</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">MATCH,🔯</span> <span class="string">代理模式</span> <span class="comment"># 规则之外的</span></span><br><span class="line">  <span class="comment"># 添加规则集</span></span><br><span class="line">      <span class="attr">mix-rule-providers:</span> </span><br><span class="line">        <span class="attr">reject:</span> <span class="comment"># 广告域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/reject.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">icloud:</span> <span class="comment"># iCloud 域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/icloud.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">apple:</span> <span class="comment"># Apple 在中国大陆可直连的域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/apple.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">google:</span> <span class="comment"># Google 在中国大陆可直连的域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/google.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">proxy:</span> <span class="comment"># 代理域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/proxy.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">direct:</span> <span class="comment"># 直连域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/direct.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">private:</span> <span class="comment"># 私有网络专用域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/private.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">gfw:</span> <span class="comment"># GFWList 域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/gfw.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">greatfire:</span> <span class="comment"># GreatFire 域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/greatfire.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/greatfire.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">tld-not-cn:</span> <span class="comment"># 非中国大陆使用的顶级域名列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/tld-not-cn.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">telegramcidr:</span> <span class="comment"># Telegram 使用的 IP 地址列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">ipcidr</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/telegramcidr.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">cncidr:</span> <span class="comment"># 中国大陆 IP 地址列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">ipcidr</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/cncidr.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">lancidr:</span> <span class="comment"># 局域网 IP 及保留 IP 地址列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">ipcidr</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/lancidr.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">          </span><br><span class="line">        <span class="attr">applications:</span> <span class="comment"># 需要直连的常见软件列表</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">          <span class="attr">behavior:</span> <span class="string">classical</span></span><br><span class="line">          <span class="attr">url:</span> <span class="string">&quot;https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt&quot;</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">./ruleset/applications.yaml</span></span><br><span class="line">          <span class="attr">interval:</span> <span class="number">86400</span></span><br></pre></td></tr></table></figure>
+
+<p>再次启动后，到<code>Rule</code>下依次选择<code>代理模式</code>-&gt;<code>绕过大陆白名单</code>-&gt;<code>选择节点</code>-&gt;<code>选择自己需要的节点</code></p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142249268.png" alt="image-20221114224941214" style="zoom:50%;" />
+
+<center>图9 以Rule模式运行</center>   
+
+<p>至此自动代理配置完成，可在浏览器中进行以下实验</p>
+<ul>
+<li><p>浏览器打开百度，搜索ip   查询结果为国内</p>
+</li>
+<li><p>浏览器打开谷歌，搜索ip   查询结果为国外</p>
+</li>
+</ul>
+<h2 id="3-2-Linux"><a href="#3-2-Linux" class="headerlink" title="3.2 Linux"></a>3.2 Linux</h2><p>在Linux下，我个人使用体验最好的的代理软件是<code>Trajan-Qt5</code>，但是由于某些原因，作者删除了其github仓库，目前可以通过<a href="https://dl.trojan-cdn.com/trojan/linux/Trojan-Qt5-Linux.1.1.6.7z">此链接</a>下载之前的版本。  </p>
+<p>目前我在 Debian 10.09，Ubuntu 18.04, Ubuntu 20.04系统上使用时没有遇到问题。  </p>
+<p>在Linux下，有两种不同的翻墙方式，一种方式是在Linux下安装翻墙软件，直接进行翻墙。另一种方式是通过局域网代理的方式，将linux流量代理到windows系统下，在windows下实现翻墙。其中第一种方式更便捷。</p>
+<h3 id="3-2-1-直接方式"><a href="#3-2-1-直接方式" class="headerlink" title="3.2.1 直接方式"></a>3.2.1 直接方式</h3><p>在linux中下载好<code>Trajan-Qt5</code>，并下载图3中的<code>GUI-Config配置</code>。在Linux中解压安装包并赋予执行权限。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-get install p7zip-full					# 下载7z</span><br><span class="line"><span class="meta">#</span><span class="bash"> 双击压缩包解压</span></span><br><span class="line">cd Trojan-Qt5-Linux.1.1.6/</span><br><span class="line">sudo chmod 777 Trojan-Qt5-Linux.AppImage		# 赋予可执行权限</span><br><span class="line">./Trojan-Qt5-Linux.AppImage						# 打开Trojan</span><br></pre></td></tr></table></figure>
+
+<p>之后导入下载好的<code>GUI-Config配置</code>即可。</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142250284.png" alt="image-20221114225029244" style="zoom:50%;" />
+
+<center>图10 导入配置文件</center>   
+
+<p>此时，在界面下方显示网络被代理到<strong>127.0.0.1:58591</strong>，通过可通过linux系统的【Setting &#x2F;Network &#x2F;Network Proxy】进行查看。</p>
+<p>同时，可将Trojan-Qt5-Linux.AppImage移动到&#x2F;usr&#x2F;bin目录下，即可直接通过输入<code>Trojan-Qt5-Linux.AppImage</code>启动软件。</p>
+<h3 id="3-2-2-间接方式"><a href="#3-2-2-间接方式" class="headerlink" title="3.2.2 间接方式"></a>3.2.2 间接方式</h3><p>在使用Linux虚拟机时，可以通过间接方式，将Linux虚拟机中流量代理到windows主机中，由windows主机完成翻墙。</p>
+<p>首先查询windows主机IP地址</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> win + R</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> cmd</span></span><br><span class="line">ipconfig</span><br></pre></td></tr></table></figure>
+
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/How%20To%20Use%20VPN/202211142250376.png" alt="image-20221114225054343" style="zoom:50%;" />
+
+<center>图11 查询主机IP地址</center>   
+
+<p>虚拟机打开【Setting &#x2F;Network &#x2F;Network Proxy】，选择 Manual，将 HTTP Proxy 与 HTTPS Proxy 设置为主机IPv4地址，端口为<strong>7890</strong>（原因见图4），同时在 clash for windows 中打开 Allow LAN，即可实现代理。   </p>
+<p><strong>注意：这种方法不成功的原因可能有1.主机与虚拟机无法ping通 2.主机虚拟机不在同一网段 3.主机防火墙 4.代理端口等</strong></p>
+<h2 id="3-3-Android"><a href="#3-3-Android" class="headerlink" title="3.3 Android"></a>3.3 Android</h2><p>Android下推荐使用<code>clash for Android</code>，可在其<a href="https://github.com/Kr328/ClashForAndroid/releases">github</a>中下载最新版本。其配置方式与 clash for windows大同小异，在此不做赘述。</p>
+<h1 id="四、Apt-Git配置"><a href="#四、Apt-Git配置" class="headerlink" title="四、Apt Git配置"></a>四、Apt Git配置</h1><p>当我们完成上文的操作后，已可以正常访问 Github、Youtube等网站。但是用<code>git</code>、<code>apt</code>等指令下载时速度还是很慢，这是因为这两条指令默认不走代理端口。</p>
+<p><strong>注意：按照上文中的配置，windows下代理端口为<code>7890</code>，Linux下代理端口为<code>58591</code>，如果自行更改端口，请对应修改指令</strong></p>
+<h2 id="4-1-Apt配置代理"><a href="#4-1-Apt配置代理" class="headerlink" title="4.1 Apt配置代理"></a>4.1 Apt配置代理</h2><p>可参考<a href="https://blog.csdn.net/lonelysky/article/details/81059339">此链接</a>，在 &#x2F;etc&#x2F;apt&#x2F;apt.conf.d 文件夹下新建了一个<code>apt-proxy.conf</code>文件，在文件中写入以下语句：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Acquire::http::Proxy &quot;http://127.0.0.1:58591/&quot;;</span><br><span class="line">Acquire::https::Proxy &quot;http://127.0.0.1:58591/&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>其原理是<code>apt</code>指令每次执行都会读取<code>apt.conf.d</code>文件夹下所有配置，但在执行apt指令前需要打开代理软件。</p>
+<h2 id="4-2-Git配置代理"><a href="#4-2-Git配置代理" class="headerlink" title="4.2 Git配置代理"></a>4.2 Git配置代理</h2><p>可参考<a href="https://www.jianshu.com/p/739f139cf13c">此链接</a>,直接在终端输入以下指令即可</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global https.proxy http://127.0.0.1:58591</span><br><span class="line"></span><br><span class="line">git config --global https.proxy https://127.0.0.1:58591</span><br><span class="line"></span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line"></span><br><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>VPN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>TSN Simulation - INET（1）</title>
+    <url>/TSN-Simulation-INET(1)/</url>
+    <content><![CDATA[<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>在<a href="https://deepsea52418.github.io/TSN-Simulation-NeSTiNg/">之前的文章</a>中，对TSN仿真框架<code>NeSTiNg</code>进行了简单的介绍与分析。然后，在今年6月推出的INET 4.4中，包含了TSN相关功能，同时其实现的功能更多，可扩展性更好。在本系列中，将根据<a href="https://inet.omnetpp.org/docs/users-guide/ch-tsn.html">INET官方文档</a>，对其支持的TSN功能进行分析。</p>
+<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><h3 id="1-1-TSN设备"><a href="#1-1-TSN设备" class="headerlink" title="1.1 TSN设备"></a>1.1 TSN设备</h3><p>为了方便TSN功能的配置，INET提供了几个TSN特定的网络设备。其在INET基本网络节点的基础上额外添加了TSN特定参数。</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnClock.html">TsnClock</a> 模拟TSN时钟，负责gPTP时间同步</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnDevice.html">TsnDevice</a> TSN端设备</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.node.tsn.TsnSwitch.html">TsnSwitch</a> TSN交换机</li>
+</ul>
+<h3 id="1-2-时间同步"><a href="#1-2-时间同步" class="headerlink" title="1.2 时间同步"></a>1.2 时间同步</h3><p>在本章节，主要实现【IEEE 802.1AS-2020】协议。INET主要在两个方面仿真了时钟同步，一方面是时钟模块，一方面是时间同步协议模块。</p>
+<p>时钟模块</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.OscillatorBasedClock.html">OscillatorBasedClock</a> 基于震荡器的时钟</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.SettableClock.html">SettableClock</a> 可设置时间的时钟</li>
+</ul>
+<p>时间同步协议实现模块</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.Gptp.html">Gptp</a> gPTP时钟同步协议</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpBridge.html">GptpBridge</a> gPTP网桥节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpEndstation.html">GptpEndstation</a> gPTP终端节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpMaster.html">GptpMaster</a> gPTP主节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.GptpSlave.html">GptpSlave</a> gPTP从节点</li>
+</ul>
+<p>为了仿真时间同步失败情况（主时钟丢失或链路断开），需要多个时间同步域，不同时钟域独立运行，用户模块决定所使用的时钟。</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.clock.model.MultiClock.html">MultiClock</a> 包含不同时钟域的多个子时钟</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021as.MultiDomainGptp.html">MultiDomainGptp</a> 包含不同时钟域的多个gPTP子模块</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasTimeSynchronization</code>和<code>hasGptp</code>参数启用时间同步。</strong></p>
+<h3 id="1-3-TSN流过滤"><a href="#1-3-TSN流过滤" class="headerlink" title="1.3 TSN流过滤"></a>1.3 TSN流过滤</h3><p>在本章节，主要实现【IEEE 802.1Qci-2017】协议。在INET有两种模型，分别为 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.SimpleIeee8021qFilter.html">SimpleIeee8021qFilter</a> 和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qFilter.html">Ieee8021qFilter</a> ，前者更接近802.1Qci，后者更接近802.1Q。前者在结构和功能上更加完善，同时使用更加简单。</p>
+<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.SimpleIeee8021qFilter.html">SimpleIeee8021qFilter</a> 包括多个子模块，对接收到的数据包进行处理，实现流量过滤 </p>
+<p><img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Inet%204.4/1/202211202134266.png" alt="image-20221120213451204"></p>
+<center>图1 SimpleIeee8021qFilter模块功能结构</center>
+
+<p>其内部包含以下功能模块：</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamClassifier.html">StreamClassifier</a> 根据流的名称映射到不同的入队列</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketMeter.html">IPacketMeter</a> 数据包计数模块，可根据不同的规则对流量进行标记，默认采用 DualRateThreeColorMeter，其可选择以下模块<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateTwoColorMeter.html">SingleRateTwoColorMeter</a> 根据 CIR 和 CBS 参数将数据包标记为绿色或红色</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.SingleRateThreeColorMeter.html">SingleRateThreeColorMeter</a> 根据 CIR、CBS 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.DualRateThreeColorMeter.html">DualRateThreeColorMeter</a> 根据 CIR、CBS、EIR 和 EBS 参数将数据包标记为绿色、黄色或红色</li>
+</ul>
+</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketFilter.html">IPacketFilter</a> 包过滤模块，默认采用 LabelFilter ，其可实现丢弃红色数据包，通过绿色和黄色数据包</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.contract.IPacketGate.html">IPacketGate</a> 数据包门模块，控制数据包是否通过</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.common.PacketMultiplexer.html">PacketMultiplexer</a> 多路复用接口</li>
+</ul>
+<p>可通过不同子模块的组合，实现不同的流过滤规则。</p>
+<p>其中 IPacketMeter 中模块基于通用令牌桶实现：</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.TokenBucketMeter.html">TokenBucketMeter</a> 实现 SingleRateTwoColorMeter。单个令牌桶，标记数据包通过或丢弃</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.meter.MultiTokenBucketMeter.html">MultiTokenBucketMeter</a> 实现 SingleRateThreeColorMeter 和 DualRateThreeColorMeter。包含多个令牌桶，根据多个令牌桶的规则标记数据包的通过或丢弃。</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasIngressTrafficFiltering</code>参数启用流过滤。</strong></p>
+<h3 id="1-4-TSN调度和整形"><a href="#1-4-TSN调度和整形" class="headerlink" title="1.4 TSN调度和整形"></a>1.4 TSN调度和整形</h3><p>在本章节，主要实现【IEEE 802.1Qbv-2015】协议。在INET中，目前支持3种3种整形器，分别是基于门控的TAS整形器,基于信用的CBS整形器和异步整形器ATS</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.CreditBasedShaper.html">CreditBasedShaper</a> CBS整形器，根据当前信用值决定数据包是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.Ieee8021qCreditBasedGate.html">Ieee8021qCreditBasedGate</a>门组成</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.TimeAwareShaper.html">TimeAwareShaper</a> TAS整形器，根据GCL决定当前队列数据是否传输，由标准数据包队列和 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.gate.PeriodicGate.html">PeriodicGate</a> 门组成</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.queueing.shaper.AsynchronousShaper.html">AsynchronousShaper</a> ATS整形器，根据数据包的传输合格时间（<a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet-EligibilityTimeTag.html">EligibilityTimeTag</a>）对数据进行重新排队候传输。</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasEgressTrafficShaping</code>参数启用流整形。</strong></p>
+<h3 id="1-5-TSN帧复制与消除"><a href="#1-5-TSN帧复制与消除" class="headerlink" title="1.5 TSN帧复制与消除"></a>1.5 TSN帧复制与消除</h3><p>在本章节，主要实现【IEEE 802.1CB-2017】协议。主要由以下4个部分组成，分别负责不同的工作。</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamIdentifierLayer.html">StreamIdentifierLayer</a> 负责根据其内容和数据等来为传出的数据包分配流名称，只可以用于自身产生应用流量的网络节点</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamRelayLayer.html">StreamRelayLayer</a> 负责传入流的重复帧删除和传出流的复制拆分</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ieee8021q.StreamFilterLayer.html">StreamFilterLayer</a> 负责传入传出流的过滤（非必要）</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.protocolelement.redundancy.StreamCoderLayer.html">StreamCoderLayer</a> 负责传入流的解码和传出流的编码。通过检查传入流的各种标签域映射进行匹配，解析数据流</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasStreamRedundancy</code>参数启用流复制与消除。</strong></p>
+<h3 id="1-6-TSN帧抢占"><a href="#1-6-TSN帧抢占" class="headerlink" title="1.6 TSN帧抢占"></a>1.6 TSN帧抢占</h3><p>在本章节，主要实现【IEEE 802.1Qbu】协议。帧抢占要求网口能够中断正在进行的传输并切换到更高优先级帧的传输，需要由特殊的MAC层和PHC层一起实现。</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetPreemptingMacLayer.html">EthernetPreemptingMacLayer</a> 包含多个MAC子层的以太网MAC层</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.physicallayer.wired.ethernet.EthernetPreemptingPhyLayer.html">EthernetPreemptingPhyLayer</a> 允许数据帧抢占的PHC层</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasFramePreemption</code>参数启用帧抢占。</strong></p>
+<h3 id="1-7-Cut-through-Switching"><a href="#1-7-Cut-through-Switching" class="headerlink" title="1.7 Cut-through Switching"></a>1.7 Cut-through Switching</h3><p>传统交换机采用<code>存储-转发</code>的架构，需要接收到全部数据帧之后判断其转发端口，再进行转发。Cut-through Switching可实现在接收到数据包MAC头后判断转发端口，直接转发，减少数据包在交换机处浪费的时间。<strong>（注意：只有当出端口速度&gt;&#x3D;入端口速度时，才可以使用)</strong></p>
+<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughInterface.html">EthernetCutthroughInterface</a> Cut-through网卡，允许数据帧直接从输入接口传输至输出接口。内部主要通过 EthernetCutthroughLayer 实现</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Inet%204.4/1/202211202152023.png" alt="image-20221120215235961" style="zoom:50%;" />
+
+<center>图2 EthernetCutthroughInterface模块功能结构</center>
+
+<p><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughLayer.html">EthernetCutthroughLayer</a> 内部由 EthernetCutthroughSource 和 EthernetCutthroughSink 组成</p>
+<img src="https://raw.githubusercontent.com/deepsea52418/Blog-image/main/Inet%204.4/1/202211202154217.png" alt="image-20221120215410143" style="zoom:50%;" />
+
+<center>图3 EthernetCutthroughLayer模块功能结构</center>
+
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSource.html">EthernetCutthroughSource</a> 转发入的Cut-through Switch</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.ethernet.modular.EthernetCutthroughSink.html">EthernetCutthroughSink</a> 转发出的Cut-through Switch</li>
+</ul>
+<p><strong>在TsnDevice和TsnSwitch中，通过<code>hasCutthroughSwitching</code>参数启用Cut-through Switching。</strong></p>
+<h3 id="1-8-TSN网络自动配置"><a href="#1-8-TSN网络自动配置" class="headerlink" title="1.8 TSN网络自动配置"></a>1.8 TSN网络自动配置</h3><p>inet提供了3种网络自动配置机制，可能会用到不同层的的配置器，如 <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator.html">Ipv4NetworkConfigurator</a> 和  <a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.MacForwardingTableConfigurator.html">MacForwardingTableConfigurator</a> </p>
+<ul>
+<li>门调度配置：通过配置GCL，实现网络流量确定性传输</li>
+<li>冗余配置：通过流复制和消除，实现网络中流量的冗余传输</li>
+<li>故障保护配置：结合门调度配置和冗余配置</li>
+</ul>
+<p>对于门控调度配置，inet提供了3中不同的的调度器</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.EagerGateScheduleConfigurator.html">EagerGateScheduleConfigurator</a> 按照流量优先级分配时隙</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.z3.Z3GateScheduleConfigurator.html">Z3GateScheduleConfigurator</a> 使用SAT求解器计算GCL</li>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.gatescheduling.common.TSNschedGateScheduleConfigurator.html">TSNschedGateScheduleConfigurator</a> 使用<a href="https://github.com/ACassimiro/TSNsched">TSNsched</a>计算调度</li>
+</ul>
+<p>对于流冗余配置，inet提供了1个调度器</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.StreamRedundancyConfigurator.html">StreamRedundancyConfigurator</a> 为网络中所有节点的流量配置流赋值与消除</li>
+</ul>
+<p>对于失败保护配置，inet提供了1个调度器</p>
+<ul>
+<li><a href="https://doc.omnetpp.org/inet/api-current/neddoc/inet.linklayer.configurator.FailureProtectionConfigurator.html">FailureProtectionConfigurator</a> 配置门调度和流冗余配置器以提供针对指定链路和节点故障的保护</li>
+</ul>
 ]]></content>
       <tags>
         <tag>TSN</tag>
